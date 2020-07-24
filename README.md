@@ -1,16 +1,16 @@
 # waterz
 Pronounced water-zed. A simple watershed and region agglomeration library for affinity graphs.
 
-# Features in this fork
+## Features in this fork
 Incorporate functions from Mala_v2.zip from [http://cremi.org](CREMI.org) for better segmentation result
 
-# Installation
+## Installation (python 2.7)
 ```
 conda install --yes --file requirements.txt -c conda-forge
 python setup.py install
 ```
 
-# Usage
+## Usage
 ```
 import waterz
 import numpy as np
