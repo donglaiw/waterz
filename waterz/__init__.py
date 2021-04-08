@@ -51,7 +51,7 @@ def __compile(scoring_function='OneMinus<MeanAffinity<RegionGraphType, ScoreValu
         pass
 
     # make sure the same module is not build concurrently
-    with open(os.path.join(lib_dir, module_name + '_%s.lock'%str(numpy.random(1)[0])[2:]), 'w') as lock_file:
+    with open(os.path.join(lib_dir, module_name + '_%s.lock'%str(numpy.random.random(1)[0])[2:]), 'w') as lock_file:
         fcntl.lockf(lock_file, fcntl.LOCK_EX)
         try:
 
