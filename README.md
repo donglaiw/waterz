@@ -4,10 +4,10 @@ Pronounced water-zed. A simple watershed and region agglomeration library for af
 ## Features in this fork
 Incorporate functions from Mala_v2.zip from [http://cremi.org](CREMI.org) for better segmentation result
 
-## Installation (python 2.7)
+## Installation (python 3.8)
 ```
-conda install --yes --file requirements.txt -c conda-forge
-python setup.py install
+conda create -n zw python==3.8
+pip install --editable .
 ```
 
 ## Usage

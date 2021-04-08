@@ -3,9 +3,9 @@ import numpy as np
 import h5py
 import json
 
-from seg_watershed import watershed
-from seg_util import create_border_mask, writeh5
-from waterz import agglomerate
+from .seg_watershed import watershed
+from .seg_util import create_border_mask, writeh5
+from . import agglomerate
 
 def getScoreFunc(scoreF):
     # aff50_his256
@@ -33,7 +33,7 @@ def waterz(
 
     # affs shape: 3*z*y*x
     thresholds = list(thresholds)
-    print "waterz at thresholds " + str(thresholds)
+    print("waterz at thresholds " + str(thresholds))
 
     if fragments is None:
         fragments = watershed(affs, 'maxima_distance')
@@ -63,11 +63,11 @@ def waterz(
         if return_seg:
             outs.append(seg.copy())
         else:
-            print "Storing segmentation..."
+            print("Storing segmentation...")
             writeh5(output_basename + '.hdf', 'main', seg)
         if gt is not None:
             metrics = out[1]
-            print "Storing record..."
+            print("Storing record...")
             record = {
                 'threshold': threshold,
                 'merge_function': merge_function,

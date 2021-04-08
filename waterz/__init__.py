@@ -51,9 +51,8 @@ def __compile(scoring_function='OneMinus<MeanAffinity<RegionGraphType, ScoreValu
         pass
 
     # make sure the same module is not build concurrently
-    with open(os.path.join(lib_dir, module_name + '.lock'), 'w') as lock_file:
+    with open(os.path.join(lib_dir, module_name + '_%s.lock'%str(numpy.random(1)[0])[2:], 'w') as lock_file:
         fcntl.lockf(lock_file, fcntl.LOCK_EX)
-
         try:
 
             if lib_dir not in sys.path:
@@ -63,7 +62,6 @@ def __compile(scoring_function='OneMinus<MeanAffinity<RegionGraphType, ScoreValu
             else:
                 print("Re-using already compiled waterz version")
                 return module_name
-
         except ImportError:
 
             print("Compiling waterz in " + str(lib_dir))
