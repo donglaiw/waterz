@@ -121,7 +121,7 @@ def __compile(scoring_function='OneMinus<MeanAffinity<RegionGraphType, ScoreValu
             )
             build_extension = build_ext(Distribution())
             build_extension.finalize_options()
-            build_extension.extensions = cythonize([extension], quiet=True, nthreads=2)
+            build_extension.extensions = cythonize([extension], quiet=True, nthreads=1, language_level = "3")
             build_extension.build_temp = lib_dir
             build_extension.build_lib  = lib_dir
             build_extension.run()

@@ -41,5 +41,5 @@ setup(
         },
         include_package_data=True,
         zip_safe=False,
-        ext_modules=cythonize(extensions)
+        ext_modules=cythonize(extensions,language_level = "3")
 )
