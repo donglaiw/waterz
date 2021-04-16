@@ -26,20 +26,29 @@ def waterz(
         gt = None,
         gt_border = 25/4.0,
         fragments = None,
+        fragments_opt = 0,
         discretize_queue = 256,
         fragments_mask = None,
         aff_threshold  = [0.0001,0.9999],
-        return_seg = True):
+        return_seg = True,
+        return_rg = False,
+        rebuild = True):
 
     # affs shape: 3*z*y*x
     thresholds = list(thresholds)
     print("waterz at thresholds " + str(thresholds))
 
     if fragments is None:
-        fragments = watershed(affs, 'maxima_distance')
-        if fragments_mask is not None:
-            fragments[fragments_mask==False] = 0
-    outs=[]
+        if fragments_opt != 0:
+            if fragments_opt == 1: # mahotas
+                fragments = watershed(affs, 'maxima_distance')
+            elif fragments_opt == 2: # scipy
+                fragments = watershed(affs, 'maxima_distance', use_mahotas_watershed = False)
+            if fragments_mask is not None:
+                fragments[fragments_mask==False] = 0
+
+    outs = []
+    outs_rg = []
     if gt is not None and gt_border !=0:
         gt = create_border_mask(gt, gt_border, np.uint64(0))
 
@@ -49,22 +58,37 @@ def waterz(
             gt = gt,
             aff_threshold_low  = aff_threshold[0],
             aff_threshold_high = aff_threshold[1],
-            fragments=fragments,
-            scoring_function=getScoreFunc(merge_function),
-            discretize_queue=discretize_queue,
-            force_rebuild=True)):
+            fragments = fragments,
+            scoring_function = getScoreFunc(merge_function),
+            discretize_queue = discretize_queue,
+            return_region_graph = return_rg,
+            force_rebuild=rebuild)):
 
         threshold = thresholds[i]
         output_basename = output_prefix+merge_function+'_%.2f'%threshold
+        print('hh',len(out))
+        seg = None
+        rg = None
         if gt is not None:
-            seg = out[0]
+            if return_seg:
+                seg = out[0]
+            if return_rg:
+                rg = out[1]
         else:
-            seg = out
+            if return_seg:
+                if return_rg:
+                    seg, rg = out[0], out[1]
+                else:
+                    seg = out
         if return_seg:
-            outs.append(seg.copy())
+            if seg is not None:
+                outs.append(seg.copy())
+            if rg is not None:
+                outs_rg.append(rg.copy())
         else:
             print("Storing segmentation...")
             writeh5(output_basename + '.hdf', 'main', seg)
+
         if gt is not None:
             metrics = out[1]
             print("Storing record...")
@@ -79,5 +103,10 @@ def waterz(
             }
             with open(output_basename + '.json', 'w') as f:
                 json.dump(record, f)
-    if return_seg:
-        return outs
+    if seg is not None:
+        if rg is not None:
+            return outs, outs_rg
+        else:
+            return outs
+    else:
+        return outs_rg
