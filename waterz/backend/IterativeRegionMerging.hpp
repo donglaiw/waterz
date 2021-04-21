@@ -55,15 +55,24 @@ public:
 		if (_mergedUntil == std::numeric_limits<ScoreType>::lowest()) {
 
 			std::cout << "computing initial scores" << std::endl;
-
-			for (EdgeIdType e = 0; e < _regionGraph.edges().size(); e++)
+            int cc = 0; 
+			for (EdgeIdType e = 0; e < _regionGraph.edges().size(); e++){
 				scoreEdge(e, edgeScoringFunction);
+                /*
+                if (cc < 20){
+                    std::cout<<e<<","<<+_edgeScores[e]<<std::endl;
+                    cc += 1;
+                }else{
+                    break;
+                }
+                */
+            }
 		}
 
-		std::cout << "merging until " << threshold << std::endl;
+		std::cout << "merging until " << +threshold << std::endl;
 
 		if (!_edgeQueue.empty())
-			std::cout << "min edge score " << _edgeScores[_edgeQueue.top()] << std::endl;
+			std::cout << "min edge score " << +_edgeScores[_edgeQueue.top()] << std::endl;
 
 		// while there are still unhandled edges
 		std::size_t merged = 0;
@@ -76,6 +85,7 @@ public:
 			// stop, if the threshold got exceeded
 			// (also if edge is stale or got deleted, as new edges can only be 
 			// more expensive)
+            // std::cout<<next<<":"<<+score<<std::endl;
 			if (score >= threshold) {
 
 				std::cout << "threshold exceeded" << std::endl;
@@ -276,6 +286,11 @@ private:
 
 		_edgeScores[e] = score;
 		_edgeQueue.push(e, score);
+        /*
+        if(e < 10){
+            std::cout<<"se:"<<e<<":"<<+score<<std::endl;
+        }
+        */
 
 		return score;
 	}

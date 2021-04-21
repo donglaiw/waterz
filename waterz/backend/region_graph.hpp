@@ -45,7 +45,7 @@ get_region_graph(
 
 	EdgeIdType e;
 	std::size_t p[3];
-    //int cc = 0;
+    int cc = 0;
 	for (p[0] = 0; p[0] < zdim; ++p[0])
 		for (p[1] = 0; p[1] < ydim; ++p[1])
 			for (p[2] = 0; p[2] < xdim; ++p[2]) {
@@ -82,6 +82,12 @@ get_region_graph(
 			// p.first is ID
 			// p.second is list of affiliated edges
 			EdgeIdType e = rg.addEdge(id1, p.first);
+            /*
+            if(cc<10){
+                std::cout<<e<<","<<id1<<","<<p.first<<std::endl;
+                cc += 1;
+            }
+            */
 			statisticsProvider.notifyNewEdge(e);
 
 			for (F affinity : p.second){

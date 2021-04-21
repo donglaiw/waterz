@@ -80,7 +80,6 @@ initialize(
 			*statisticsProvider,
 			*regionGraph);
 
-    std::cout<<"ho"<<std::endl;
 	std::shared_ptr<ScoringFunctionType> scoringFunction(
 			new ScoringFunctionType(*regionGraph, *statisticsProvider)
 	);
@@ -197,7 +196,7 @@ mergeUntil(
 
 	WaterzContext* context = WaterzContext::get(state.context);
 
-	std::cout << "merging until threshold " << threshold << std::endl;
+	std::cout << "merging until threshold " << +threshold << std::endl;
 
 	std::vector<Merge>  mergeHistory;
 	MergeHistoryVisitor mergeHistoryVisitor(mergeHistory);

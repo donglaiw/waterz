@@ -41,6 +41,7 @@ private:
 		ScoreType score;
 
 		bool operator>(const Entry& other) const {
+            // std::cout<<"c:"<<+score<<"_"<<"_"<< +other.score<<" "<<(score > other.score)<<std::endl;
 			return score > other.score;
 		}
 	};

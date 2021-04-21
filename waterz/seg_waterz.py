@@ -27,7 +27,7 @@ def waterz(
         gt_border = 25/4.0,
         fragments = None,
         fragments_opt = 0,
-        discretize_queue = 256,
+        discretize_queue = 0,
         fragments_mask = None,
         aff_threshold  = [1, 254],
         return_seg = True,
