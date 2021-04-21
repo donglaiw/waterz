@@ -28,7 +28,7 @@ setup(
         description='Simple watershed and agglomeration for affinity graphs.',
         url='https://github.com/donglaiw/waterz',
         license='MIT',
-        install_requires=['cython','numpy','scipy','mahotas'],
+        install_requires=['scipy','mahotas', 'h5py'],
         packages=['waterz'],
         package_data={
             '': [
