@@ -69,6 +69,13 @@ template <typename T>
 using OneMinus = UnaryOperator<T, one_minus>;
 
 template <typename T>
+struct one255_minus {
+	T operator()(const T& x) const { return 255 - x; }
+};
+template <typename T>
+using One255Minus = UnaryOperator<T, one255_minus>;
+
+template <typename T>
 struct invert {
 	T operator()(const T& x) const { return 1.0/x; }
 };

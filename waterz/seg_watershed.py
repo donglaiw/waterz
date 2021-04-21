@@ -3,7 +3,7 @@ import mahotas
 from scipy import ndimage
 
 def get_seeds(boundary, method='grid', next_id = 1,
-             seed_distance = 10, boundary_thres = 0.5):
+             seed_distance = 10, boundary_thres = 0.5, label_nb = None):
     if method == 'grid':
         height = boundary.shape[0]
         width  = boundary.shape[1]
@@ -15,31 +15,32 @@ def get_seeds(boundary, method='grid', next_id = 1,
         seeds = np.zeros_like(boundary).astype(np.int32)
         seeds[seed_positions] = np.arange(next_id, next_id + num_seeds).reshape((num_seeds_y,num_seeds_x))
 
-    if method == 'minima':
-        minima = mahotas.regmin(boundary)
-        seeds, num_seeds = mahotas.label(minima)
-        seeds += next_id
-        seeds[seeds==next_id] = 0
+    if method in ['minima', 'maxima_distance']:
+        if method == 'minima':
+            peak = mahotas.regmin(boundary)
+        elif method == 'maxima_distance':
+            # edt: slow, maxima discontinous -> more strip-seg
+            #distance = mahotas.distance(boundary < boundary_thres)
+            distance = ndimage.morphology.distance_transform_cdt(boundary < boundary_thres)
+            peak = mahotas.regmax(distance)
+        if label_nb is None:
+            seeds, num_seeds = mahotas.label(peak)
+        else:
+            seeds, num_seeds = mahotas.label(peak, label_nb)
+        seeds[seeds > 0] += next_id
 
-    if method == 'maxima_distance':
-        distance = mahotas.distance(boundary < boundary_thres)
-        maxima = mahotas.regmax(distance)
-        seeds, num_seeds = mahotas.label(maxima)
-        seeds += next_id
-        seeds[seeds==next_id] = 0
     return seeds, num_seeds
 
-def watershed(affs, seed_method, use_mahotas_watershed = True, boundary_thres = 0.5):
-    affs_xy = 1.0 - 0.5*(affs[1] + affs[2])
-    depth  = affs_xy.shape[0]
+def watershed(affs, seed_method='maxima_distance', boundary_thres = 0.5, label_nb = None, seg_bg = True):
     fragments = np.zeros_like(affs[0]).astype(np.uint64)
+    depth  = fragments.shape[0]
     next_id = 1
+    # 3D watershed is too slow -> do 2D watershed
     for z in range(depth):
-        seeds, num_seeds = get_seeds(affs_xy[z], next_id=next_id, method=seed_method, boundary_thres=boundary_thres)
-        if use_mahotas_watershed:
-            fragments[z] = mahotas.cwatershed(affs_xy[z], seeds)
-        else:
-            fragments[z] = ndimage.watershed_ift((255.0*affs_xy[z]).astype(np.uint8), seeds)
+        boundary = 1.0 - 0.5*(affs[1,z].astype(np.float32) + affs[2,z]) / 255.0
+        seeds, num_seeds = get_seeds(boundary, next_id = next_id, method = seed_method, boundary_thres = boundary_thres, label_nb = label_nb)
+        fragments[z] = mahotas.cwatershed(boundary, seeds)
         next_id += num_seeds
-
+        if seg_bg: # assign bg seg
+            fragments[z][(affs[:,z]==0).max(axis=0)] = 0
     return fragments

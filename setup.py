@@ -19,8 +19,7 @@ extensions = [
         include_dirs=include_dirs,
         language='c++',
         extra_link_args=['-std=c++11'],
-        extra_compile_args=['-std=c++11', '-w'])
-]
+        extra_compile_args=['-std=c++11', '-w'])]
 
 setup(
         name='waterz',

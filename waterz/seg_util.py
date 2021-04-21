@@ -7,11 +7,20 @@ def getScoreFunc(scoreF):
     config = {x[:3]: x[3:] for x in scoreF.split('_')}
     if 'aff' in config:
         if 'his' in config and config['his']!='0':
-            return 'OneMinus<HistogramQuantileAffinity<RegionGraphType, %s, ScoreValue, %s>>' % (config['aff'],config['his'])
+            if config['ran'] == 255:
+                return 'One255Minus<HistogramQuantileAffinity<RegionGraphType, %s, ScoreValue, %s>>' % (config['aff'],config['his'])
+            else:
+                return 'OneMinus<HistogramQuantileAffinity<RegionGraphType, %s, ScoreValue, %s>>' % (config['aff'],config['his'])
         else:
-            return 'OneMinus<QuantileAffinity<RegionGraphType, '+config['aff']+', ScoreValue>>'
+            if config['ran'] == 255:
+                return 'One255Minus<QuantileAffinity<RegionGraphType, '+config['aff']+', ScoreValue>>'
+            else:
+                return 'OneMinus<QuantileAffinity<RegionGraphType, '+config['aff']+', ScoreValue>>'
     elif 'max' in config:
-            return 'OneMinus<MeanMaxKAffinity<RegionGraphType, '+config['max']+', ScoreValue>>'
+            if config['ran'] == 255:
+                return 'One255Minus<MeanMaxKAffinity<RegionGraphType, '+config['max']+', ScoreValue>>'
+            else:
+                return 'OneMinus<MeanMaxKAffinity<RegionGraphType, '+config['max']+', ScoreValue>>'
 
 def writeh5(filename, datasetname, dtarray):                                                         
     fid=h5py.File(filename,'w')

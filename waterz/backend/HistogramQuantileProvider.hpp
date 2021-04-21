@@ -14,15 +14,17 @@ class HistogramQuantileProvider : public StatisticsProvider {
 
 public:
 
-	typedef Precision ValueType;
+    typedef Precision ValueType;
 	typedef typename RegionGraphType::EdgeIdType EdgeIdType;
 
 	HistogramQuantileProvider(RegionGraphType& regionGraph) :
 		_histograms(regionGraph) {}
 
 	inline void addAffinity(EdgeIdType e, ValueType affinity) {
-
-		int bin = discretize<int>(affinity, Bins);
+        
+        // for uint8 affinity, directly
+		int bin = affinity;
+		// int bin = discretize<int>(affinity, Bins);
 
 		if (InitWithMax && _histograms[e].lowestBin() != Bins) {
 
@@ -58,7 +60,8 @@ public:
 				break;
 		}
 
-		return undiscretize<Precision>(bin, Bins);
+		//return undiscretize<Precision>(bin, Bins);
+		return bin;
 	}
 
 private:

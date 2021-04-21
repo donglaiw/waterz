@@ -45,11 +45,14 @@ get_region_graph(
 
 	EdgeIdType e;
 	std::size_t p[3];
+    //int cc = 0;
 	for (p[0] = 0; p[0] < zdim; ++p[0])
 		for (p[1] = 0; p[1] < ydim; ++p[1])
 			for (p[2] = 0; p[2] < xdim; ++p[2]) {
 
 				ID id1 = seg[p[0]][p[1]][p[2]];
+                if (id1 == 0)
+                    continue;
 				statisticsProvider.addVoxel(id1, p[2], p[1], p[0]);
 
 				for (int d = 0; d < 3; d++) {
@@ -58,15 +61,21 @@ get_region_graph(
 						continue;
 
 					ID id2 = seg[p[0]-(d==0)][p[1]-(d==1)][p[2]-(d==2)];
+                    if (id2 == 0)
+                        continue;
 
 					if (id1 != id2) {
 						auto mm = std::minmax(id1, id2);
 						affinities[mm.first][mm.second].push_back(aff[d][p[0]][p[1]][p[2]]);
-
+                        /*
+                        if (cc<30){
+                            std::cout<<mm.first<<","<<mm.second<<","<< +aff[d][p[0]][p[1]][p[2]]<<std::endl;
+                            cc+=1;
+                        }
+                        */
 					}
 				}
 			}
-
 	for (ID id1 = 1; id1 <= max_segid; ++id1) {
 		for (const auto& p: affinities[id1]) {
 

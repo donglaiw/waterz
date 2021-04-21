@@ -80,6 +80,7 @@ initialize(
 			*statisticsProvider,
 			*regionGraph);
 
+    std::cout<<"ho"<<std::endl;
 	std::shared_ptr<ScoringFunctionType> scoringFunction(
 			new ScoringFunctionType(*regionGraph, *statisticsProvider)
 	);
@@ -192,7 +193,7 @@ vector<ScoredEdge> rgFromSeg(
 std::vector<Merge>
 mergeUntil(
 		WaterzState& state,
-		float        threshold) {
+		ScoreValue   threshold) {
 
 	WaterzContext* context = WaterzContext::get(state.context);
 

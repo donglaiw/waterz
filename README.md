@@ -6,7 +6,7 @@ Incorporate functions from Mala_v2.zip from [http://cremi.org](CREMI.org) for be
 
 ## Installation (python 3.8)
 ```
-conda create -n zw python==3.8
+conda create -n zw python==3.8 cython numpy
 pip install --editable .
 ```
 

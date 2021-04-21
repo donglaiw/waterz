@@ -15,8 +15,8 @@
 
 typedef uint64_t SegID;
 typedef uint32_t GtID;
-typedef float AffValue;
-typedef float ScoreValue;
+typedef uint8_t AffValue;
+typedef uint8_t ScoreValue;
 typedef RegionGraph<SegID> RegionGraphType;
 
 // to be created by __init__.py
@@ -149,13 +149,13 @@ WaterzState initialize(
 		const AffValue* affinity_data,
 		SegID*          segmentation_data,
 		const GtID*     groundtruth_data = NULL,
-		AffValue        affThresholdLow  = 0.0001,
-		AffValue        affThresholdHigh = 0.9999,
+		AffValue        affThresholdLow  = 1,
+		AffValue        affThresholdHigh = 254,
 		bool            findFragments = true);
 
 std::vector<Merge> mergeUntil(
 		WaterzState& state,
-		float        threshold);
+		ScoreValue   threshold);
 
 std::vector<ScoredEdge> getRegionGraph(WaterzState& state);
 
