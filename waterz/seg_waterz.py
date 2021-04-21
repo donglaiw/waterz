@@ -4,19 +4,19 @@ import h5py
 import json
 
 from .seg_watershed import watershed
-from .seg_util import create_border_mask, writeh5
+from .seg_util import create_border_mask, writeh5, getScoreFunc
 from . import agglomerate
 
-def getScoreFunc(scoreF):
-    # aff50_his256
-    config = {x[:3]: x[3:] for x in scoreF.split('_')}
-    if 'aff' in config:
-        if 'his' in config and config['his']!='0':
-            return 'OneMinus<HistogramQuantileAffinity<RegionGraphType, %s, ScoreValue, %s>>' % (config['aff'],config['his'])
-        else:
-            return 'OneMinus<QuantileAffinity<RegionGraphType, '+config['aff']+', ScoreValue>>'
-    elif 'max' in config:
-            return 'OneMinus<MeanMaxKAffinity<RegionGraphType, '+config['max']+', ScoreValue>>'
+
+def getRegionGraph(affs, fragments, rg_opt = 1, merge_function = None, discretize_queue=256, rebuild = True):
+    for rg in agglomerate(
+            affs,
+            fragments = fragments,
+            scoring_function = getScoreFunc(merge_function),
+            discretize_queue = discretize_queue,
+            rg_opt = rg_opt,
+            force_rebuild=rebuild):
+        return rg
 
 def waterz(
         affs,
@@ -36,9 +36,10 @@ def waterz(
 
     # affs shape: 3*z*y*x
     thresholds = list(thresholds)
-    print("waterz at thresholds " + str(thresholds))
+    # print("waterz at thresholds " + str(thresholds))
 
     if fragments is None:
+        print('initial watershed')
         if fragments_opt != 0:
             if fragments_opt == 1: # mahotas
                 fragments = watershed(affs, 'maxima_distance')
@@ -64,9 +65,9 @@ def waterz(
             return_region_graph = return_rg,
             force_rebuild=rebuild)):
 
+        rebuild = False
         threshold = thresholds[i]
         output_basename = output_prefix+merge_function+'_%.2f'%threshold
-        print('hh',len(out))
         seg = None
         rg = None
         if gt is not None:
@@ -82,9 +83,9 @@ def waterz(
                     seg = out
         if return_seg:
             if seg is not None:
-                outs.append(seg.copy())
+                outs.append(seg)
             if rg is not None:
-                outs_rg.append(rg.copy())
+                outs_rg.append([rg[0].copy(), rg[1].copy()])
         else:
             print("Storing segmentation...")
             writeh5(output_basename + '.hdf', 'main', seg)

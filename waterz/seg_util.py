@@ -2,6 +2,17 @@ import h5py
 import numpy as np
 import scipy
 
+def getScoreFunc(scoreF):
+    # aff50_his256
+    config = {x[:3]: x[3:] for x in scoreF.split('_')}
+    if 'aff' in config:
+        if 'his' in config and config['his']!='0':
+            return 'OneMinus<HistogramQuantileAffinity<RegionGraphType, %s, ScoreValue, %s>>' % (config['aff'],config['his'])
+        else:
+            return 'OneMinus<QuantileAffinity<RegionGraphType, '+config['aff']+', ScoreValue>>'
+    elif 'max' in config:
+            return 'OneMinus<MeanMaxKAffinity<RegionGraphType, '+config['max']+', ScoreValue>>'
+
 def writeh5(filename, datasetname, dtarray):                                                         
     fid=h5py.File(filename,'w')
     ds = fid.create_dataset(datasetname, dtarray.shape, compression="gzip", dtype=dtarray.dtype)

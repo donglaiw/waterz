@@ -130,7 +130,7 @@ def __compile(scoring_function='OneMinus<MeanAffinity<RegionGraphType, ScoreValu
 
 def agglomerate(
         affs,
-        thresholds,
+        thresholds = [0.1],
         gt=None,
         fragments=None,
         aff_threshold_low=0.0001,
@@ -139,6 +139,7 @@ def agglomerate(
         return_region_graph = False,
         scoring_function='OneMinus<MeanAffinity<RegionGraphType, ScoreValue>>',
         discretize_queue=0,
+        rg_opt = 0,
         force_rebuild=False):
     '''
     Compute segmentations from an affinity graph for several thresholds.
@@ -252,10 +253,11 @@ def agglomerate(
         fragments, 
         aff_threshold_low, 
         aff_threshold_high, 
+        rg_opt,
         return_merge_history,
         return_region_graph)
 
 
 from .seg_watershed import watershed
 from .seg_util import create_border_mask
-from .seg_waterz import waterz
+from .seg_waterz import waterz, getRegionGraph

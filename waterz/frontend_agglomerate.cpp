@@ -114,6 +114,81 @@ initialize(
 	return initial_state;
 }
 
+vector<ScoredEdge> rgFromSeg(
+		std::size_t     width,
+		std::size_t     height,
+		std::size_t     depth,
+		const AffValue* affinity_data,
+		SegID*          segmentation_data,
+		std::size_t     rg_opt){
+
+	std::size_t num_voxels = width*height*depth;
+
+	// wrap affinities (no copy)
+	affinity_graph_ref<AffValue> affinities(
+			affinity_data,
+			boost::extents[3][width][height][depth]
+	);
+
+	// wrap segmentation array (no copy)
+	volume_ref_ptr<SegID> segmentation(
+			new volume_ref<SegID>(
+					segmentation_data,
+					boost::extents[width][height][depth]
+			)
+	);
+
+	counts_t<std::size_t> sizes;
+    std::cout << "counting regions and sizes..." << std::endl;
+    std::size_t maxId = *std::max_element(segmentation_data, segmentation_data + num_voxels);
+    sizes.resize(maxId + 1);
+    for (std::size_t i = 0; i < num_voxels; i++)
+        sizes[segmentation_data[i]]++;
+
+	std::size_t numNodes = sizes.size();
+	std::cout << "creating region graph for " << numNodes << " nodes" << std::endl;
+
+	std::shared_ptr<RegionGraphType> regionGraph(
+			new RegionGraphType(numNodes)
+	);
+
+	std::cout << "creating statistics provider" << std::endl;
+	std::shared_ptr<StatisticsProviderType> statisticsProvider(
+			new StatisticsProviderType(*regionGraph)
+	);
+
+	std::cout << "extracting region graph..." << std::endl;
+    if (rg_opt == 1){
+        // all three directions
+    	get_region_graph(
+			affinities,
+			*segmentation,
+			numNodes - 1,
+			*statisticsProvider,
+			*regionGraph);
+    }else{
+        // only z-direction
+        get_region_graph_border(
+			affinities,
+			*segmentation,
+			numNodes - 1,
+			*statisticsProvider,
+			*regionGraph);
+    }
+	std::shared_ptr<ScoringFunctionType> scoringFunction(
+			new ScoringFunctionType(*regionGraph, *statisticsProvider)
+	);
+
+    std::shared_ptr<RegionMergingType> regionMerging(
+                        new RegionMergingType(*regionGraph)
+    );
+    // initialize stale
+
+    regionMerging->setStale(true);
+
+	return regionMerging->extractRegionGraph<ScoredEdge>(*scoringFunction);
+}
+
 std::vector<Merge>
 mergeUntil(
 		WaterzState& state,
@@ -156,6 +231,16 @@ mergeUntil(
 
 std::vector<ScoredEdge>
 getRegionGraph(WaterzState& state) {
+
+	WaterzContext* context = WaterzContext::get(state.context);
+	std::shared_ptr<RegionMergingType> regionMerging = context->regionMerging;
+	std::shared_ptr<ScoringFunctionType> scoringFunction = context->scoringFunction;
+
+	return regionMerging->extractRegionGraph<ScoredEdge>(*scoringFunction);
+}
+
+std::vector<ScoredEdge>
+getRegionGraphBorder(WaterzState& state) {
 
 	WaterzContext* context = WaterzContext::get(state.context);
 	std::shared_ptr<RegionMergingType> regionMerging = context->regionMerging;
