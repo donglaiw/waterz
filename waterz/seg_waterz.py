@@ -8,12 +8,14 @@ from .seg_util import create_border_mask, writeh5, getScoreFunc
 from . import agglomerate
 
 
-def getRegionGraph(affs, fragments, rg_opt = 1, merge_function = None, discretize_queue=256, rebuild = True):
+def getRegionGraph(affs, fragments, rg_opt = 1, merge_function = None, rebuild = True):
+    # rg_opt=1: all seg
+    # rg_opt=2: skip first slice
+    # rg_opt=3: only the connection
     for rg in agglomerate(
             affs,
             fragments = fragments,
             scoring_function = getScoreFunc(merge_function),
-            discretize_queue = discretize_queue,
             rg_opt = rg_opt,
             force_rebuild=rebuild):
         return rg
@@ -27,6 +29,7 @@ def waterz(
         gt_border = 25/4.0,
         fragments = None,
         fragments_opt = 0,
+        fragments_seed_nb = 5,
         discretize_queue = 0,
         fragments_mask = None,
         aff_threshold  = [1, 254],
@@ -41,14 +44,15 @@ def waterz(
     if fragments is None:
         print('initial watershed')
         if fragments_opt != 0: # mahotas
-            fragments = watershed(affs, 'maxima_distance', label_nb = np.ones([3,3]))
+            fragments = watershed(affs, 'maxima_distance', label_nb = np.ones([fragments_seed_nb,fragments_seed_nb]))
             if fragments_mask is not None:
                 fragments[fragments_mask==False] = 0
+
 
     outs = []
     outs_rg = []
     if gt is not None and gt_border !=0:
-        gt = create_border_mask(gt, gt_border, np.uint64(0))
+        gt = create_border_mask(gt, gt_border, np.uint32(0))
 
     for i,out in enumerate(agglomerate(
             affs,

@@ -7,7 +7,7 @@ cimport numpy as np
 def rgToArr(rg):
     # convert waterz rg into array
     num_rg = len(rg)
-    rg_id = np.zeros([num_rg,2],np.uint64)
+    rg_id = np.zeros([num_rg,2],np.uint32)
     rg_sc = np.zeros(num_rg, np.uint8)
     for i in range(num_rg):
         rg_id[i] = [rg[i]['u'],rg[i]['v']]
@@ -17,10 +17,9 @@ def rgToArr(rg):
 
     return rg_id[rg_sid], rg_sc[rg_sid]
 
-
 def agglomerate(
     affs, 
-    thresholds = [0.1], 
+    thresholds = [2], 
     gt = None, 
     fragments = None, 
     aff_threshold_low  = 1, 
@@ -45,10 +44,10 @@ def agglomerate(
 
     if fragments is None:
         volume_shape = (affs.shape[1], affs.shape[2], affs.shape[3])
-        segmentation = np.zeros(volume_shape, dtype=np.uint64)
+        segmentation = np.zeros(volume_shape, dtype=np.uint32)
         find_fragments = True
     else:
-        segmentation = fragments.astype(np.uint64)
+        segmentation = fragments.astype(np.uint32)
         find_fragments = False
     
 
@@ -77,15 +76,20 @@ def agglomerate(
             else:
                 yield result
         free(state)
-    elif rg_opt in [1, 2]: # segmentation -> rg
+    elif rg_opt in [1, 2, 3]: # segmentation -> rg
         yield __getRegionGraph(affs, segmentation, rg_opt)
+    elif rg_opt == 4: # load rg
+        # affs -> rg_score
+        # segmentation -> rg_id
+        # state = __initializeFromRg(segmentation[:,0], segmentation[:,1], affs)
+        pass
     else:
         raise ValueError("Unknown region graph options")
 
 
 def __getRegionGraph(np.ndarray[uint8_t, ndim=4] aff,
-                np.ndarray[uint64_t, ndim=3] seg,
-                np.uint64_t rg_opt):
+                np.ndarray[uint32_t, ndim=3] seg,
+                np.uint32_t rg_opt):
     '''Return the initial region graph
     
     :param aff: the affinity predictions - an array of x, y, z, c where c == 0
@@ -96,7 +100,7 @@ def __getRegionGraph(np.ndarray[uint8_t, ndim=4] aff,
               ID1 and ID2
     '''
     cdef uint8_t*    aff_data
-    cdef uint64_t* seg_data
+    cdef uint32_t* seg_data
     aff_data = &aff[0,0,0,0]
     seg_data = &seg[0,0,0]
 
@@ -106,14 +110,14 @@ def __getRegionGraph(np.ndarray[uint8_t, ndim=4] aff,
 
 def __initialize(
         np.ndarray[uint8_t, ndim=4] affs,
-        np.ndarray[uint64_t, ndim=3]     segmentation,
+        np.ndarray[uint32_t, ndim=3]     segmentation,
         np.ndarray[uint32_t, ndim=3]     gt = None,
         aff_threshold_low  = 1,
         aff_threshold_high = 254,
         find_fragments = True):
 
     cdef uint8_t*    aff_data
-    cdef uint64_t* segmentation_data
+    cdef uint32_t* segmentation_data
     cdef uint32_t* gt_data = NULL
 
     aff_data = &affs[0,0,0,0]
@@ -130,6 +134,29 @@ def __initialize(
         aff_threshold_high,
         find_fragments)
 
+"""
+def __initializeFromRg(
+        np.ndarray[uint32_t, ndim=1]      rg_id1,
+        np.ndarray[uint32_t, ndim=1]      rg_id2,
+        np.ndarray[uint8_t,  ndim=1]      rg_score):
+
+    cdef uint8_t*    rg_score_data;
+    cdef uint32_t*   rg_id1_data;
+    cdef uint32_t*   rg_id2_data;
+
+    rg_id1_data = &rg_id1[0]
+    rg_id2_data = &rg_id2[0]
+    rg_score_data = &rg_score[0]
+
+    return initializeFromRg(
+        max(rg_id1.max(), rg_id2.max()),
+        np.uint32(len(rg_id1)),
+        rg_id1_data,
+        rg_id2_data,
+        rg_score_data)
+"""
+
+
 cdef extern from "frontend_agglomerate.h":
     struct Metrics:
         double voi_split
@@ -138,14 +165,14 @@ cdef extern from "frontend_agglomerate.h":
         double rand_merge
 
     struct Merge:
-        uint64_t a
-        uint64_t b
-        uint64_t c
+        uint32_t a
+        uint32_t b
+        uint32_t c
         uint8_t score
 
     struct ScoredEdge:
-        uint64_t u
-        uint64_t v
+        uint32_t u
+        uint32_t v
         uint8_t score
 
     struct WaterzState:
@@ -157,11 +184,18 @@ cdef extern from "frontend_agglomerate.h":
             size_t          height,
             size_t          depth,
             const uint8_t*  affinity_data,
-            uint64_t*       segmentation_data,
+            uint32_t*       segmentation_data,
             const uint32_t* groundtruth_data,
             uint8_t         affThresholdLow,
             uint8_t         affThresholdHigh,
             bool            findFragments);
+
+    WaterzState initializeFromRg(
+            uint32_t        num_node,
+            uint32_t        num_edge,
+            uint32_t*       rg_id1,
+            uint32_t*       rg_id2,
+            uint8_t*        rg_score);
 
     vector[Merge] mergeUntil(
             WaterzState& state,
@@ -173,9 +207,10 @@ cdef extern from "frontend_agglomerate.h":
     
     # add region graph 
     vector[ScoredEdge] rgFromSeg(
-		uint64_t     width,
-		uint64_t     height,
-		uint64_t     depth,
+		uint32_t     width,
+		uint32_t     height,
+		uint32_t     depth,
 		const uint8_t* affinity_data,
-		uint64_t*    segmentation_data,
-		uint64_t     rg_opt);
+		uint32_t*    segmentation_data,
+		uint32_t     rg_opt);
+

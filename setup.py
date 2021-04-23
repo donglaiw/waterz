@@ -19,7 +19,13 @@ extensions = [
         include_dirs=include_dirs,
         language='c++',
         extra_link_args=['-std=c++11'],
-        extra_compile_args=['-std=c++11', '-w'])]
+        extra_compile_args=['-std=c++11']),
+    Extension(
+        'waterz.region_graph',
+        sources=['waterz/region_graph.pyx', 'waterz/frontend_region_graph.cpp'],
+        language='c++',
+        extra_link_args=['-std=c++11'],
+        extra_compile_args=['-std=c++11'])]
 
 setup(
         name='waterz',
@@ -40,5 +46,6 @@ setup(
         },
         include_package_data=True,
         zip_safe=False,
-        ext_modules=cythonize(extensions,language_level = "3")
+        ext_modules=cythonize(extensions)
 )
+# python setup.py build_ext --inplace

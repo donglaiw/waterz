@@ -13,6 +13,7 @@
 std::map<int, WaterzContext*> WaterzContext::_contexts;
 int WaterzContext::_nextId = 0;
 
+
 WaterzState
 initialize(
 		std::size_t     width,
@@ -76,6 +77,7 @@ initialize(
 	get_region_graph(
 			affinities,
 			*segmentation,
+            0,
 			numNodes - 1,
 			*statisticsProvider,
 			*regionGraph);
@@ -110,6 +112,112 @@ initialize(
 
 		context->groundtruth = groundtruth;
 	}
+
+	return initial_state;
+}
+
+std::vector<Merge>
+mergeUntil(
+		WaterzState& state,
+		ScoreValue   threshold) {
+
+	WaterzContext* context = WaterzContext::get(state.context);
+
+	std::cout << "merging until threshold " << +threshold << std::endl;
+
+	std::vector<Merge>  mergeHistory;
+	MergeHistoryVisitor mergeHistoryVisitor(mergeHistory);
+
+	std::size_t merged = context->regionMerging->mergeUntil(
+			*context->scoringFunction,
+			*context->statisticsProvider,
+			threshold,
+			mergeHistoryVisitor);
+
+	if (merged) {
+
+		std::cout << "extracting segmentation" << std::endl;
+
+		context->regionMerging->extractSegmentation(*context->segmentation);
+	}
+
+	if (context->groundtruth) {
+
+		std::cout << "evaluating current segmentation against ground-truth" << std::endl;
+
+		auto m = compare_volumes(*context->groundtruth, *context->segmentation);
+
+		state.metrics.rand_split = std::get<0>(m);
+		state.metrics.rand_merge = std::get<1>(m);
+		state.metrics.voi_split  = std::get<2>(m);
+		state.metrics.voi_merge  = std::get<3>(m);
+	}
+
+	return mergeHistory;
+}
+
+void
+free(WaterzState& state) {
+	WaterzContext::free(state.context);
+}
+
+std::vector<ScoredEdge>
+getRegionGraph(WaterzState& state) {
+
+	WaterzContext* context = WaterzContext::get(state.context);
+	std::shared_ptr<RegionMergingType> regionMerging = context->regionMerging;
+	std::shared_ptr<ScoringFunctionType> scoringFunction = context->scoringFunction;
+
+	return regionMerging->extractRegionGraph<ScoredEdge>(*scoringFunction);
+}
+
+WaterzState
+initializeFromRg(
+		SegID           num_node,
+		SegID           num_edge,
+		SegID*          rg_id1,
+		SegID*          rg_id2,
+		AffValue*       rg_score) {
+
+	std::cout << "creating region graph for " << num_node << " nodes" << std::endl;
+
+	std::shared_ptr<RegionGraphType> regionGraph(
+			new RegionGraphType(num_node)
+	);
+
+	std::cout << "creating statistics provider" << std::endl;
+	std::shared_ptr<StatisticsProviderType> statisticsProvider(
+			new StatisticsProviderType(*regionGraph)
+	);
+
+	std::cout << "extracting region graph..." << std::endl;
+    
+    /*
+	get_region_graph_from_array(
+			num_edge,
+			rg_score,
+			rg_id1,
+			rg_id2,
+			*statisticsProvider,
+			*regionGraph);
+    */
+
+	std::shared_ptr<ScoringFunctionType> scoringFunction(
+			new ScoringFunctionType(*regionGraph, *statisticsProvider)
+	);
+
+	std::shared_ptr<RegionMergingType> regionMerging(
+			new RegionMergingType(*regionGraph)
+	);
+
+	WaterzContext* context = WaterzContext::createNew();
+	context->regionGraph        = regionGraph;
+	context->regionMerging      = regionMerging;
+	context->scoringFunction    = scoringFunction;
+	context->statisticsProvider = statisticsProvider;
+
+	WaterzState initial_state;
+	initial_state.context = context->id;
 
 	return initial_state;
 }
@@ -159,14 +267,24 @@ vector<ScoredEdge> rgFromSeg(
 
 	std::cout << "extracting region graph..." << std::endl;
     if (rg_opt == 1){
-        // all three directions
+        // all slices, all three directions
     	get_region_graph(
 			affinities,
 			*segmentation,
 			numNodes - 1,
+            0,
 			*statisticsProvider,
 			*regionGraph);
-    }else{
+    } else if (rg_opt == 2){
+        // skip first slice, all three directions
+    	get_region_graph(
+			affinities,
+			*segmentation,
+			numNodes - 1,
+            1,
+			*statisticsProvider,
+			*regionGraph);
+    } else if (rg_opt == 3){
         // only z-direction
         get_region_graph_border(
 			affinities,
@@ -187,70 +305,4 @@ vector<ScoredEdge> rgFromSeg(
     regionMerging->setStale(true);
 
 	return regionMerging->extractRegionGraph<ScoredEdge>(*scoringFunction);
-}
-
-std::vector<Merge>
-mergeUntil(
-		WaterzState& state,
-		ScoreValue   threshold) {
-
-	WaterzContext* context = WaterzContext::get(state.context);
-
-	std::cout << "merging until threshold " << +threshold << std::endl;
-
-	std::vector<Merge>  mergeHistory;
-	MergeHistoryVisitor mergeHistoryVisitor(mergeHistory);
-
-	std::size_t merged = context->regionMerging->mergeUntil(
-			*context->scoringFunction,
-			*context->statisticsProvider,
-			threshold,
-			mergeHistoryVisitor);
-
-	if (merged) {
-
-		std::cout << "extracting segmentation" << std::endl;
-
-		context->regionMerging->extractSegmentation(*context->segmentation);
-	}
-
-	if (context->groundtruth) {
-
-		std::cout << "evaluating current segmentation against ground-truth" << std::endl;
-
-		auto m = compare_volumes(*context->groundtruth, *context->segmentation);
-
-		state.metrics.rand_split = std::get<0>(m);
-		state.metrics.rand_merge = std::get<1>(m);
-		state.metrics.voi_split  = std::get<2>(m);
-		state.metrics.voi_merge  = std::get<3>(m);
-	}
-
-	return mergeHistory;
-}
-
-std::vector<ScoredEdge>
-getRegionGraph(WaterzState& state) {
-
-	WaterzContext* context = WaterzContext::get(state.context);
-	std::shared_ptr<RegionMergingType> regionMerging = context->regionMerging;
-	std::shared_ptr<ScoringFunctionType> scoringFunction = context->scoringFunction;
-
-	return regionMerging->extractRegionGraph<ScoredEdge>(*scoringFunction);
-}
-
-std::vector<ScoredEdge>
-getRegionGraphBorder(WaterzState& state) {
-
-	WaterzContext* context = WaterzContext::get(state.context);
-	std::shared_ptr<RegionMergingType> regionMerging = context->regionMerging;
-	std::shared_ptr<ScoringFunctionType> scoringFunction = context->scoringFunction;
-
-	return regionMerging->extractRegionGraph<ScoredEdge>(*scoringFunction);
-}
-
-void
-free(WaterzState& state) {
-
-	WaterzContext::free(state.context);
 }

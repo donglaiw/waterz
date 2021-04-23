@@ -35,6 +35,7 @@ public:
 			_stale[e] = val;
         }
     }
+
 	/**
 	 * Merge a RAG with the given edge scoring function until the given threshold.
 	 */
@@ -58,14 +59,6 @@ public:
             int cc = 0; 
 			for (EdgeIdType e = 0; e < _regionGraph.edges().size(); e++){
 				scoreEdge(e, edgeScoringFunction);
-                /*
-                if (cc < 20){
-                    std::cout<<e<<","<<+_edgeScores[e]<<std::endl;
-                    cc += 1;
-                }else{
-                    break;
-                }
-                */
             }
 		}
 

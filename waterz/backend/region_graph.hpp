@@ -16,6 +16,8 @@
  *              The segmentation.
  * @param max_segid [in]
  *              The highest ID in the segmentation.
+ * @param start_zid [in]
+ *              The starting z index. Default: 0
  * @param statisticsProvider [in]
  *              A statistics provider to update on-the-fly.
  * @param region_graph [out]
@@ -28,6 +30,7 @@ get_region_graph(
 		const AG& aff,
 		const V& seg,
 		std::size_t max_segid,
+		std::size_t start_zid,
 		StatisticsProviderType& statisticsProvider,
 		RegionGraph<typename V::element>& rg) {
 
@@ -46,7 +49,8 @@ get_region_graph(
 	EdgeIdType e;
 	std::size_t p[3];
     int cc = 0;
-	for (p[0] = 0; p[0] < zdim; ++p[0])
+    // std::cout<<start_zid<<","<<zdim<<","<< ydim<<","<< xdim<<std::endl;
+	for (p[0] = start_zid; p[0] < zdim; ++p[0])
 		for (p[1] = 0; p[1] < ydim; ++p[1])
 			for (p[2] = 0; p[2] < xdim; ++p[2]) {
 
@@ -56,7 +60,6 @@ get_region_graph(
 				statisticsProvider.addVoxel(id1, p[2], p[1], p[0]);
 
 				for (int d = 0; d < 3; d++) {
-
 					if (p[d] == 0)
 						continue;
 
@@ -67,6 +70,7 @@ get_region_graph(
 					if (id1 != id2) {
 						auto mm = std::minmax(id1, id2);
 						affinities[mm.first][mm.second].push_back(aff[d][p[0]][p[1]][p[2]]);
+
                         /*
                         if (cc<30){
                             std::cout<<mm.first<<","<<mm.second<<","<< +aff[d][p[0]][p[1]][p[2]]<<std::endl;
@@ -99,6 +103,7 @@ get_region_graph(
 	std::cout << "Region graph number of edges: " << rg.edges().size() << std::endl;
 }
 
+
 template<typename AG, typename V, typename StatisticsProviderType>
 inline
 void
@@ -128,8 +133,13 @@ get_region_graph_border(
 			for (p[2] = 0; p[2] < xdim; ++p[2]) {
 
 				ID id1 = seg[p[0]][p[1]][p[2]];
+                if (id1 == 0)
+                    continue;
 				statisticsProvider.addVoxel(id1, p[2], p[1], p[0]);
+
                 ID id2 = seg[p[0]-1][p[1]][p[2]];
+                if (id2 == 0)
+                    continue;
 				statisticsProvider.addVoxel(id2, p[2], p[1], p[0]-1);
 
                 if (id1 != id2) {
@@ -150,6 +160,34 @@ get_region_graph_border(
 			for (F affinity : p.second)
 				statisticsProvider.addAffinity(e, affinity);
         }
+    }
+
+	std::cout << "Region graph number of edges: " << rg.edges().size() << std::endl;
+}
+
+template<typename AG, typename V, typename StatisticsProviderType>
+inline
+void
+get_region_graph_from_array(
+        const V   num_edge,
+		const AG& rg_score,
+		const V&  rg_id1,
+		const V&  rg_id2,
+		StatisticsProviderType& statisticsProvider,
+		RegionGraph<typename V::element>& rg) {
+
+	typedef typename AG::element F;
+	typedef typename V::element ID;
+	typedef RegionGraph<ID> RegionGraphType;
+	typedef typename RegionGraphType::EdgeIdType EdgeIdType;
+
+	EdgeIdType e;
+
+	for (ID i = 0; i < num_edge; ++i) {
+			// p.first is ID
+			// p.second is list of affiliated edges
+			EdgeIdType e = rg.addEdge(rg_id1[i], rg_id2[i]);
+			statisticsProvider.notifyNewEdge(e);
     }
 
 	std::cout << "Region graph number of edges: " << rg.edges().size() << std::endl;

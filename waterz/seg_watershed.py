@@ -2,7 +2,7 @@ import numpy as np
 import mahotas
 from scipy import ndimage
 
-def get_seeds(boundary, method='grid', next_id = 1,
+def get_seeds(boundary, method='grid', \
              seed_distance = 10, boundary_thres = 0.5, label_nb = None):
     if method == 'grid':
         height = boundary.shape[0]
@@ -13,9 +13,9 @@ def get_seeds(boundary, method='grid', next_id = 1,
         num_seeds_x = seed_positions[1].size
         num_seeds = num_seeds_x*num_seeds_y
         seeds = np.zeros_like(boundary).astype(np.int32)
-        seeds[seed_positions] = np.arange(next_id, next_id + num_seeds).reshape((num_seeds_y,num_seeds_x))
+        seeds[seed_positions] = np.arange(1, 1 + num_seeds).reshape((num_seeds_y,num_seeds_x))
 
-    if method in ['minima', 'maxima_distance']:
+    elif method in ['minima', 'maxima_distance']:
         if method == 'minima':
             peak = mahotas.regmin(boundary)
         elif method == 'maxima_distance':
@@ -27,20 +27,22 @@ def get_seeds(boundary, method='grid', next_id = 1,
             seeds, num_seeds = mahotas.label(peak)
         else:
             seeds, num_seeds = mahotas.label(peak, label_nb)
-        seeds[seeds > 0] += next_id
 
     return seeds, num_seeds
 
 def watershed(affs, seed_method='maxima_distance', boundary_thres = 0.5, label_nb = None, seg_bg = True):
-    fragments = np.zeros_like(affs[0]).astype(np.uint64)
+    fragments = np.zeros_like(affs[0]).astype(np.uint32)
     depth  = fragments.shape[0]
-    next_id = 1
     # 3D watershed is too slow -> do 2D watershed
+    next_id = np.uint32(0)
     for z in range(depth):
         boundary = 1.0 - 0.5*(affs[1,z].astype(np.float32) + affs[2,z]) / 255.0
-        seeds, num_seeds = get_seeds(boundary, next_id = next_id, method = seed_method, boundary_thres = boundary_thres, label_nb = label_nb)
+        seeds, num_seeds = get_seeds(boundary, method = seed_method, boundary_thres = boundary_thres, label_nb = label_nb)
         fragments[z] = mahotas.cwatershed(boundary, seeds)
+        fragments[z][fragments[z] > 0] += next_id
         next_id += num_seeds
         if seg_bg: # assign bg seg
             fragments[z][(affs[:,z]==0).max(axis=0)] = 0
+
+        print('\tinit:', z, next_id)
     return fragments

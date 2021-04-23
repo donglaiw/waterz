@@ -1,5 +1,5 @@
-#ifndef C_FRONTEND_H
-#define C_FRONTEND_H
+#ifndef C_AGGLOMERATE_H
+#define C_AGGLOMERATE_H
 
 #include <vector>
 
@@ -13,53 +13,14 @@
 #include "backend/VectorQuantileProvider.hpp"
 #include "evaluate.hpp"
 
-typedef uint64_t SegID;
-typedef uint32_t GtID;
-typedef uint8_t AffValue;
-typedef uint8_t ScoreValue;
+#include "frontend_basic.h"
 typedef RegionGraph<SegID> RegionGraphType;
-
 // to be created by __init__.py
 #include <ScoringFunction.h>
 #include <Queue.h>
 
 typedef typename ScoringFunctionType::StatisticsProviderType StatisticsProviderType;
 typedef IterativeRegionMerging<SegID, ScoreValue, QueueType> RegionMergingType;
-
-struct Metrics {
-
-	double voi_split;
-	double voi_merge;
-	double rand_split;
-	double rand_merge;
-};
-
-struct Merge {
-
-	SegID a;
-	SegID b;
-	SegID c;
-	ScoreValue score;
-};
-
-struct ScoredEdge {
-
-	ScoredEdge(SegID u_, SegID v_, ScoreValue score_) :
-		u(u_),
-		v(v_),
-		score(score_) {}
-
-	SegID u;
-	SegID v;
-	ScoreValue score;
-};
-
-
-struct WaterzState {
-
-	int     context;
-	Metrics metrics;
-};
 
 class WaterzContext {
 
@@ -141,7 +102,6 @@ private:
 
 	std::vector<Merge>& _history;
 };
-
 WaterzState initialize(
 		size_t          width,
 		size_t          height,
@@ -152,6 +112,13 @@ WaterzState initialize(
 		AffValue        affThresholdLow  = 1,
 		AffValue        affThresholdHigh = 254,
 		bool            findFragments = true);
+
+WaterzState initializeFromRg(
+		SegID           num_node,
+		SegID           num_edge,
+		SegID*          rg_id1,
+		SegID*          rg_id2,
+		AffValue*       rg_score);
 
 std::vector<Merge> mergeUntil(
 		WaterzState& state,
@@ -168,5 +135,6 @@ std::vector<ScoredEdge> rgFromSeg(
 		const AffValue* affinity_data,
 		SegID*          segmentation_data,
 		std::size_t     rg_opt);
+
 
 #endif
