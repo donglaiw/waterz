@@ -2,6 +2,12 @@ import h5py
 import numpy as np
 import scipy
 
+def mappingToList(mapping):
+    # conver to sparse list for efficient i/o 
+    ind = np.arange(len(mapping)).astype(mapping.dtype)
+    ind = ind[ind!=mapping]
+    return np.hstack([ind.reshape(-1,1), mapping[ind].reshape(-1,1)])
+
 def getScoreFunc(scoreF):
     # aff50_his256
     config = {x[:3]: x[3:] for x in scoreF.split('_')}
