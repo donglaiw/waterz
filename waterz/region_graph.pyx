@@ -5,6 +5,10 @@ cimport numpy as np
 
 def mapping_id(id1, id2):
     mapping = np.arange(max(id1.max(), id2.max()) + 1).astype(id1.dtype)
+    if not id1.flags['C_CONTIGUOUS']:
+        id1 = np.ascontiguousarray(id1)
+    if not id2.flags['C_CONTIGUOUS']:
+        id2 = np.ascontiguousarray(id2)
     __mapping_id(id1, id2, mapping)
     return mapping 
 

@@ -15,10 +15,13 @@ void do_mapping_id(
         if (s1 > s2){
             mapping[id1[i]] = s2;
             mapping[id2[i]] = s2;
+            std::cout<<id1[i]<<","<<id2[i]<<","<<s2<<std::endl;
         } else {
             mapping[id1[i]] = s1;
             mapping[id2[i]] = s1;
+            std::cout<<id1[i]<<","<<id2[i]<<","<<s1<<std::endl;
         }
+
     }
 
     // skip 0th element: bg seg
@@ -27,11 +30,13 @@ void do_mapping_id(
         // root node: mapping to itself
         // is it mapped to the root node
         if (mapping[s1] == s1) continue;
+        std::cout<<"a"<<i<<","<<s1<<std::endl;
 
         s1 = mapping[s1];
         while (mapping[s1] != s1){
             s1 = mapping[s1];
         }
+        std::cout<<"aa"<<i<<","<<s1<<std::endl;
         mapping[i] = s1;
     }
 }
