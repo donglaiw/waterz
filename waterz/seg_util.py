@@ -1,6 +1,7 @@
 import h5py
 import numpy as np
 import scipy
+import sys
 
 def mappingToList(mapping):
     # conver to sparse list for efficient i/o 
@@ -27,6 +28,24 @@ def getScoreFunc(scoreF):
                 return 'One255Minus<MeanMaxKAffinity<RegionGraphType, '+config['max']+', ScoreValue>>'
             else:
                 return 'OneMinus<MeanMaxKAffinity<RegionGraphType, '+config['max']+', ScoreValue>>'
+
+def readh5(filename, datasetname=None):
+    fid = h5py.File(filename,'r')
+
+    if datasetname is None:
+        if sys.version[0]=='2': # py2
+            datasetname = fid.keys()
+        else: # py3
+            datasetname = list(fid)
+    if len(datasetname) == 1:
+        datasetname = datasetname[0]
+    if isinstance(datasetname, (list,)):
+        out=[None]*len(datasetname)
+        for di,d in enumerate(datasetname):
+            out[di] = np.array(fid[d])
+        return out
+    else:
+        return np.array(fid[datasetname])
 
 def writeh5(filename, datasetname, dtarray):                                                         
     fid=h5py.File(filename,'w')

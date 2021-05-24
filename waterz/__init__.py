@@ -1,7 +1,7 @@
 from __future__ import absolute_import
 from .evaluate import evaluate_total_volume, initialize_stats, update_statistics_using_volume, \
     compute_final_metrics
-from .region_graph import mapping_id
+from .region_graph import merge_id
 
 __version__ = '0.8'
 
@@ -261,4 +261,4 @@ def agglomerate(
 from .seg_watershed import watershed
 from .seg_util import create_border_mask, mappingToList
 from .seg_waterz import waterz, getRegionGraph
-from .seg_region_graph import somaBFS
+from .seg_region_graph import somaBFS, branchIoU, branchIoUBFS
