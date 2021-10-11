@@ -3,6 +3,9 @@ import numpy as np
 import scipy
 import sys
 
+def arrToStr(arr,delim=','):
+    return delim.join([str(x) for x in arr])
+
 def mappingToList(mapping):
     # conver to sparse list for efficient i/o 
     ind = np.arange(len(mapping)).astype(mapping.dtype)

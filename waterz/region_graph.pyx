@@ -3,6 +3,34 @@ from libcpp cimport bool
 import numpy as np
 cimport numpy as np
 
+def merge_id_full(id1, id2, uid):
+    id1 = np.array(id1).astype(np.uint32)
+    id2 = np.array(id2).astype(np.uint32)
+    if not id1.flags['C_CONTIGUOUS']:
+        id1 = np.ascontiguousarray(id1)
+    if not id2.flags['C_CONTIGUOUS']:
+        id2 = np.ascontiguousarray(id2)
+    # for non-continuous uid
+    # return the relabel array for all seg id
+    uid = np.array(uid).astype(np.uint32)
+    uid = uid[uid > 0]
+    mapping = np.arange(uid.max() + 1).astype(np.uint32)
+    mapping[uid] = np.arange(1, len(uid) + 1).astype(np.uint32)
+    
+    # merge seg ids
+    mapping2 = np.arange(len(uid) + 1).astype(np.uint32)
+    __merge_id(mapping[id1], mapping[id2], mapping2, 0)
+    # relabel mapping2 result: 1-len(uid) first
+    mapping2_uid = np.unique(mapping2)
+    mapping2_uid = mapping2_uid[mapping2_uid>0]
+    mapping2_rl = np.zeros(len(mapping2), np.uint32)
+    mapping2_rl[mapping2_uid] = np.arange(1, len(mapping2_uid) + 1).astype(np.uint32)
+
+    mapping[:] = 0
+    mapping[uid] = mapping2_rl[mapping2[1:]]
+
+    return mapping
+
 def merge_id(id1, id2, score=None, count=None, id_thres=0, aff_thres=1, count_thres=50, dust_thres = 50):
     # avoid wrong memory access
     if len(id1) != 0:
@@ -13,7 +41,7 @@ def merge_id(id1, id2, score=None, count=None, id_thres=0, aff_thres=1, count_th
         mid = max(id1.max(), id2.max()) + 1
         if count is not None:
             mid = max(mid, len(count))
-        mapping = np.arange(mid).astype(id1.dtype)
+        mapping = np.arange(mid).astype(np.uint32)
     else: # if id is empty, count is not empty
         mapping = np.arange(len(count)).astype(np.uint32)
 

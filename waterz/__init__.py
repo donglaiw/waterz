@@ -1,7 +1,7 @@
 from __future__ import absolute_import
 from .evaluate import evaluate_total_volume, initialize_stats, update_statistics_using_volume, \
     compute_final_metrics
-from .region_graph import merge_id
+from .region_graph import merge_id, merge_id_full
 
 __version__ = '0.8'
 

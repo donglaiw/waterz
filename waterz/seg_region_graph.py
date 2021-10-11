@@ -1,6 +1,6 @@
 import numpy as np
 from .region_graph import merge_id
-from .seg_util import readh5
+from .seg_util import readh5,arrToStr
 
 def findConnectEdge(ii, i0, i1):
     # TODO
@@ -124,6 +124,12 @@ def branchIoU(bbs, sid, rl, count_a, fn_count, fn_bb, fn_iou, chunk_sz = 228, th
                 ids = rl[ids]
                 # not merge to other soma
                 gid += list(ids[ids<m0])
+                # dsp_seg('../seg2d_rg/4106',4106)
+                """
+                if 226096342 in gid:
+                    import pdb; pdb.set_trace()
+                """
+            #print(z)
                 
         """
         if z == 3276:
@@ -140,6 +146,7 @@ def branchIoUBFS(bbs, sid, rl, count_a, fn_count, fn_bb, fn_iou, chunk_sz = 228,
     did = []
     todo = [sid]
     rid = 0
+    output = []
     while len(todo) > 0:
         print('---------')
         print('round %d, #seg=%d' % (rid, len(todo)))
@@ -150,8 +157,13 @@ def branchIoUBFS(bbs, sid, rl, count_a, fn_count, fn_bb, fn_iou, chunk_sz = 228,
             gid = np.in1d(bbs[:,0], gid)
             aa, bb = bbs[gid,0], bbs[gid,-1]
             aa = aa[bb > thd_sz]
-            todo2 += list(aa[np.in1d(aa, did, invert = True)])
+            new_id = list(aa[np.in1d(aa, did, invert = True)])
+            todo2 += new_id 
             print('\t %d-th seg, # children=%d' % (i, len(todo2)))
+            if len(new_id) > 0:
+                output += [str(ii) + ',' + arrToStr(new_id)] 
+            else:
+                output += [str(ii)]
         todo = list(np.unique(todo2))
         rid += 1
-    return np.unique(did)
+    return np.unique(did), output
