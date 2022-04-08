@@ -2602,8 +2602,8 @@ static PyObject *__pyx_pf_6waterz_12region_graph_merge_id_full(CYTHON_UNUSED PyO
  *     __merge_id(mapping[id1], mapping[id2], mapping2, 0)
  *     # relabel mapping2 result: 1-len(uid) first
  *     mapping2_uid = np.unique(mapping2)             # <<<<<<<<<<<<<<
+ *     mapping2_uid = mapping2_uid[mapping2_uid>0]
  *     mapping2_rl = np.zeros(len(mapping2), np.uint32)
- *     mapping2_rl[mapping2_uid] = np.arange(1, len(mapping2_uid) + 1).astype(np.uint32)
  */
   __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 24, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
@@ -2631,21 +2631,35 @@ static PyObject *__pyx_pf_6waterz_12region_graph_merge_id_full(CYTHON_UNUSED PyO
   /* "waterz/region_graph.pyx":25
  *     # relabel mapping2 result: 1-len(uid) first
  *     mapping2_uid = np.unique(mapping2)
+ *     mapping2_uid = mapping2_uid[mapping2_uid>0]             # <<<<<<<<<<<<<<
+ *     mapping2_rl = np.zeros(len(mapping2), np.uint32)
+ *     mapping2_rl[mapping2_uid] = np.arange(1, len(mapping2_uid) + 1).astype(np.uint32)
+ */
+  __pyx_t_4 = PyObject_RichCompare(__pyx_v_mapping2_uid, __pyx_int_0, Py_GT); __Pyx_XGOTREF(__pyx_t_4); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 25, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetItem(__pyx_v_mapping2_uid, __pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 25, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __Pyx_DECREF_SET(__pyx_v_mapping2_uid, __pyx_t_2);
+  __pyx_t_2 = 0;
+
+  /* "waterz/region_graph.pyx":26
+ *     mapping2_uid = np.unique(mapping2)
+ *     mapping2_uid = mapping2_uid[mapping2_uid>0]
  *     mapping2_rl = np.zeros(len(mapping2), np.uint32)             # <<<<<<<<<<<<<<
  *     mapping2_rl[mapping2_uid] = np.arange(1, len(mapping2_uid) + 1).astype(np.uint32)
  * 
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 25, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_zeros); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 25, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 26, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_zeros); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 26, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_9 = PyObject_Length(__pyx_v_mapping2); if (unlikely(__pyx_t_9 == ((Py_ssize_t)-1))) __PYX_ERR(0, 25, __pyx_L1_error)
-  __pyx_t_2 = PyInt_FromSsize_t(__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 25, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 25, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __pyx_t_9 = PyObject_Length(__pyx_v_mapping2); if (unlikely(__pyx_t_9 == ((Py_ssize_t)-1))) __PYX_ERR(0, 26, __pyx_L1_error)
+  __pyx_t_4 = PyInt_FromSsize_t(__pyx_t_9); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 26, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 26, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_uint32); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 25, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_uint32); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 26, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_t_3 = NULL;
@@ -2662,66 +2676,66 @@ static PyObject *__pyx_pf_6waterz_12region_graph_merge_id_full(CYTHON_UNUSED PyO
   }
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_1)) {
-    PyObject *__pyx_temp[3] = {__pyx_t_3, __pyx_t_2, __pyx_t_8};
-    __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 25, __pyx_L1_error)
+    PyObject *__pyx_temp[3] = {__pyx_t_3, __pyx_t_4, __pyx_t_8};
+    __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 26, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __Pyx_GOTREF(__pyx_t_4);
-    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
   } else
   #endif
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_1)) {
-    PyObject *__pyx_temp[3] = {__pyx_t_3, __pyx_t_2, __pyx_t_8};
-    __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 25, __pyx_L1_error)
+    PyObject *__pyx_temp[3] = {__pyx_t_3, __pyx_t_4, __pyx_t_8};
+    __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 26, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __Pyx_GOTREF(__pyx_t_4);
-    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
   } else
   #endif
   {
-    __pyx_t_7 = PyTuple_New(2+__pyx_t_10); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 25, __pyx_L1_error)
+    __pyx_t_7 = PyTuple_New(2+__pyx_t_10); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 26, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     if (__pyx_t_3) {
       __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_3); __pyx_t_3 = NULL;
     }
-    __Pyx_GIVEREF(__pyx_t_2);
-    PyTuple_SET_ITEM(__pyx_t_7, 0+__pyx_t_10, __pyx_t_2);
+    __Pyx_GIVEREF(__pyx_t_4);
+    PyTuple_SET_ITEM(__pyx_t_7, 0+__pyx_t_10, __pyx_t_4);
     __Pyx_GIVEREF(__pyx_t_8);
     PyTuple_SET_ITEM(__pyx_t_7, 1+__pyx_t_10, __pyx_t_8);
-    __pyx_t_2 = 0;
+    __pyx_t_4 = 0;
     __pyx_t_8 = 0;
-    __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_7, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 25, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_7, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 26, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_v_mapping2_rl = __pyx_t_4;
-  __pyx_t_4 = 0;
+  __pyx_v_mapping2_rl = __pyx_t_2;
+  __pyx_t_2 = 0;
 
-  /* "waterz/region_graph.pyx":26
- *     mapping2_uid = np.unique(mapping2)
+  /* "waterz/region_graph.pyx":27
+ *     mapping2_uid = mapping2_uid[mapping2_uid>0]
  *     mapping2_rl = np.zeros(len(mapping2), np.uint32)
  *     mapping2_rl[mapping2_uid] = np.arange(1, len(mapping2_uid) + 1).astype(np.uint32)             # <<<<<<<<<<<<<<
  * 
  *     mapping[:] = 0
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_np); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 26, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_np); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 27, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_arange); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 26, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_arange); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 27, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_9 = PyObject_Length(__pyx_v_mapping2_uid); if (unlikely(__pyx_t_9 == ((Py_ssize_t)-1))) __PYX_ERR(0, 26, __pyx_L1_error)
-  __pyx_t_7 = PyInt_FromSsize_t((__pyx_t_9 + 1)); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 26, __pyx_L1_error)
+  __pyx_t_9 = PyObject_Length(__pyx_v_mapping2_uid); if (unlikely(__pyx_t_9 == ((Py_ssize_t)-1))) __PYX_ERR(0, 27, __pyx_L1_error)
+  __pyx_t_7 = PyInt_FromSsize_t((__pyx_t_9 + 1)); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 27, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_2 = NULL;
+  __pyx_t_4 = NULL;
   __pyx_t_10 = 0;
   if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_8))) {
-    __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_8);
-    if (likely(__pyx_t_2)) {
+    __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_8);
+    if (likely(__pyx_t_4)) {
       PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_8);
-      __Pyx_INCREF(__pyx_t_2);
+      __Pyx_INCREF(__pyx_t_4);
       __Pyx_INCREF(function);
       __Pyx_DECREF_SET(__pyx_t_8, function);
       __pyx_t_10 = 1;
@@ -2729,27 +2743,27 @@ static PyObject *__pyx_pf_6waterz_12region_graph_merge_id_full(CYTHON_UNUSED PyO
   }
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_8)) {
-    PyObject *__pyx_temp[3] = {__pyx_t_2, __pyx_int_1, __pyx_t_7};
-    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_8, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 26, __pyx_L1_error)
-    __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
+    PyObject *__pyx_temp[3] = {__pyx_t_4, __pyx_int_1, __pyx_t_7};
+    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_8, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 27, __pyx_L1_error)
+    __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   } else
   #endif
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_8)) {
-    PyObject *__pyx_temp[3] = {__pyx_t_2, __pyx_int_1, __pyx_t_7};
-    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_8, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 26, __pyx_L1_error)
-    __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
+    PyObject *__pyx_temp[3] = {__pyx_t_4, __pyx_int_1, __pyx_t_7};
+    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_8, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 27, __pyx_L1_error)
+    __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   } else
   #endif
   {
-    __pyx_t_3 = PyTuple_New(2+__pyx_t_10); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 26, __pyx_L1_error)
+    __pyx_t_3 = PyTuple_New(2+__pyx_t_10); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 27, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    if (__pyx_t_2) {
-      __Pyx_GIVEREF(__pyx_t_2); PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_2); __pyx_t_2 = NULL;
+    if (__pyx_t_4) {
+      __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_4); __pyx_t_4 = NULL;
     }
     __Pyx_INCREF(__pyx_int_1);
     __Pyx_GIVEREF(__pyx_int_1);
@@ -2757,17 +2771,17 @@ static PyObject *__pyx_pf_6waterz_12region_graph_merge_id_full(CYTHON_UNUSED PyO
     __Pyx_GIVEREF(__pyx_t_7);
     PyTuple_SET_ITEM(__pyx_t_3, 1+__pyx_t_10, __pyx_t_7);
     __pyx_t_7 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_8, __pyx_t_3, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 26, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_8, __pyx_t_3, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 27, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   }
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-  __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_astype); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 26, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_astype); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 27, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 26, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 27, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_uint32); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 26, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_uint32); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 27, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_t_1 = NULL;
@@ -2780,40 +2794,40 @@ static PyObject *__pyx_pf_6waterz_12region_graph_merge_id_full(CYTHON_UNUSED PyO
       __Pyx_DECREF_SET(__pyx_t_8, function);
     }
   }
-  __pyx_t_4 = (__pyx_t_1) ? __Pyx_PyObject_Call2Args(__pyx_t_8, __pyx_t_1, __pyx_t_3) : __Pyx_PyObject_CallOneArg(__pyx_t_8, __pyx_t_3);
+  __pyx_t_2 = (__pyx_t_1) ? __Pyx_PyObject_Call2Args(__pyx_t_8, __pyx_t_1, __pyx_t_3) : __Pyx_PyObject_CallOneArg(__pyx_t_8, __pyx_t_3);
   __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 26, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
+  if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 27, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-  if (unlikely(PyObject_SetItem(__pyx_v_mapping2_rl, __pyx_v_mapping2_uid, __pyx_t_4) < 0)) __PYX_ERR(0, 26, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  if (unlikely(PyObject_SetItem(__pyx_v_mapping2_rl, __pyx_v_mapping2_uid, __pyx_t_2) < 0)) __PYX_ERR(0, 27, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "waterz/region_graph.pyx":28
+  /* "waterz/region_graph.pyx":29
  *     mapping2_rl[mapping2_uid] = np.arange(1, len(mapping2_uid) + 1).astype(np.uint32)
  * 
  *     mapping[:] = 0             # <<<<<<<<<<<<<<
  *     mapping[uid] = mapping2_rl[mapping2[1:]]
  * 
  */
-  if (__Pyx_PyObject_SetSlice(__pyx_v_mapping, __pyx_int_0, 0, 0, NULL, NULL, &__pyx_slice_, 0, 0, 1) < 0) __PYX_ERR(0, 28, __pyx_L1_error)
+  if (__Pyx_PyObject_SetSlice(__pyx_v_mapping, __pyx_int_0, 0, 0, NULL, NULL, &__pyx_slice_, 0, 0, 1) < 0) __PYX_ERR(0, 29, __pyx_L1_error)
 
-  /* "waterz/region_graph.pyx":29
+  /* "waterz/region_graph.pyx":30
  * 
  *     mapping[:] = 0
  *     mapping[uid] = mapping2_rl[mapping2[1:]]             # <<<<<<<<<<<<<<
  * 
  *     return mapping
  */
-  __pyx_t_4 = __Pyx_PyObject_GetSlice(__pyx_v_mapping2, 1, 0, NULL, NULL, &__pyx_slice__2, 1, 0, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 29, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_8 = __Pyx_PyObject_GetItem(__pyx_v_mapping2_rl, __pyx_t_4); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 29, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetSlice(__pyx_v_mapping2, 1, 0, NULL, NULL, &__pyx_slice__2, 1, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 30, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_8 = __Pyx_PyObject_GetItem(__pyx_v_mapping2_rl, __pyx_t_2); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 30, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (unlikely(PyObject_SetItem(__pyx_v_mapping, __pyx_v_uid, __pyx_t_8) < 0)) __PYX_ERR(0, 29, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  if (unlikely(PyObject_SetItem(__pyx_v_mapping, __pyx_v_uid, __pyx_t_8) < 0)) __PYX_ERR(0, 30, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
 
-  /* "waterz/region_graph.pyx":31
+  /* "waterz/region_graph.pyx":32
  *     mapping[uid] = mapping2_rl[mapping2[1:]]
  * 
  *     return mapping             # <<<<<<<<<<<<<<
@@ -2856,7 +2870,7 @@ static PyObject *__pyx_pf_6waterz_12region_graph_merge_id_full(CYTHON_UNUSED PyO
   return __pyx_r;
 }
 
-/* "waterz/region_graph.pyx":33
+/* "waterz/region_graph.pyx":34
  *     return mapping
  * 
  * def merge_id(id1, id2, score=None, count=None, id_thres=0, aff_thres=1, count_thres=50, dust_thres = 50):             # <<<<<<<<<<<<<<
@@ -2923,7 +2937,7 @@ static PyObject *__pyx_pw_6waterz_12region_graph_3merge_id(PyObject *__pyx_self,
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_id2)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("merge_id", 0, 2, 8, 1); __PYX_ERR(0, 33, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("merge_id", 0, 2, 8, 1); __PYX_ERR(0, 34, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
@@ -2963,7 +2977,7 @@ static PyObject *__pyx_pw_6waterz_12region_graph_3merge_id(PyObject *__pyx_self,
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "merge_id") < 0)) __PYX_ERR(0, 33, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "merge_id") < 0)) __PYX_ERR(0, 34, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -2996,7 +3010,7 @@ static PyObject *__pyx_pw_6waterz_12region_graph_3merge_id(PyObject *__pyx_self,
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("merge_id", 0, 2, 8, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 33, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("merge_id", 0, 2, 8, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 34, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("waterz.region_graph.merge_id", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -3031,44 +3045,44 @@ static PyObject *__pyx_pf_6waterz_12region_graph_2merge_id(CYTHON_UNUSED PyObjec
   __Pyx_INCREF(__pyx_v_id1);
   __Pyx_INCREF(__pyx_v_id2);
 
-  /* "waterz/region_graph.pyx":35
+  /* "waterz/region_graph.pyx":36
  * def merge_id(id1, id2, score=None, count=None, id_thres=0, aff_thres=1, count_thres=50, dust_thres = 50):
  *     # avoid wrong memory access
  *     if len(id1) != 0:             # <<<<<<<<<<<<<<
  *         if not id1.flags['C_CONTIGUOUS']:
  *             id1 = np.ascontiguousarray(id1)
  */
-  __pyx_t_1 = PyObject_Length(__pyx_v_id1); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 35, __pyx_L1_error)
+  __pyx_t_1 = PyObject_Length(__pyx_v_id1); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 36, __pyx_L1_error)
   __pyx_t_2 = ((__pyx_t_1 != 0) != 0);
   if (__pyx_t_2) {
 
-    /* "waterz/region_graph.pyx":36
+    /* "waterz/region_graph.pyx":37
  *     # avoid wrong memory access
  *     if len(id1) != 0:
  *         if not id1.flags['C_CONTIGUOUS']:             # <<<<<<<<<<<<<<
  *             id1 = np.ascontiguousarray(id1)
  *         if not id2.flags['C_CONTIGUOUS']:
  */
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_id1, __pyx_n_s_flags); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 36, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_id1, __pyx_n_s_flags); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 37, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_4 = __Pyx_PyObject_Dict_GetItem(__pyx_t_3, __pyx_n_s_C_CONTIGUOUS); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 36, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_Dict_GetItem(__pyx_t_3, __pyx_n_s_C_CONTIGUOUS); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 37, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 36, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 37, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __pyx_t_5 = ((!__pyx_t_2) != 0);
     if (__pyx_t_5) {
 
-      /* "waterz/region_graph.pyx":37
+      /* "waterz/region_graph.pyx":38
  *     if len(id1) != 0:
  *         if not id1.flags['C_CONTIGUOUS']:
  *             id1 = np.ascontiguousarray(id1)             # <<<<<<<<<<<<<<
  *         if not id2.flags['C_CONTIGUOUS']:
  *             id2 = np.ascontiguousarray(id2)
  */
-      __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 37, __pyx_L1_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 38, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_ascontiguousarray); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 37, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_ascontiguousarray); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 38, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __pyx_t_3 = NULL;
@@ -3083,13 +3097,13 @@ static PyObject *__pyx_pf_6waterz_12region_graph_2merge_id(CYTHON_UNUSED PyObjec
       }
       __pyx_t_4 = (__pyx_t_3) ? __Pyx_PyObject_Call2Args(__pyx_t_6, __pyx_t_3, __pyx_v_id1) : __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_v_id1);
       __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-      if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 37, __pyx_L1_error)
+      if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 38, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       __Pyx_DECREF_SET(__pyx_v_id1, __pyx_t_4);
       __pyx_t_4 = 0;
 
-      /* "waterz/region_graph.pyx":36
+      /* "waterz/region_graph.pyx":37
  *     # avoid wrong memory access
  *     if len(id1) != 0:
  *         if not id1.flags['C_CONTIGUOUS']:             # <<<<<<<<<<<<<<
@@ -3098,33 +3112,33 @@ static PyObject *__pyx_pf_6waterz_12region_graph_2merge_id(CYTHON_UNUSED PyObjec
  */
     }
 
-    /* "waterz/region_graph.pyx":38
+    /* "waterz/region_graph.pyx":39
  *         if not id1.flags['C_CONTIGUOUS']:
  *             id1 = np.ascontiguousarray(id1)
  *         if not id2.flags['C_CONTIGUOUS']:             # <<<<<<<<<<<<<<
  *             id2 = np.ascontiguousarray(id2)
  *         mid = max(id1.max(), id2.max()) + 1
  */
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_id2, __pyx_n_s_flags); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 38, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_id2, __pyx_n_s_flags); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 39, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_6 = __Pyx_PyObject_Dict_GetItem(__pyx_t_4, __pyx_n_s_C_CONTIGUOUS); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 38, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyObject_Dict_GetItem(__pyx_t_4, __pyx_n_s_C_CONTIGUOUS); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 39, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 38, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 39, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __pyx_t_2 = ((!__pyx_t_5) != 0);
     if (__pyx_t_2) {
 
-      /* "waterz/region_graph.pyx":39
+      /* "waterz/region_graph.pyx":40
  *             id1 = np.ascontiguousarray(id1)
  *         if not id2.flags['C_CONTIGUOUS']:
  *             id2 = np.ascontiguousarray(id2)             # <<<<<<<<<<<<<<
  *         mid = max(id1.max(), id2.max()) + 1
  *         if count is not None:
  */
-      __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 39, __pyx_L1_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 40, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_ascontiguousarray); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 39, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_ascontiguousarray); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 40, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       __pyx_t_4 = NULL;
@@ -3139,13 +3153,13 @@ static PyObject *__pyx_pf_6waterz_12region_graph_2merge_id(CYTHON_UNUSED PyObjec
       }
       __pyx_t_6 = (__pyx_t_4) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_4, __pyx_v_id2) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_id2);
       __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-      if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 39, __pyx_L1_error)
+      if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 40, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_DECREF_SET(__pyx_v_id2, __pyx_t_6);
       __pyx_t_6 = 0;
 
-      /* "waterz/region_graph.pyx":38
+      /* "waterz/region_graph.pyx":39
  *         if not id1.flags['C_CONTIGUOUS']:
  *             id1 = np.ascontiguousarray(id1)
  *         if not id2.flags['C_CONTIGUOUS']:             # <<<<<<<<<<<<<<
@@ -3154,14 +3168,14 @@ static PyObject *__pyx_pf_6waterz_12region_graph_2merge_id(CYTHON_UNUSED PyObjec
  */
     }
 
-    /* "waterz/region_graph.pyx":40
+    /* "waterz/region_graph.pyx":41
  *         if not id2.flags['C_CONTIGUOUS']:
  *             id2 = np.ascontiguousarray(id2)
  *         mid = max(id1.max(), id2.max()) + 1             # <<<<<<<<<<<<<<
  *         if count is not None:
  *             mid = max(mid, len(count))
  */
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_id2, __pyx_n_s_max); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 40, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_id2, __pyx_n_s_max); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 41, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __pyx_t_4 = NULL;
     if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
@@ -3175,10 +3189,10 @@ static PyObject *__pyx_pf_6waterz_12region_graph_2merge_id(CYTHON_UNUSED PyObjec
     }
     __pyx_t_6 = (__pyx_t_4) ? __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4) : __Pyx_PyObject_CallNoArg(__pyx_t_3);
     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-    if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 40, __pyx_L1_error)
+    if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 41, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_id1, __pyx_n_s_max); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 40, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_id1, __pyx_n_s_max); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 41, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __pyx_t_7 = NULL;
     if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_4))) {
@@ -3192,11 +3206,11 @@ static PyObject *__pyx_pf_6waterz_12region_graph_2merge_id(CYTHON_UNUSED PyObjec
     }
     __pyx_t_3 = (__pyx_t_7) ? __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_7) : __Pyx_PyObject_CallNoArg(__pyx_t_4);
     __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
-    if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 40, __pyx_L1_error)
+    if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 41, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_7 = PyObject_RichCompare(__pyx_t_6, __pyx_t_3, Py_GT); __Pyx_XGOTREF(__pyx_t_7); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 40, __pyx_L1_error)
-    __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_7); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 40, __pyx_L1_error)
+    __pyx_t_7 = PyObject_RichCompare(__pyx_t_6, __pyx_t_3, Py_GT); __Pyx_XGOTREF(__pyx_t_7); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 41, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_7); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 41, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
     if (__pyx_t_2) {
       __Pyx_INCREF(__pyx_t_6);
@@ -3207,13 +3221,13 @@ static PyObject *__pyx_pf_6waterz_12region_graph_2merge_id(CYTHON_UNUSED PyObjec
     }
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    __pyx_t_6 = __Pyx_PyInt_AddObjC(__pyx_t_4, __pyx_int_1, 1, 0, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 40, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyInt_AddObjC(__pyx_t_4, __pyx_int_1, 1, 0, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 41, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __pyx_v_mid = __pyx_t_6;
     __pyx_t_6 = 0;
 
-    /* "waterz/region_graph.pyx":41
+    /* "waterz/region_graph.pyx":42
  *             id2 = np.ascontiguousarray(id2)
  *         mid = max(id1.max(), id2.max()) + 1
  *         if count is not None:             # <<<<<<<<<<<<<<
@@ -3224,24 +3238,24 @@ static PyObject *__pyx_pf_6waterz_12region_graph_2merge_id(CYTHON_UNUSED PyObjec
     __pyx_t_5 = (__pyx_t_2 != 0);
     if (__pyx_t_5) {
 
-      /* "waterz/region_graph.pyx":42
+      /* "waterz/region_graph.pyx":43
  *         mid = max(id1.max(), id2.max()) + 1
  *         if count is not None:
  *             mid = max(mid, len(count))             # <<<<<<<<<<<<<<
  *         mapping = np.arange(mid).astype(np.uint32)
  *     else: # if id is empty, count is not empty
  */
-      __pyx_t_1 = PyObject_Length(__pyx_v_count); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 42, __pyx_L1_error)
+      __pyx_t_1 = PyObject_Length(__pyx_v_count); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 43, __pyx_L1_error)
       __Pyx_INCREF(__pyx_v_mid);
       __pyx_t_6 = __pyx_v_mid;
-      __pyx_t_3 = PyInt_FromSsize_t(__pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 42, __pyx_L1_error)
+      __pyx_t_3 = PyInt_FromSsize_t(__pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 43, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_7 = PyObject_RichCompare(__pyx_t_3, __pyx_t_6, Py_GT); __Pyx_XGOTREF(__pyx_t_7); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 42, __pyx_L1_error)
+      __pyx_t_7 = PyObject_RichCompare(__pyx_t_3, __pyx_t_6, Py_GT); __Pyx_XGOTREF(__pyx_t_7); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 43, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_7); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 42, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_7); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 43, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
       if (__pyx_t_5) {
-        __pyx_t_7 = PyInt_FromSsize_t(__pyx_t_1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 42, __pyx_L1_error)
+        __pyx_t_7 = PyInt_FromSsize_t(__pyx_t_1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 43, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_7);
         __pyx_t_4 = __pyx_t_7;
         __pyx_t_7 = 0;
@@ -3256,7 +3270,7 @@ static PyObject *__pyx_pf_6waterz_12region_graph_2merge_id(CYTHON_UNUSED PyObjec
       __Pyx_DECREF_SET(__pyx_v_mid, __pyx_t_6);
       __pyx_t_6 = 0;
 
-      /* "waterz/region_graph.pyx":41
+      /* "waterz/region_graph.pyx":42
  *             id2 = np.ascontiguousarray(id2)
  *         mid = max(id1.max(), id2.max()) + 1
  *         if count is not None:             # <<<<<<<<<<<<<<
@@ -3265,16 +3279,16 @@ static PyObject *__pyx_pf_6waterz_12region_graph_2merge_id(CYTHON_UNUSED PyObjec
  */
     }
 
-    /* "waterz/region_graph.pyx":43
+    /* "waterz/region_graph.pyx":44
  *         if count is not None:
  *             mid = max(mid, len(count))
  *         mapping = np.arange(mid).astype(np.uint32)             # <<<<<<<<<<<<<<
  *     else: # if id is empty, count is not empty
  *         mapping = np.arange(len(count)).astype(np.uint32)
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_np); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 43, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_np); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 44, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_arange); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 43, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_arange); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 44, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
     __pyx_t_7 = NULL;
@@ -3289,15 +3303,15 @@ static PyObject *__pyx_pf_6waterz_12region_graph_2merge_id(CYTHON_UNUSED PyObjec
     }
     __pyx_t_4 = (__pyx_t_7) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_7, __pyx_v_mid) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_mid);
     __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
-    if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 43, __pyx_L1_error)
+    if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 44, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_astype); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 43, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_astype); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 44, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 43, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 44, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_uint32); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 43, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_uint32); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 44, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __pyx_t_4 = NULL;
@@ -3313,13 +3327,13 @@ static PyObject *__pyx_pf_6waterz_12region_graph_2merge_id(CYTHON_UNUSED PyObjec
     __pyx_t_6 = (__pyx_t_4) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_4, __pyx_t_7) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_7);
     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-    if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 43, __pyx_L1_error)
+    if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 44, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __pyx_v_mapping = __pyx_t_6;
     __pyx_t_6 = 0;
 
-    /* "waterz/region_graph.pyx":35
+    /* "waterz/region_graph.pyx":36
  * def merge_id(id1, id2, score=None, count=None, id_thres=0, aff_thres=1, count_thres=50, dust_thres = 50):
  *     # avoid wrong memory access
  *     if len(id1) != 0:             # <<<<<<<<<<<<<<
@@ -3329,7 +3343,7 @@ static PyObject *__pyx_pf_6waterz_12region_graph_2merge_id(CYTHON_UNUSED PyObjec
     goto __pyx_L3;
   }
 
-  /* "waterz/region_graph.pyx":45
+  /* "waterz/region_graph.pyx":46
  *         mapping = np.arange(mid).astype(np.uint32)
  *     else: # if id is empty, count is not empty
  *         mapping = np.arange(len(count)).astype(np.uint32)             # <<<<<<<<<<<<<<
@@ -3337,13 +3351,13 @@ static PyObject *__pyx_pf_6waterz_12region_graph_2merge_id(CYTHON_UNUSED PyObjec
  *     if len(id1) == 0:
  */
   /*else*/ {
-    __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_np); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 45, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_np); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 46, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_arange); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 45, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_arange); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 46, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-    __pyx_t_1 = PyObject_Length(__pyx_v_count); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 45, __pyx_L1_error)
-    __pyx_t_7 = PyInt_FromSsize_t(__pyx_t_1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 45, __pyx_L1_error)
+    __pyx_t_1 = PyObject_Length(__pyx_v_count); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 46, __pyx_L1_error)
+    __pyx_t_7 = PyInt_FromSsize_t(__pyx_t_1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 46, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     __pyx_t_8 = NULL;
     if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_4))) {
@@ -3358,15 +3372,15 @@ static PyObject *__pyx_pf_6waterz_12region_graph_2merge_id(CYTHON_UNUSED PyObjec
     __pyx_t_3 = (__pyx_t_8) ? __Pyx_PyObject_Call2Args(__pyx_t_4, __pyx_t_8, __pyx_t_7) : __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_7);
     __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-    if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 45, __pyx_L1_error)
+    if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 46, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_astype); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 45, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_astype); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 46, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 45, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 46, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_uint32); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 45, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_uint32); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 46, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __pyx_t_3 = NULL;
@@ -3382,7 +3396,7 @@ static PyObject *__pyx_pf_6waterz_12region_graph_2merge_id(CYTHON_UNUSED PyObjec
     __pyx_t_6 = (__pyx_t_3) ? __Pyx_PyObject_Call2Args(__pyx_t_4, __pyx_t_3, __pyx_t_7) : __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_7);
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-    if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 45, __pyx_L1_error)
+    if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 46, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __pyx_v_mapping = __pyx_t_6;
@@ -3390,25 +3404,25 @@ static PyObject *__pyx_pf_6waterz_12region_graph_2merge_id(CYTHON_UNUSED PyObjec
   }
   __pyx_L3:;
 
-  /* "waterz/region_graph.pyx":47
+  /* "waterz/region_graph.pyx":48
  *         mapping = np.arange(len(count)).astype(np.uint32)
  * 
  *     if len(id1) == 0:             # <<<<<<<<<<<<<<
  *         __remove_small(mapping, count, dust_thres)
  *     elif (score is None) and (count is None):
  */
-  __pyx_t_1 = PyObject_Length(__pyx_v_id1); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 47, __pyx_L1_error)
+  __pyx_t_1 = PyObject_Length(__pyx_v_id1); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 48, __pyx_L1_error)
   __pyx_t_5 = ((__pyx_t_1 == 0) != 0);
   if (__pyx_t_5) {
 
-    /* "waterz/region_graph.pyx":48
+    /* "waterz/region_graph.pyx":49
  * 
  *     if len(id1) == 0:
  *         __remove_small(mapping, count, dust_thres)             # <<<<<<<<<<<<<<
  *     elif (score is None) and (count is None):
  *         # merge by id
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_remove_small); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 48, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_remove_small); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 49, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __pyx_t_7 = NULL;
     __pyx_t_9 = 0;
@@ -3425,7 +3439,7 @@ static PyObject *__pyx_pf_6waterz_12region_graph_2merge_id(CYTHON_UNUSED PyObjec
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_4)) {
       PyObject *__pyx_temp[4] = {__pyx_t_7, __pyx_v_mapping, __pyx_v_count, __pyx_v_dust_thres};
-      __pyx_t_6 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 48, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 49, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
       __Pyx_GOTREF(__pyx_t_6);
     } else
@@ -3433,13 +3447,13 @@ static PyObject *__pyx_pf_6waterz_12region_graph_2merge_id(CYTHON_UNUSED PyObjec
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_4)) {
       PyObject *__pyx_temp[4] = {__pyx_t_7, __pyx_v_mapping, __pyx_v_count, __pyx_v_dust_thres};
-      __pyx_t_6 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 48, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 49, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
       __Pyx_GOTREF(__pyx_t_6);
     } else
     #endif
     {
-      __pyx_t_3 = PyTuple_New(3+__pyx_t_9); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 48, __pyx_L1_error)
+      __pyx_t_3 = PyTuple_New(3+__pyx_t_9); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 49, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       if (__pyx_t_7) {
         __Pyx_GIVEREF(__pyx_t_7); PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_7); __pyx_t_7 = NULL;
@@ -3453,14 +3467,14 @@ static PyObject *__pyx_pf_6waterz_12region_graph_2merge_id(CYTHON_UNUSED PyObjec
       __Pyx_INCREF(__pyx_v_dust_thres);
       __Pyx_GIVEREF(__pyx_v_dust_thres);
       PyTuple_SET_ITEM(__pyx_t_3, 2+__pyx_t_9, __pyx_v_dust_thres);
-      __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_3, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 48, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_3, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 49, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     }
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-    /* "waterz/region_graph.pyx":47
+    /* "waterz/region_graph.pyx":48
  *         mapping = np.arange(len(count)).astype(np.uint32)
  * 
  *     if len(id1) == 0:             # <<<<<<<<<<<<<<
@@ -3470,7 +3484,7 @@ static PyObject *__pyx_pf_6waterz_12region_graph_2merge_id(CYTHON_UNUSED PyObjec
     goto __pyx_L7;
   }
 
-  /* "waterz/region_graph.pyx":49
+  /* "waterz/region_graph.pyx":50
  *     if len(id1) == 0:
  *         __remove_small(mapping, count, dust_thres)
  *     elif (score is None) and (count is None):             # <<<<<<<<<<<<<<
@@ -3490,14 +3504,14 @@ static PyObject *__pyx_pf_6waterz_12region_graph_2merge_id(CYTHON_UNUSED PyObjec
   __pyx_L8_bool_binop_done:;
   if (__pyx_t_5) {
 
-    /* "waterz/region_graph.pyx":51
+    /* "waterz/region_graph.pyx":52
  *     elif (score is None) and (count is None):
  *         # merge by id
  *         __merge_id(id1, id2, mapping, id_thres)             # <<<<<<<<<<<<<<
  *     elif (score is not None) and (count is None):
  *         # merge by id and aff
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_merge_id); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 51, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_merge_id); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 52, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __pyx_t_3 = NULL;
     __pyx_t_9 = 0;
@@ -3514,7 +3528,7 @@ static PyObject *__pyx_pf_6waterz_12region_graph_2merge_id(CYTHON_UNUSED PyObjec
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_4)) {
       PyObject *__pyx_temp[5] = {__pyx_t_3, __pyx_v_id1, __pyx_v_id2, __pyx_v_mapping, __pyx_v_id_thres};
-      __pyx_t_6 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_9, 4+__pyx_t_9); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 51, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_9, 4+__pyx_t_9); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 52, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_GOTREF(__pyx_t_6);
     } else
@@ -3522,13 +3536,13 @@ static PyObject *__pyx_pf_6waterz_12region_graph_2merge_id(CYTHON_UNUSED PyObjec
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_4)) {
       PyObject *__pyx_temp[5] = {__pyx_t_3, __pyx_v_id1, __pyx_v_id2, __pyx_v_mapping, __pyx_v_id_thres};
-      __pyx_t_6 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_9, 4+__pyx_t_9); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 51, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_9, 4+__pyx_t_9); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 52, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_GOTREF(__pyx_t_6);
     } else
     #endif
     {
-      __pyx_t_7 = PyTuple_New(4+__pyx_t_9); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 51, __pyx_L1_error)
+      __pyx_t_7 = PyTuple_New(4+__pyx_t_9); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 52, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
       if (__pyx_t_3) {
         __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_3); __pyx_t_3 = NULL;
@@ -3545,14 +3559,14 @@ static PyObject *__pyx_pf_6waterz_12region_graph_2merge_id(CYTHON_UNUSED PyObjec
       __Pyx_INCREF(__pyx_v_id_thres);
       __Pyx_GIVEREF(__pyx_v_id_thres);
       PyTuple_SET_ITEM(__pyx_t_7, 3+__pyx_t_9, __pyx_v_id_thres);
-      __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_7, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 51, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_7, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 52, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
     }
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-    /* "waterz/region_graph.pyx":49
+    /* "waterz/region_graph.pyx":50
  *     if len(id1) == 0:
  *         __remove_small(mapping, count, dust_thres)
  *     elif (score is None) and (count is None):             # <<<<<<<<<<<<<<
@@ -3562,7 +3576,7 @@ static PyObject *__pyx_pf_6waterz_12region_graph_2merge_id(CYTHON_UNUSED PyObjec
     goto __pyx_L7;
   }
 
-  /* "waterz/region_graph.pyx":52
+  /* "waterz/region_graph.pyx":53
  *         # merge by id
  *         __merge_id(id1, id2, mapping, id_thres)
  *     elif (score is not None) and (count is None):             # <<<<<<<<<<<<<<
@@ -3582,14 +3596,14 @@ static PyObject *__pyx_pf_6waterz_12region_graph_2merge_id(CYTHON_UNUSED PyObjec
   __pyx_L10_bool_binop_done:;
   if (__pyx_t_5) {
 
-    /* "waterz/region_graph.pyx":54
+    /* "waterz/region_graph.pyx":55
  *     elif (score is not None) and (count is None):
  *         # merge by id and aff
  *         __merge_id_byAff(id1, id2, mapping, score, id_thres, aff_thres)             # <<<<<<<<<<<<<<
  *     elif (score is None) and (count is not None):
  *         # merge by id and aff
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_merge_id_byAff); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 54, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_merge_id_byAff); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 55, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __pyx_t_7 = NULL;
     __pyx_t_9 = 0;
@@ -3606,7 +3620,7 @@ static PyObject *__pyx_pf_6waterz_12region_graph_2merge_id(CYTHON_UNUSED PyObjec
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_4)) {
       PyObject *__pyx_temp[7] = {__pyx_t_7, __pyx_v_id1, __pyx_v_id2, __pyx_v_mapping, __pyx_v_score, __pyx_v_id_thres, __pyx_v_aff_thres};
-      __pyx_t_6 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_9, 6+__pyx_t_9); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 54, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_9, 6+__pyx_t_9); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 55, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
       __Pyx_GOTREF(__pyx_t_6);
     } else
@@ -3614,13 +3628,13 @@ static PyObject *__pyx_pf_6waterz_12region_graph_2merge_id(CYTHON_UNUSED PyObjec
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_4)) {
       PyObject *__pyx_temp[7] = {__pyx_t_7, __pyx_v_id1, __pyx_v_id2, __pyx_v_mapping, __pyx_v_score, __pyx_v_id_thres, __pyx_v_aff_thres};
-      __pyx_t_6 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_9, 6+__pyx_t_9); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 54, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_9, 6+__pyx_t_9); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 55, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
       __Pyx_GOTREF(__pyx_t_6);
     } else
     #endif
     {
-      __pyx_t_3 = PyTuple_New(6+__pyx_t_9); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 54, __pyx_L1_error)
+      __pyx_t_3 = PyTuple_New(6+__pyx_t_9); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 55, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       if (__pyx_t_7) {
         __Pyx_GIVEREF(__pyx_t_7); PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_7); __pyx_t_7 = NULL;
@@ -3643,14 +3657,14 @@ static PyObject *__pyx_pf_6waterz_12region_graph_2merge_id(CYTHON_UNUSED PyObjec
       __Pyx_INCREF(__pyx_v_aff_thres);
       __Pyx_GIVEREF(__pyx_v_aff_thres);
       PyTuple_SET_ITEM(__pyx_t_3, 5+__pyx_t_9, __pyx_v_aff_thres);
-      __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_3, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 54, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_3, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 55, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     }
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-    /* "waterz/region_graph.pyx":52
+    /* "waterz/region_graph.pyx":53
  *         # merge by id
  *         __merge_id(id1, id2, mapping, id_thres)
  *     elif (score is not None) and (count is None):             # <<<<<<<<<<<<<<
@@ -3660,7 +3674,7 @@ static PyObject *__pyx_pf_6waterz_12region_graph_2merge_id(CYTHON_UNUSED PyObjec
     goto __pyx_L7;
   }
 
-  /* "waterz/region_graph.pyx":55
+  /* "waterz/region_graph.pyx":56
  *         # merge by id and aff
  *         __merge_id_byAff(id1, id2, mapping, score, id_thres, aff_thres)
  *     elif (score is None) and (count is not None):             # <<<<<<<<<<<<<<
@@ -3680,14 +3694,14 @@ static PyObject *__pyx_pf_6waterz_12region_graph_2merge_id(CYTHON_UNUSED PyObjec
   __pyx_L12_bool_binop_done:;
   if (__pyx_t_5) {
 
-    /* "waterz/region_graph.pyx":57
+    /* "waterz/region_graph.pyx":58
  *     elif (score is None) and (count is not None):
  *         # merge by id and aff
  *         __merge_id_byCount(id1, id2, mapping, count, id_thres, count_thres, dust_thres)             # <<<<<<<<<<<<<<
  *     elif (score is not None) and (count is not None):
  *         # merge by id, aff and count
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_merge_id_byCount); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 57, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_merge_id_byCount); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 58, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __pyx_t_3 = NULL;
     __pyx_t_9 = 0;
@@ -3704,7 +3718,7 @@ static PyObject *__pyx_pf_6waterz_12region_graph_2merge_id(CYTHON_UNUSED PyObjec
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_4)) {
       PyObject *__pyx_temp[8] = {__pyx_t_3, __pyx_v_id1, __pyx_v_id2, __pyx_v_mapping, __pyx_v_count, __pyx_v_id_thres, __pyx_v_count_thres, __pyx_v_dust_thres};
-      __pyx_t_6 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_9, 7+__pyx_t_9); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 57, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_9, 7+__pyx_t_9); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 58, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_GOTREF(__pyx_t_6);
     } else
@@ -3712,13 +3726,13 @@ static PyObject *__pyx_pf_6waterz_12region_graph_2merge_id(CYTHON_UNUSED PyObjec
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_4)) {
       PyObject *__pyx_temp[8] = {__pyx_t_3, __pyx_v_id1, __pyx_v_id2, __pyx_v_mapping, __pyx_v_count, __pyx_v_id_thres, __pyx_v_count_thres, __pyx_v_dust_thres};
-      __pyx_t_6 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_9, 7+__pyx_t_9); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 57, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_9, 7+__pyx_t_9); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 58, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_GOTREF(__pyx_t_6);
     } else
     #endif
     {
-      __pyx_t_7 = PyTuple_New(7+__pyx_t_9); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 57, __pyx_L1_error)
+      __pyx_t_7 = PyTuple_New(7+__pyx_t_9); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 58, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
       if (__pyx_t_3) {
         __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_3); __pyx_t_3 = NULL;
@@ -3744,14 +3758,14 @@ static PyObject *__pyx_pf_6waterz_12region_graph_2merge_id(CYTHON_UNUSED PyObjec
       __Pyx_INCREF(__pyx_v_dust_thres);
       __Pyx_GIVEREF(__pyx_v_dust_thres);
       PyTuple_SET_ITEM(__pyx_t_7, 6+__pyx_t_9, __pyx_v_dust_thres);
-      __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_7, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 57, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_7, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 58, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
     }
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-    /* "waterz/region_graph.pyx":55
+    /* "waterz/region_graph.pyx":56
  *         # merge by id and aff
  *         __merge_id_byAff(id1, id2, mapping, score, id_thres, aff_thres)
  *     elif (score is None) and (count is not None):             # <<<<<<<<<<<<<<
@@ -3761,7 +3775,7 @@ static PyObject *__pyx_pf_6waterz_12region_graph_2merge_id(CYTHON_UNUSED PyObjec
     goto __pyx_L7;
   }
 
-  /* "waterz/region_graph.pyx":58
+  /* "waterz/region_graph.pyx":59
  *         # merge by id and aff
  *         __merge_id_byCount(id1, id2, mapping, count, id_thres, count_thres, dust_thres)
  *     elif (score is not None) and (count is not None):             # <<<<<<<<<<<<<<
@@ -3781,14 +3795,14 @@ static PyObject *__pyx_pf_6waterz_12region_graph_2merge_id(CYTHON_UNUSED PyObjec
   __pyx_L14_bool_binop_done:;
   if (__pyx_t_5) {
 
-    /* "waterz/region_graph.pyx":60
+    /* "waterz/region_graph.pyx":61
  *     elif (score is not None) and (count is not None):
  *         # merge by id, aff and count
  *         __merge_id_byAffCount(id1, id2, mapping, score, count, id_thres, aff_thres, count_thres, dust_thres)             # <<<<<<<<<<<<<<
  *     return mapping
  * 
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_merge_id_byAffCount); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 60, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_merge_id_byAffCount); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 61, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __pyx_t_7 = NULL;
     __pyx_t_9 = 0;
@@ -3805,7 +3819,7 @@ static PyObject *__pyx_pf_6waterz_12region_graph_2merge_id(CYTHON_UNUSED PyObjec
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_4)) {
       PyObject *__pyx_temp[10] = {__pyx_t_7, __pyx_v_id1, __pyx_v_id2, __pyx_v_mapping, __pyx_v_score, __pyx_v_count, __pyx_v_id_thres, __pyx_v_aff_thres, __pyx_v_count_thres, __pyx_v_dust_thres};
-      __pyx_t_6 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_9, 9+__pyx_t_9); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 60, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_9, 9+__pyx_t_9); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 61, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
       __Pyx_GOTREF(__pyx_t_6);
     } else
@@ -3813,13 +3827,13 @@ static PyObject *__pyx_pf_6waterz_12region_graph_2merge_id(CYTHON_UNUSED PyObjec
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_4)) {
       PyObject *__pyx_temp[10] = {__pyx_t_7, __pyx_v_id1, __pyx_v_id2, __pyx_v_mapping, __pyx_v_score, __pyx_v_count, __pyx_v_id_thres, __pyx_v_aff_thres, __pyx_v_count_thres, __pyx_v_dust_thres};
-      __pyx_t_6 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_9, 9+__pyx_t_9); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 60, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_9, 9+__pyx_t_9); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 61, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
       __Pyx_GOTREF(__pyx_t_6);
     } else
     #endif
     {
-      __pyx_t_3 = PyTuple_New(9+__pyx_t_9); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 60, __pyx_L1_error)
+      __pyx_t_3 = PyTuple_New(9+__pyx_t_9); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 61, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       if (__pyx_t_7) {
         __Pyx_GIVEREF(__pyx_t_7); PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_7); __pyx_t_7 = NULL;
@@ -3851,14 +3865,14 @@ static PyObject *__pyx_pf_6waterz_12region_graph_2merge_id(CYTHON_UNUSED PyObjec
       __Pyx_INCREF(__pyx_v_dust_thres);
       __Pyx_GIVEREF(__pyx_v_dust_thres);
       PyTuple_SET_ITEM(__pyx_t_3, 8+__pyx_t_9, __pyx_v_dust_thres);
-      __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_3, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 60, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_3, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 61, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     }
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-    /* "waterz/region_graph.pyx":58
+    /* "waterz/region_graph.pyx":59
  *         # merge by id and aff
  *         __merge_id_byCount(id1, id2, mapping, count, id_thres, count_thres, dust_thres)
  *     elif (score is not None) and (count is not None):             # <<<<<<<<<<<<<<
@@ -3868,7 +3882,7 @@ static PyObject *__pyx_pf_6waterz_12region_graph_2merge_id(CYTHON_UNUSED PyObjec
   }
   __pyx_L7:;
 
-  /* "waterz/region_graph.pyx":61
+  /* "waterz/region_graph.pyx":62
  *         # merge by id, aff and count
  *         __merge_id_byAffCount(id1, id2, mapping, score, count, id_thres, aff_thres, count_thres, dust_thres)
  *     return mapping             # <<<<<<<<<<<<<<
@@ -3880,7 +3894,7 @@ static PyObject *__pyx_pf_6waterz_12region_graph_2merge_id(CYTHON_UNUSED PyObjec
   __pyx_r = __pyx_v_mapping;
   goto __pyx_L0;
 
-  /* "waterz/region_graph.pyx":33
+  /* "waterz/region_graph.pyx":34
  *     return mapping
  * 
  * def merge_id(id1, id2, score=None, count=None, id_thres=0, aff_thres=1, count_thres=50, dust_thres = 50):             # <<<<<<<<<<<<<<
@@ -3907,7 +3921,7 @@ static PyObject *__pyx_pf_6waterz_12region_graph_2merge_id(CYTHON_UNUSED PyObjec
   return __pyx_r;
 }
 
-/* "waterz/region_graph.pyx":63
+/* "waterz/region_graph.pyx":64
  *     return mapping
  * 
  * def __remove_small(np.ndarray[np.uint32_t, ndim=1] mapping,             # <<<<<<<<<<<<<<
@@ -3953,17 +3967,17 @@ static PyObject *__pyx_pw_6waterz_12region_graph_5__remove_small(PyObject *__pyx
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_count)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__remove_small", 1, 3, 3, 1); __PYX_ERR(0, 63, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__remove_small", 1, 3, 3, 1); __PYX_ERR(0, 64, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_dust_thres)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__remove_small", 1, 3, 3, 2); __PYX_ERR(0, 63, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__remove_small", 1, 3, 3, 2); __PYX_ERR(0, 64, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__remove_small") < 0)) __PYX_ERR(0, 63, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__remove_small") < 0)) __PYX_ERR(0, 64, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 3) {
       goto __pyx_L5_argtuple_error;
@@ -3978,14 +3992,14 @@ static PyObject *__pyx_pw_6waterz_12region_graph_5__remove_small(PyObject *__pyx
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__remove_small", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 63, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__remove_small", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 64, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("waterz.region_graph.__remove_small", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_mapping), __pyx_ptype_5numpy_ndarray, 1, "mapping", 0))) __PYX_ERR(0, 63, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_count), __pyx_ptype_5numpy_ndarray, 1, "count", 0))) __PYX_ERR(0, 64, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_mapping), __pyx_ptype_5numpy_ndarray, 1, "mapping", 0))) __PYX_ERR(0, 64, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_count), __pyx_ptype_5numpy_ndarray, 1, "count", 0))) __PYX_ERR(0, 65, __pyx_L1_error)
   __pyx_r = __pyx_pf_6waterz_12region_graph_4__remove_small(__pyx_self, __pyx_v_mapping, __pyx_v_count, __pyx_v_dust_thres);
 
   /* function exit code */
@@ -4024,16 +4038,16 @@ static PyObject *__pyx_pf_6waterz_12region_graph_4__remove_small(CYTHON_UNUSED P
   __pyx_pybuffernd_count.rcbuffer = &__pyx_pybuffer_count;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_mapping.rcbuffer->pybuffer, (PyObject*)__pyx_v_mapping, &__Pyx_TypeInfo_nn___pyx_t_5numpy_uint32_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 63, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_mapping.rcbuffer->pybuffer, (PyObject*)__pyx_v_mapping, &__Pyx_TypeInfo_nn___pyx_t_5numpy_uint32_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 64, __pyx_L1_error)
   }
   __pyx_pybuffernd_mapping.diminfo[0].strides = __pyx_pybuffernd_mapping.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_mapping.diminfo[0].shape = __pyx_pybuffernd_mapping.rcbuffer->pybuffer.shape[0];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_count.rcbuffer->pybuffer, (PyObject*)__pyx_v_count, &__Pyx_TypeInfo_nn___pyx_t_5numpy_uint32_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 63, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_count.rcbuffer->pybuffer, (PyObject*)__pyx_v_count, &__Pyx_TypeInfo_nn___pyx_t_5numpy_uint32_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 64, __pyx_L1_error)
   }
   __pyx_pybuffernd_count.diminfo[0].strides = __pyx_pybuffernd_count.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_count.diminfo[0].shape = __pyx_pybuffernd_count.rcbuffer->pybuffer.shape[0];
 
-  /* "waterz/region_graph.pyx":69
+  /* "waterz/region_graph.pyx":70
  *     cdef uint32_t* count_data;
  * 
  *     mapping_data = &mapping[0];             # <<<<<<<<<<<<<<
@@ -4048,11 +4062,11 @@ static PyObject *__pyx_pf_6waterz_12region_graph_4__remove_small(CYTHON_UNUSED P
   } else if (unlikely(__pyx_t_1 >= __pyx_pybuffernd_mapping.diminfo[0].shape)) __pyx_t_2 = 0;
   if (unlikely(__pyx_t_2 != -1)) {
     __Pyx_RaiseBufferIndexError(__pyx_t_2);
-    __PYX_ERR(0, 69, __pyx_L1_error)
+    __PYX_ERR(0, 70, __pyx_L1_error)
   }
   __pyx_v_mapping_data = (&(*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_uint32_t *, __pyx_pybuffernd_mapping.rcbuffer->pybuffer.buf, __pyx_t_1, __pyx_pybuffernd_mapping.diminfo[0].strides)));
 
-  /* "waterz/region_graph.pyx":70
+  /* "waterz/region_graph.pyx":71
  * 
  *     mapping_data = &mapping[0];
  *     count_data = &count[0];             # <<<<<<<<<<<<<<
@@ -4067,22 +4081,22 @@ static PyObject *__pyx_pf_6waterz_12region_graph_4__remove_small(CYTHON_UNUSED P
   } else if (unlikely(__pyx_t_1 >= __pyx_pybuffernd_count.diminfo[0].shape)) __pyx_t_2 = 0;
   if (unlikely(__pyx_t_2 != -1)) {
     __Pyx_RaiseBufferIndexError(__pyx_t_2);
-    __PYX_ERR(0, 70, __pyx_L1_error)
+    __PYX_ERR(0, 71, __pyx_L1_error)
   }
   __pyx_v_count_data = (&(*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_uint32_t *, __pyx_pybuffernd_count.rcbuffer->pybuffer.buf, __pyx_t_1, __pyx_pybuffernd_count.diminfo[0].strides)));
 
-  /* "waterz/region_graph.pyx":71
+  /* "waterz/region_graph.pyx":72
  *     mapping_data = &mapping[0];
  *     count_data = &count[0];
  *     cpp_remove_small(mapping_data, count_data, len(mapping), dust_thres)             # <<<<<<<<<<<<<<
  * 
  * def __merge_id_byAff(np.ndarray[np.uint32_t, ndim=1] id1,
  */
-  __pyx_t_3 = PyObject_Length(((PyObject *)__pyx_v_mapping)); if (unlikely(__pyx_t_3 == ((Py_ssize_t)-1))) __PYX_ERR(0, 71, __pyx_L1_error)
-  __pyx_t_4 = __Pyx_PyInt_As_uint32_t(__pyx_v_dust_thres); if (unlikely((__pyx_t_4 == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 71, __pyx_L1_error)
+  __pyx_t_3 = PyObject_Length(((PyObject *)__pyx_v_mapping)); if (unlikely(__pyx_t_3 == ((Py_ssize_t)-1))) __PYX_ERR(0, 72, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyInt_As_uint32_t(__pyx_v_dust_thres); if (unlikely((__pyx_t_4 == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 72, __pyx_L1_error)
   cpp_remove_small(__pyx_v_mapping_data, __pyx_v_count_data, __pyx_t_3, __pyx_t_4);
 
-  /* "waterz/region_graph.pyx":63
+  /* "waterz/region_graph.pyx":64
  *     return mapping
  * 
  * def __remove_small(np.ndarray[np.uint32_t, ndim=1] mapping,             # <<<<<<<<<<<<<<
@@ -4113,7 +4127,7 @@ static PyObject *__pyx_pf_6waterz_12region_graph_4__remove_small(CYTHON_UNUSED P
   return __pyx_r;
 }
 
-/* "waterz/region_graph.pyx":73
+/* "waterz/region_graph.pyx":74
  *     cpp_remove_small(mapping_data, count_data, len(mapping), dust_thres)
  * 
  * def __merge_id_byAff(np.ndarray[np.uint32_t, ndim=1] id1,             # <<<<<<<<<<<<<<
@@ -4168,35 +4182,35 @@ static PyObject *__pyx_pw_6waterz_12region_graph_7__merge_id_byAff(PyObject *__p
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_id2)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__merge_id_byAff", 1, 6, 6, 1); __PYX_ERR(0, 73, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__merge_id_byAff", 1, 6, 6, 1); __PYX_ERR(0, 74, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_mapping)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__merge_id_byAff", 1, 6, 6, 2); __PYX_ERR(0, 73, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__merge_id_byAff", 1, 6, 6, 2); __PYX_ERR(0, 74, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_score)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__merge_id_byAff", 1, 6, 6, 3); __PYX_ERR(0, 73, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__merge_id_byAff", 1, 6, 6, 3); __PYX_ERR(0, 74, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
         if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_id_thres)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__merge_id_byAff", 1, 6, 6, 4); __PYX_ERR(0, 73, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__merge_id_byAff", 1, 6, 6, 4); __PYX_ERR(0, 74, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  5:
         if (likely((values[5] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_aff_thres)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__merge_id_byAff", 1, 6, 6, 5); __PYX_ERR(0, 73, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__merge_id_byAff", 1, 6, 6, 5); __PYX_ERR(0, 74, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__merge_id_byAff") < 0)) __PYX_ERR(0, 73, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__merge_id_byAff") < 0)) __PYX_ERR(0, 74, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 6) {
       goto __pyx_L5_argtuple_error;
@@ -4217,16 +4231,16 @@ static PyObject *__pyx_pw_6waterz_12region_graph_7__merge_id_byAff(PyObject *__p
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__merge_id_byAff", 1, 6, 6, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 73, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__merge_id_byAff", 1, 6, 6, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 74, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("waterz.region_graph.__merge_id_byAff", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_id1), __pyx_ptype_5numpy_ndarray, 1, "id1", 0))) __PYX_ERR(0, 73, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_id2), __pyx_ptype_5numpy_ndarray, 1, "id2", 0))) __PYX_ERR(0, 74, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_mapping), __pyx_ptype_5numpy_ndarray, 1, "mapping", 0))) __PYX_ERR(0, 75, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_score), __pyx_ptype_5numpy_ndarray, 1, "score", 0))) __PYX_ERR(0, 76, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_id1), __pyx_ptype_5numpy_ndarray, 1, "id1", 0))) __PYX_ERR(0, 74, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_id2), __pyx_ptype_5numpy_ndarray, 1, "id2", 0))) __PYX_ERR(0, 75, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_mapping), __pyx_ptype_5numpy_ndarray, 1, "mapping", 0))) __PYX_ERR(0, 76, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_score), __pyx_ptype_5numpy_ndarray, 1, "score", 0))) __PYX_ERR(0, 77, __pyx_L1_error)
   __pyx_r = __pyx_pf_6waterz_12region_graph_6__merge_id_byAff(__pyx_self, __pyx_v_id1, __pyx_v_id2, __pyx_v_mapping, __pyx_v_score, __pyx_v_id_thres, __pyx_v_aff_thres);
 
   /* function exit code */
@@ -4281,26 +4295,26 @@ static PyObject *__pyx_pf_6waterz_12region_graph_6__merge_id_byAff(CYTHON_UNUSED
   __pyx_pybuffernd_score.rcbuffer = &__pyx_pybuffer_score;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_id1.rcbuffer->pybuffer, (PyObject*)__pyx_v_id1, &__Pyx_TypeInfo_nn___pyx_t_5numpy_uint32_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 73, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_id1.rcbuffer->pybuffer, (PyObject*)__pyx_v_id1, &__Pyx_TypeInfo_nn___pyx_t_5numpy_uint32_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 74, __pyx_L1_error)
   }
   __pyx_pybuffernd_id1.diminfo[0].strides = __pyx_pybuffernd_id1.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_id1.diminfo[0].shape = __pyx_pybuffernd_id1.rcbuffer->pybuffer.shape[0];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_id2.rcbuffer->pybuffer, (PyObject*)__pyx_v_id2, &__Pyx_TypeInfo_nn___pyx_t_5numpy_uint32_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 73, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_id2.rcbuffer->pybuffer, (PyObject*)__pyx_v_id2, &__Pyx_TypeInfo_nn___pyx_t_5numpy_uint32_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 74, __pyx_L1_error)
   }
   __pyx_pybuffernd_id2.diminfo[0].strides = __pyx_pybuffernd_id2.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_id2.diminfo[0].shape = __pyx_pybuffernd_id2.rcbuffer->pybuffer.shape[0];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_mapping.rcbuffer->pybuffer, (PyObject*)__pyx_v_mapping, &__Pyx_TypeInfo_nn___pyx_t_5numpy_uint32_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 73, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_mapping.rcbuffer->pybuffer, (PyObject*)__pyx_v_mapping, &__Pyx_TypeInfo_nn___pyx_t_5numpy_uint32_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 74, __pyx_L1_error)
   }
   __pyx_pybuffernd_mapping.diminfo[0].strides = __pyx_pybuffernd_mapping.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_mapping.diminfo[0].shape = __pyx_pybuffernd_mapping.rcbuffer->pybuffer.shape[0];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_score.rcbuffer->pybuffer, (PyObject*)__pyx_v_score, &__Pyx_TypeInfo_nn___pyx_t_5numpy_uint8_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 73, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_score.rcbuffer->pybuffer, (PyObject*)__pyx_v_score, &__Pyx_TypeInfo_nn___pyx_t_5numpy_uint8_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 74, __pyx_L1_error)
   }
   __pyx_pybuffernd_score.diminfo[0].strides = __pyx_pybuffernd_score.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_score.diminfo[0].shape = __pyx_pybuffernd_score.rcbuffer->pybuffer.shape[0];
 
-  /* "waterz/region_graph.pyx":83
+  /* "waterz/region_graph.pyx":84
  *     cdef uint32_t*  mapping_data;
  * 
  *     id1_data = &id1[0];             # <<<<<<<<<<<<<<
@@ -4315,11 +4329,11 @@ static PyObject *__pyx_pf_6waterz_12region_graph_6__merge_id_byAff(CYTHON_UNUSED
   } else if (unlikely(__pyx_t_1 >= __pyx_pybuffernd_id1.diminfo[0].shape)) __pyx_t_2 = 0;
   if (unlikely(__pyx_t_2 != -1)) {
     __Pyx_RaiseBufferIndexError(__pyx_t_2);
-    __PYX_ERR(0, 83, __pyx_L1_error)
+    __PYX_ERR(0, 84, __pyx_L1_error)
   }
   __pyx_v_id1_data = (&(*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_uint32_t *, __pyx_pybuffernd_id1.rcbuffer->pybuffer.buf, __pyx_t_1, __pyx_pybuffernd_id1.diminfo[0].strides)));
 
-  /* "waterz/region_graph.pyx":84
+  /* "waterz/region_graph.pyx":85
  * 
  *     id1_data = &id1[0];
  *     id2_data = &id2[0];             # <<<<<<<<<<<<<<
@@ -4334,11 +4348,11 @@ static PyObject *__pyx_pf_6waterz_12region_graph_6__merge_id_byAff(CYTHON_UNUSED
   } else if (unlikely(__pyx_t_1 >= __pyx_pybuffernd_id2.diminfo[0].shape)) __pyx_t_2 = 0;
   if (unlikely(__pyx_t_2 != -1)) {
     __Pyx_RaiseBufferIndexError(__pyx_t_2);
-    __PYX_ERR(0, 84, __pyx_L1_error)
+    __PYX_ERR(0, 85, __pyx_L1_error)
   }
   __pyx_v_id2_data = (&(*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_uint32_t *, __pyx_pybuffernd_id2.rcbuffer->pybuffer.buf, __pyx_t_1, __pyx_pybuffernd_id2.diminfo[0].strides)));
 
-  /* "waterz/region_graph.pyx":85
+  /* "waterz/region_graph.pyx":86
  *     id1_data = &id1[0];
  *     id2_data = &id2[0];
  *     score_data = &score[0];             # <<<<<<<<<<<<<<
@@ -4353,11 +4367,11 @@ static PyObject *__pyx_pf_6waterz_12region_graph_6__merge_id_byAff(CYTHON_UNUSED
   } else if (unlikely(__pyx_t_1 >= __pyx_pybuffernd_score.diminfo[0].shape)) __pyx_t_2 = 0;
   if (unlikely(__pyx_t_2 != -1)) {
     __Pyx_RaiseBufferIndexError(__pyx_t_2);
-    __PYX_ERR(0, 85, __pyx_L1_error)
+    __PYX_ERR(0, 86, __pyx_L1_error)
   }
   __pyx_v_score_data = (&(*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_uint8_t *, __pyx_pybuffernd_score.rcbuffer->pybuffer.buf, __pyx_t_1, __pyx_pybuffernd_score.diminfo[0].strides)));
 
-  /* "waterz/region_graph.pyx":86
+  /* "waterz/region_graph.pyx":87
  *     id2_data = &id2[0];
  *     score_data = &score[0];
  *     mapping_data = &mapping[0];             # <<<<<<<<<<<<<<
@@ -4372,31 +4386,31 @@ static PyObject *__pyx_pf_6waterz_12region_graph_6__merge_id_byAff(CYTHON_UNUSED
   } else if (unlikely(__pyx_t_1 >= __pyx_pybuffernd_mapping.diminfo[0].shape)) __pyx_t_2 = 0;
   if (unlikely(__pyx_t_2 != -1)) {
     __Pyx_RaiseBufferIndexError(__pyx_t_2);
-    __PYX_ERR(0, 86, __pyx_L1_error)
+    __PYX_ERR(0, 87, __pyx_L1_error)
   }
   __pyx_v_mapping_data = (&(*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_uint32_t *, __pyx_pybuffernd_mapping.rcbuffer->pybuffer.buf, __pyx_t_1, __pyx_pybuffernd_mapping.diminfo[0].strides)));
 
-  /* "waterz/region_graph.pyx":88
+  /* "waterz/region_graph.pyx":89
  *     mapping_data = &mapping[0];
  * 
  *     cpp_merge_id_byAff(id1_data, id2_data, mapping_data, score_data, len(id1), len(mapping), \             # <<<<<<<<<<<<<<
  *                 id_thres, aff_thres)
  * 
  */
-  __pyx_t_3 = PyObject_Length(((PyObject *)__pyx_v_id1)); if (unlikely(__pyx_t_3 == ((Py_ssize_t)-1))) __PYX_ERR(0, 88, __pyx_L1_error)
-  __pyx_t_4 = PyObject_Length(((PyObject *)__pyx_v_mapping)); if (unlikely(__pyx_t_4 == ((Py_ssize_t)-1))) __PYX_ERR(0, 88, __pyx_L1_error)
+  __pyx_t_3 = PyObject_Length(((PyObject *)__pyx_v_id1)); if (unlikely(__pyx_t_3 == ((Py_ssize_t)-1))) __PYX_ERR(0, 89, __pyx_L1_error)
+  __pyx_t_4 = PyObject_Length(((PyObject *)__pyx_v_mapping)); if (unlikely(__pyx_t_4 == ((Py_ssize_t)-1))) __PYX_ERR(0, 89, __pyx_L1_error)
 
-  /* "waterz/region_graph.pyx":89
+  /* "waterz/region_graph.pyx":90
  * 
  *     cpp_merge_id_byAff(id1_data, id2_data, mapping_data, score_data, len(id1), len(mapping), \
  *                 id_thres, aff_thres)             # <<<<<<<<<<<<<<
  * 
  * def __merge_id_byAffCount(np.ndarray[np.uint32_t, ndim=1] id1,
  */
-  __pyx_t_5 = __Pyx_PyInt_As_uint32_t(__pyx_v_id_thres); if (unlikely((__pyx_t_5 == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 89, __pyx_L1_error)
-  __pyx_t_6 = __Pyx_PyInt_As_uint8_t(__pyx_v_aff_thres); if (unlikely((__pyx_t_6 == ((uint8_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 89, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyInt_As_uint32_t(__pyx_v_id_thres); if (unlikely((__pyx_t_5 == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 90, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyInt_As_uint8_t(__pyx_v_aff_thres); if (unlikely((__pyx_t_6 == ((uint8_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 90, __pyx_L1_error)
 
-  /* "waterz/region_graph.pyx":88
+  /* "waterz/region_graph.pyx":89
  *     mapping_data = &mapping[0];
  * 
  *     cpp_merge_id_byAff(id1_data, id2_data, mapping_data, score_data, len(id1), len(mapping), \             # <<<<<<<<<<<<<<
@@ -4405,7 +4419,7 @@ static PyObject *__pyx_pf_6waterz_12region_graph_6__merge_id_byAff(CYTHON_UNUSED
  */
   cpp_merge_id_byAff(__pyx_v_id1_data, __pyx_v_id2_data, __pyx_v_mapping_data, __pyx_v_score_data, __pyx_t_3, __pyx_t_4, __pyx_t_5, __pyx_t_6);
 
-  /* "waterz/region_graph.pyx":73
+  /* "waterz/region_graph.pyx":74
  *     cpp_remove_small(mapping_data, count_data, len(mapping), dust_thres)
  * 
  * def __merge_id_byAff(np.ndarray[np.uint32_t, ndim=1] id1,             # <<<<<<<<<<<<<<
@@ -4440,7 +4454,7 @@ static PyObject *__pyx_pf_6waterz_12region_graph_6__merge_id_byAff(CYTHON_UNUSED
   return __pyx_r;
 }
 
-/* "waterz/region_graph.pyx":91
+/* "waterz/region_graph.pyx":92
  *                 id_thres, aff_thres)
  * 
  * def __merge_id_byAffCount(np.ndarray[np.uint32_t, ndim=1] id1,             # <<<<<<<<<<<<<<
@@ -4504,53 +4518,53 @@ static PyObject *__pyx_pw_6waterz_12region_graph_9__merge_id_byAffCount(PyObject
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_id2)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__merge_id_byAffCount", 1, 9, 9, 1); __PYX_ERR(0, 91, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__merge_id_byAffCount", 1, 9, 9, 1); __PYX_ERR(0, 92, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_mapping)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__merge_id_byAffCount", 1, 9, 9, 2); __PYX_ERR(0, 91, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__merge_id_byAffCount", 1, 9, 9, 2); __PYX_ERR(0, 92, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_score)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__merge_id_byAffCount", 1, 9, 9, 3); __PYX_ERR(0, 91, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__merge_id_byAffCount", 1, 9, 9, 3); __PYX_ERR(0, 92, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
         if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_count)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__merge_id_byAffCount", 1, 9, 9, 4); __PYX_ERR(0, 91, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__merge_id_byAffCount", 1, 9, 9, 4); __PYX_ERR(0, 92, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  5:
         if (likely((values[5] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_id_thres)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__merge_id_byAffCount", 1, 9, 9, 5); __PYX_ERR(0, 91, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__merge_id_byAffCount", 1, 9, 9, 5); __PYX_ERR(0, 92, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  6:
         if (likely((values[6] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_aff_thres)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__merge_id_byAffCount", 1, 9, 9, 6); __PYX_ERR(0, 91, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__merge_id_byAffCount", 1, 9, 9, 6); __PYX_ERR(0, 92, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  7:
         if (likely((values[7] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_count_thres)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__merge_id_byAffCount", 1, 9, 9, 7); __PYX_ERR(0, 91, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__merge_id_byAffCount", 1, 9, 9, 7); __PYX_ERR(0, 92, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  8:
         if (likely((values[8] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_dust_thres)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__merge_id_byAffCount", 1, 9, 9, 8); __PYX_ERR(0, 91, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__merge_id_byAffCount", 1, 9, 9, 8); __PYX_ERR(0, 92, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__merge_id_byAffCount") < 0)) __PYX_ERR(0, 91, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__merge_id_byAffCount") < 0)) __PYX_ERR(0, 92, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 9) {
       goto __pyx_L5_argtuple_error;
@@ -4577,17 +4591,17 @@ static PyObject *__pyx_pw_6waterz_12region_graph_9__merge_id_byAffCount(PyObject
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__merge_id_byAffCount", 1, 9, 9, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 91, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__merge_id_byAffCount", 1, 9, 9, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 92, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("waterz.region_graph.__merge_id_byAffCount", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_id1), __pyx_ptype_5numpy_ndarray, 1, "id1", 0))) __PYX_ERR(0, 91, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_id2), __pyx_ptype_5numpy_ndarray, 1, "id2", 0))) __PYX_ERR(0, 92, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_mapping), __pyx_ptype_5numpy_ndarray, 1, "mapping", 0))) __PYX_ERR(0, 93, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_score), __pyx_ptype_5numpy_ndarray, 1, "score", 0))) __PYX_ERR(0, 94, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_count), __pyx_ptype_5numpy_ndarray, 1, "count", 0))) __PYX_ERR(0, 95, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_id1), __pyx_ptype_5numpy_ndarray, 1, "id1", 0))) __PYX_ERR(0, 92, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_id2), __pyx_ptype_5numpy_ndarray, 1, "id2", 0))) __PYX_ERR(0, 93, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_mapping), __pyx_ptype_5numpy_ndarray, 1, "mapping", 0))) __PYX_ERR(0, 94, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_score), __pyx_ptype_5numpy_ndarray, 1, "score", 0))) __PYX_ERR(0, 95, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_count), __pyx_ptype_5numpy_ndarray, 1, "count", 0))) __PYX_ERR(0, 96, __pyx_L1_error)
   __pyx_r = __pyx_pf_6waterz_12region_graph_8__merge_id_byAffCount(__pyx_self, __pyx_v_id1, __pyx_v_id2, __pyx_v_mapping, __pyx_v_score, __pyx_v_count, __pyx_v_id_thres, __pyx_v_aff_thres, __pyx_v_count_thres, __pyx_v_dust_thres);
 
   /* function exit code */
@@ -4651,31 +4665,31 @@ static PyObject *__pyx_pf_6waterz_12region_graph_8__merge_id_byAffCount(CYTHON_U
   __pyx_pybuffernd_count.rcbuffer = &__pyx_pybuffer_count;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_id1.rcbuffer->pybuffer, (PyObject*)__pyx_v_id1, &__Pyx_TypeInfo_nn___pyx_t_5numpy_uint32_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 91, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_id1.rcbuffer->pybuffer, (PyObject*)__pyx_v_id1, &__Pyx_TypeInfo_nn___pyx_t_5numpy_uint32_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 92, __pyx_L1_error)
   }
   __pyx_pybuffernd_id1.diminfo[0].strides = __pyx_pybuffernd_id1.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_id1.diminfo[0].shape = __pyx_pybuffernd_id1.rcbuffer->pybuffer.shape[0];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_id2.rcbuffer->pybuffer, (PyObject*)__pyx_v_id2, &__Pyx_TypeInfo_nn___pyx_t_5numpy_uint32_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 91, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_id2.rcbuffer->pybuffer, (PyObject*)__pyx_v_id2, &__Pyx_TypeInfo_nn___pyx_t_5numpy_uint32_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 92, __pyx_L1_error)
   }
   __pyx_pybuffernd_id2.diminfo[0].strides = __pyx_pybuffernd_id2.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_id2.diminfo[0].shape = __pyx_pybuffernd_id2.rcbuffer->pybuffer.shape[0];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_mapping.rcbuffer->pybuffer, (PyObject*)__pyx_v_mapping, &__Pyx_TypeInfo_nn___pyx_t_5numpy_uint32_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 91, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_mapping.rcbuffer->pybuffer, (PyObject*)__pyx_v_mapping, &__Pyx_TypeInfo_nn___pyx_t_5numpy_uint32_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 92, __pyx_L1_error)
   }
   __pyx_pybuffernd_mapping.diminfo[0].strides = __pyx_pybuffernd_mapping.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_mapping.diminfo[0].shape = __pyx_pybuffernd_mapping.rcbuffer->pybuffer.shape[0];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_score.rcbuffer->pybuffer, (PyObject*)__pyx_v_score, &__Pyx_TypeInfo_nn___pyx_t_5numpy_uint8_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 91, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_score.rcbuffer->pybuffer, (PyObject*)__pyx_v_score, &__Pyx_TypeInfo_nn___pyx_t_5numpy_uint8_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 92, __pyx_L1_error)
   }
   __pyx_pybuffernd_score.diminfo[0].strides = __pyx_pybuffernd_score.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_score.diminfo[0].shape = __pyx_pybuffernd_score.rcbuffer->pybuffer.shape[0];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_count.rcbuffer->pybuffer, (PyObject*)__pyx_v_count, &__Pyx_TypeInfo_nn___pyx_t_5numpy_uint32_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 91, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_count.rcbuffer->pybuffer, (PyObject*)__pyx_v_count, &__Pyx_TypeInfo_nn___pyx_t_5numpy_uint32_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 92, __pyx_L1_error)
   }
   __pyx_pybuffernd_count.diminfo[0].strides = __pyx_pybuffernd_count.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_count.diminfo[0].shape = __pyx_pybuffernd_count.rcbuffer->pybuffer.shape[0];
 
-  /* "waterz/region_graph.pyx":103
+  /* "waterz/region_graph.pyx":104
  *     cdef uint32_t*  count_data;
  * 
  *     id1_data = &id1[0];             # <<<<<<<<<<<<<<
@@ -4690,11 +4704,11 @@ static PyObject *__pyx_pf_6waterz_12region_graph_8__merge_id_byAffCount(CYTHON_U
   } else if (unlikely(__pyx_t_1 >= __pyx_pybuffernd_id1.diminfo[0].shape)) __pyx_t_2 = 0;
   if (unlikely(__pyx_t_2 != -1)) {
     __Pyx_RaiseBufferIndexError(__pyx_t_2);
-    __PYX_ERR(0, 103, __pyx_L1_error)
+    __PYX_ERR(0, 104, __pyx_L1_error)
   }
   __pyx_v_id1_data = (&(*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_uint32_t *, __pyx_pybuffernd_id1.rcbuffer->pybuffer.buf, __pyx_t_1, __pyx_pybuffernd_id1.diminfo[0].strides)));
 
-  /* "waterz/region_graph.pyx":104
+  /* "waterz/region_graph.pyx":105
  * 
  *     id1_data = &id1[0];
  *     id2_data = &id2[0];             # <<<<<<<<<<<<<<
@@ -4709,11 +4723,11 @@ static PyObject *__pyx_pf_6waterz_12region_graph_8__merge_id_byAffCount(CYTHON_U
   } else if (unlikely(__pyx_t_1 >= __pyx_pybuffernd_id2.diminfo[0].shape)) __pyx_t_2 = 0;
   if (unlikely(__pyx_t_2 != -1)) {
     __Pyx_RaiseBufferIndexError(__pyx_t_2);
-    __PYX_ERR(0, 104, __pyx_L1_error)
+    __PYX_ERR(0, 105, __pyx_L1_error)
   }
   __pyx_v_id2_data = (&(*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_uint32_t *, __pyx_pybuffernd_id2.rcbuffer->pybuffer.buf, __pyx_t_1, __pyx_pybuffernd_id2.diminfo[0].strides)));
 
-  /* "waterz/region_graph.pyx":105
+  /* "waterz/region_graph.pyx":106
  *     id1_data = &id1[0];
  *     id2_data = &id2[0];
  *     score_data = &score[0];             # <<<<<<<<<<<<<<
@@ -4728,11 +4742,11 @@ static PyObject *__pyx_pf_6waterz_12region_graph_8__merge_id_byAffCount(CYTHON_U
   } else if (unlikely(__pyx_t_1 >= __pyx_pybuffernd_score.diminfo[0].shape)) __pyx_t_2 = 0;
   if (unlikely(__pyx_t_2 != -1)) {
     __Pyx_RaiseBufferIndexError(__pyx_t_2);
-    __PYX_ERR(0, 105, __pyx_L1_error)
+    __PYX_ERR(0, 106, __pyx_L1_error)
   }
   __pyx_v_score_data = (&(*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_uint8_t *, __pyx_pybuffernd_score.rcbuffer->pybuffer.buf, __pyx_t_1, __pyx_pybuffernd_score.diminfo[0].strides)));
 
-  /* "waterz/region_graph.pyx":106
+  /* "waterz/region_graph.pyx":107
  *     id2_data = &id2[0];
  *     score_data = &score[0];
  *     mapping_data = &mapping[0];             # <<<<<<<<<<<<<<
@@ -4747,11 +4761,11 @@ static PyObject *__pyx_pf_6waterz_12region_graph_8__merge_id_byAffCount(CYTHON_U
   } else if (unlikely(__pyx_t_1 >= __pyx_pybuffernd_mapping.diminfo[0].shape)) __pyx_t_2 = 0;
   if (unlikely(__pyx_t_2 != -1)) {
     __Pyx_RaiseBufferIndexError(__pyx_t_2);
-    __PYX_ERR(0, 106, __pyx_L1_error)
+    __PYX_ERR(0, 107, __pyx_L1_error)
   }
   __pyx_v_mapping_data = (&(*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_uint32_t *, __pyx_pybuffernd_mapping.rcbuffer->pybuffer.buf, __pyx_t_1, __pyx_pybuffernd_mapping.diminfo[0].strides)));
 
-  /* "waterz/region_graph.pyx":107
+  /* "waterz/region_graph.pyx":108
  *     score_data = &score[0];
  *     mapping_data = &mapping[0];
  *     count_data = &count[0];             # <<<<<<<<<<<<<<
@@ -4766,33 +4780,33 @@ static PyObject *__pyx_pf_6waterz_12region_graph_8__merge_id_byAffCount(CYTHON_U
   } else if (unlikely(__pyx_t_1 >= __pyx_pybuffernd_count.diminfo[0].shape)) __pyx_t_2 = 0;
   if (unlikely(__pyx_t_2 != -1)) {
     __Pyx_RaiseBufferIndexError(__pyx_t_2);
-    __PYX_ERR(0, 107, __pyx_L1_error)
+    __PYX_ERR(0, 108, __pyx_L1_error)
   }
   __pyx_v_count_data = (&(*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_uint32_t *, __pyx_pybuffernd_count.rcbuffer->pybuffer.buf, __pyx_t_1, __pyx_pybuffernd_count.diminfo[0].strides)));
 
-  /* "waterz/region_graph.pyx":109
+  /* "waterz/region_graph.pyx":110
  *     count_data = &count[0];
  * 
  *     cpp_merge_id_byAffCount(id1_data, id2_data, mapping_data, score_data, count_data, len(id1), len(mapping), \             # <<<<<<<<<<<<<<
  *                 id_thres, aff_thres, count_thres, dust_thres)
  * 
  */
-  __pyx_t_3 = PyObject_Length(((PyObject *)__pyx_v_id1)); if (unlikely(__pyx_t_3 == ((Py_ssize_t)-1))) __PYX_ERR(0, 109, __pyx_L1_error)
-  __pyx_t_4 = PyObject_Length(((PyObject *)__pyx_v_mapping)); if (unlikely(__pyx_t_4 == ((Py_ssize_t)-1))) __PYX_ERR(0, 109, __pyx_L1_error)
+  __pyx_t_3 = PyObject_Length(((PyObject *)__pyx_v_id1)); if (unlikely(__pyx_t_3 == ((Py_ssize_t)-1))) __PYX_ERR(0, 110, __pyx_L1_error)
+  __pyx_t_4 = PyObject_Length(((PyObject *)__pyx_v_mapping)); if (unlikely(__pyx_t_4 == ((Py_ssize_t)-1))) __PYX_ERR(0, 110, __pyx_L1_error)
 
-  /* "waterz/region_graph.pyx":110
+  /* "waterz/region_graph.pyx":111
  * 
  *     cpp_merge_id_byAffCount(id1_data, id2_data, mapping_data, score_data, count_data, len(id1), len(mapping), \
  *                 id_thres, aff_thres, count_thres, dust_thres)             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  __pyx_t_5 = __Pyx_PyInt_As_uint32_t(__pyx_v_id_thres); if (unlikely((__pyx_t_5 == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 110, __pyx_L1_error)
-  __pyx_t_6 = __Pyx_PyInt_As_uint8_t(__pyx_v_aff_thres); if (unlikely((__pyx_t_6 == ((uint8_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 110, __pyx_L1_error)
-  __pyx_t_7 = __Pyx_PyInt_As_uint32_t(__pyx_v_count_thres); if (unlikely((__pyx_t_7 == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 110, __pyx_L1_error)
-  __pyx_t_8 = __Pyx_PyInt_As_uint32_t(__pyx_v_dust_thres); if (unlikely((__pyx_t_8 == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 110, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyInt_As_uint32_t(__pyx_v_id_thres); if (unlikely((__pyx_t_5 == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 111, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyInt_As_uint8_t(__pyx_v_aff_thres); if (unlikely((__pyx_t_6 == ((uint8_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 111, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_As_uint32_t(__pyx_v_count_thres); if (unlikely((__pyx_t_7 == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 111, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyInt_As_uint32_t(__pyx_v_dust_thres); if (unlikely((__pyx_t_8 == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 111, __pyx_L1_error)
 
-  /* "waterz/region_graph.pyx":109
+  /* "waterz/region_graph.pyx":110
  *     count_data = &count[0];
  * 
  *     cpp_merge_id_byAffCount(id1_data, id2_data, mapping_data, score_data, count_data, len(id1), len(mapping), \             # <<<<<<<<<<<<<<
@@ -4801,7 +4815,7 @@ static PyObject *__pyx_pf_6waterz_12region_graph_8__merge_id_byAffCount(CYTHON_U
  */
   cpp_merge_id_byAffCount(__pyx_v_id1_data, __pyx_v_id2_data, __pyx_v_mapping_data, __pyx_v_score_data, __pyx_v_count_data, __pyx_t_3, __pyx_t_4, __pyx_t_5, __pyx_t_6, __pyx_t_7, __pyx_t_8);
 
-  /* "waterz/region_graph.pyx":91
+  /* "waterz/region_graph.pyx":92
  *                 id_thres, aff_thres)
  * 
  * def __merge_id_byAffCount(np.ndarray[np.uint32_t, ndim=1] id1,             # <<<<<<<<<<<<<<
@@ -4838,7 +4852,7 @@ static PyObject *__pyx_pf_6waterz_12region_graph_8__merge_id_byAffCount(CYTHON_U
   return __pyx_r;
 }
 
-/* "waterz/region_graph.pyx":113
+/* "waterz/region_graph.pyx":114
  * 
  * 
  * def __merge_id_byCount(np.ndarray[np.uint32_t, ndim=1] id1,             # <<<<<<<<<<<<<<
@@ -4896,41 +4910,41 @@ static PyObject *__pyx_pw_6waterz_12region_graph_11__merge_id_byCount(PyObject *
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_id2)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__merge_id_byCount", 1, 7, 7, 1); __PYX_ERR(0, 113, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__merge_id_byCount", 1, 7, 7, 1); __PYX_ERR(0, 114, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_mapping)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__merge_id_byCount", 1, 7, 7, 2); __PYX_ERR(0, 113, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__merge_id_byCount", 1, 7, 7, 2); __PYX_ERR(0, 114, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_count)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__merge_id_byCount", 1, 7, 7, 3); __PYX_ERR(0, 113, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__merge_id_byCount", 1, 7, 7, 3); __PYX_ERR(0, 114, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
         if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_id_thres)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__merge_id_byCount", 1, 7, 7, 4); __PYX_ERR(0, 113, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__merge_id_byCount", 1, 7, 7, 4); __PYX_ERR(0, 114, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  5:
         if (likely((values[5] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_count_thres)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__merge_id_byCount", 1, 7, 7, 5); __PYX_ERR(0, 113, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__merge_id_byCount", 1, 7, 7, 5); __PYX_ERR(0, 114, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  6:
         if (likely((values[6] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_dust_thres)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__merge_id_byCount", 1, 7, 7, 6); __PYX_ERR(0, 113, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__merge_id_byCount", 1, 7, 7, 6); __PYX_ERR(0, 114, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__merge_id_byCount") < 0)) __PYX_ERR(0, 113, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__merge_id_byCount") < 0)) __PYX_ERR(0, 114, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 7) {
       goto __pyx_L5_argtuple_error;
@@ -4953,16 +4967,16 @@ static PyObject *__pyx_pw_6waterz_12region_graph_11__merge_id_byCount(PyObject *
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__merge_id_byCount", 1, 7, 7, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 113, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__merge_id_byCount", 1, 7, 7, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 114, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("waterz.region_graph.__merge_id_byCount", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_id1), __pyx_ptype_5numpy_ndarray, 1, "id1", 0))) __PYX_ERR(0, 113, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_id2), __pyx_ptype_5numpy_ndarray, 1, "id2", 0))) __PYX_ERR(0, 114, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_mapping), __pyx_ptype_5numpy_ndarray, 1, "mapping", 0))) __PYX_ERR(0, 115, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_count), __pyx_ptype_5numpy_ndarray, 1, "count", 0))) __PYX_ERR(0, 116, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_id1), __pyx_ptype_5numpy_ndarray, 1, "id1", 0))) __PYX_ERR(0, 114, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_id2), __pyx_ptype_5numpy_ndarray, 1, "id2", 0))) __PYX_ERR(0, 115, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_mapping), __pyx_ptype_5numpy_ndarray, 1, "mapping", 0))) __PYX_ERR(0, 116, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_count), __pyx_ptype_5numpy_ndarray, 1, "count", 0))) __PYX_ERR(0, 117, __pyx_L1_error)
   __pyx_r = __pyx_pf_6waterz_12region_graph_10__merge_id_byCount(__pyx_self, __pyx_v_id1, __pyx_v_id2, __pyx_v_mapping, __pyx_v_count, __pyx_v_id_thres, __pyx_v_count_thres, __pyx_v_dust_thres);
 
   /* function exit code */
@@ -5018,26 +5032,26 @@ static PyObject *__pyx_pf_6waterz_12region_graph_10__merge_id_byCount(CYTHON_UNU
   __pyx_pybuffernd_count.rcbuffer = &__pyx_pybuffer_count;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_id1.rcbuffer->pybuffer, (PyObject*)__pyx_v_id1, &__Pyx_TypeInfo_nn___pyx_t_5numpy_uint32_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 113, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_id1.rcbuffer->pybuffer, (PyObject*)__pyx_v_id1, &__Pyx_TypeInfo_nn___pyx_t_5numpy_uint32_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 114, __pyx_L1_error)
   }
   __pyx_pybuffernd_id1.diminfo[0].strides = __pyx_pybuffernd_id1.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_id1.diminfo[0].shape = __pyx_pybuffernd_id1.rcbuffer->pybuffer.shape[0];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_id2.rcbuffer->pybuffer, (PyObject*)__pyx_v_id2, &__Pyx_TypeInfo_nn___pyx_t_5numpy_uint32_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 113, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_id2.rcbuffer->pybuffer, (PyObject*)__pyx_v_id2, &__Pyx_TypeInfo_nn___pyx_t_5numpy_uint32_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 114, __pyx_L1_error)
   }
   __pyx_pybuffernd_id2.diminfo[0].strides = __pyx_pybuffernd_id2.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_id2.diminfo[0].shape = __pyx_pybuffernd_id2.rcbuffer->pybuffer.shape[0];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_mapping.rcbuffer->pybuffer, (PyObject*)__pyx_v_mapping, &__Pyx_TypeInfo_nn___pyx_t_5numpy_uint32_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 113, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_mapping.rcbuffer->pybuffer, (PyObject*)__pyx_v_mapping, &__Pyx_TypeInfo_nn___pyx_t_5numpy_uint32_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 114, __pyx_L1_error)
   }
   __pyx_pybuffernd_mapping.diminfo[0].strides = __pyx_pybuffernd_mapping.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_mapping.diminfo[0].shape = __pyx_pybuffernd_mapping.rcbuffer->pybuffer.shape[0];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_count.rcbuffer->pybuffer, (PyObject*)__pyx_v_count, &__Pyx_TypeInfo_nn___pyx_t_5numpy_uint32_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 113, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_count.rcbuffer->pybuffer, (PyObject*)__pyx_v_count, &__Pyx_TypeInfo_nn___pyx_t_5numpy_uint32_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 114, __pyx_L1_error)
   }
   __pyx_pybuffernd_count.diminfo[0].strides = __pyx_pybuffernd_count.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_count.diminfo[0].shape = __pyx_pybuffernd_count.rcbuffer->pybuffer.shape[0];
 
-  /* "waterz/region_graph.pyx":123
+  /* "waterz/region_graph.pyx":124
  *     cdef uint32_t*  count_data;
  * 
  *     id1_data = &id1[0];             # <<<<<<<<<<<<<<
@@ -5052,11 +5066,11 @@ static PyObject *__pyx_pf_6waterz_12region_graph_10__merge_id_byCount(CYTHON_UNU
   } else if (unlikely(__pyx_t_1 >= __pyx_pybuffernd_id1.diminfo[0].shape)) __pyx_t_2 = 0;
   if (unlikely(__pyx_t_2 != -1)) {
     __Pyx_RaiseBufferIndexError(__pyx_t_2);
-    __PYX_ERR(0, 123, __pyx_L1_error)
+    __PYX_ERR(0, 124, __pyx_L1_error)
   }
   __pyx_v_id1_data = (&(*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_uint32_t *, __pyx_pybuffernd_id1.rcbuffer->pybuffer.buf, __pyx_t_1, __pyx_pybuffernd_id1.diminfo[0].strides)));
 
-  /* "waterz/region_graph.pyx":124
+  /* "waterz/region_graph.pyx":125
  * 
  *     id1_data = &id1[0];
  *     id2_data = &id2[0];             # <<<<<<<<<<<<<<
@@ -5071,11 +5085,11 @@ static PyObject *__pyx_pf_6waterz_12region_graph_10__merge_id_byCount(CYTHON_UNU
   } else if (unlikely(__pyx_t_1 >= __pyx_pybuffernd_id2.diminfo[0].shape)) __pyx_t_2 = 0;
   if (unlikely(__pyx_t_2 != -1)) {
     __Pyx_RaiseBufferIndexError(__pyx_t_2);
-    __PYX_ERR(0, 124, __pyx_L1_error)
+    __PYX_ERR(0, 125, __pyx_L1_error)
   }
   __pyx_v_id2_data = (&(*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_uint32_t *, __pyx_pybuffernd_id2.rcbuffer->pybuffer.buf, __pyx_t_1, __pyx_pybuffernd_id2.diminfo[0].strides)));
 
-  /* "waterz/region_graph.pyx":125
+  /* "waterz/region_graph.pyx":126
  *     id1_data = &id1[0];
  *     id2_data = &id2[0];
  *     mapping_data = &mapping[0];             # <<<<<<<<<<<<<<
@@ -5090,11 +5104,11 @@ static PyObject *__pyx_pf_6waterz_12region_graph_10__merge_id_byCount(CYTHON_UNU
   } else if (unlikely(__pyx_t_1 >= __pyx_pybuffernd_mapping.diminfo[0].shape)) __pyx_t_2 = 0;
   if (unlikely(__pyx_t_2 != -1)) {
     __Pyx_RaiseBufferIndexError(__pyx_t_2);
-    __PYX_ERR(0, 125, __pyx_L1_error)
+    __PYX_ERR(0, 126, __pyx_L1_error)
   }
   __pyx_v_mapping_data = (&(*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_uint32_t *, __pyx_pybuffernd_mapping.rcbuffer->pybuffer.buf, __pyx_t_1, __pyx_pybuffernd_mapping.diminfo[0].strides)));
 
-  /* "waterz/region_graph.pyx":126
+  /* "waterz/region_graph.pyx":127
  *     id2_data = &id2[0];
  *     mapping_data = &mapping[0];
  *     count_data = &count[0];             # <<<<<<<<<<<<<<
@@ -5109,32 +5123,32 @@ static PyObject *__pyx_pf_6waterz_12region_graph_10__merge_id_byCount(CYTHON_UNU
   } else if (unlikely(__pyx_t_1 >= __pyx_pybuffernd_count.diminfo[0].shape)) __pyx_t_2 = 0;
   if (unlikely(__pyx_t_2 != -1)) {
     __Pyx_RaiseBufferIndexError(__pyx_t_2);
-    __PYX_ERR(0, 126, __pyx_L1_error)
+    __PYX_ERR(0, 127, __pyx_L1_error)
   }
   __pyx_v_count_data = (&(*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_uint32_t *, __pyx_pybuffernd_count.rcbuffer->pybuffer.buf, __pyx_t_1, __pyx_pybuffernd_count.diminfo[0].strides)));
 
-  /* "waterz/region_graph.pyx":128
+  /* "waterz/region_graph.pyx":129
  *     count_data = &count[0];
  * 
  *     cpp_merge_id_byCount(id1_data, id2_data, mapping_data, count_data, len(id1), len(mapping), \             # <<<<<<<<<<<<<<
  *                 id_thres, count_thres, dust_thres)
  * 
  */
-  __pyx_t_3 = PyObject_Length(((PyObject *)__pyx_v_id1)); if (unlikely(__pyx_t_3 == ((Py_ssize_t)-1))) __PYX_ERR(0, 128, __pyx_L1_error)
-  __pyx_t_4 = PyObject_Length(((PyObject *)__pyx_v_mapping)); if (unlikely(__pyx_t_4 == ((Py_ssize_t)-1))) __PYX_ERR(0, 128, __pyx_L1_error)
+  __pyx_t_3 = PyObject_Length(((PyObject *)__pyx_v_id1)); if (unlikely(__pyx_t_3 == ((Py_ssize_t)-1))) __PYX_ERR(0, 129, __pyx_L1_error)
+  __pyx_t_4 = PyObject_Length(((PyObject *)__pyx_v_mapping)); if (unlikely(__pyx_t_4 == ((Py_ssize_t)-1))) __PYX_ERR(0, 129, __pyx_L1_error)
 
-  /* "waterz/region_graph.pyx":129
+  /* "waterz/region_graph.pyx":130
  * 
  *     cpp_merge_id_byCount(id1_data, id2_data, mapping_data, count_data, len(id1), len(mapping), \
  *                 id_thres, count_thres, dust_thres)             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  __pyx_t_5 = __Pyx_PyInt_As_uint32_t(__pyx_v_id_thres); if (unlikely((__pyx_t_5 == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 129, __pyx_L1_error)
-  __pyx_t_6 = __Pyx_PyInt_As_uint32_t(__pyx_v_count_thres); if (unlikely((__pyx_t_6 == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 129, __pyx_L1_error)
-  __pyx_t_7 = __Pyx_PyInt_As_uint32_t(__pyx_v_dust_thres); if (unlikely((__pyx_t_7 == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 129, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyInt_As_uint32_t(__pyx_v_id_thres); if (unlikely((__pyx_t_5 == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 130, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyInt_As_uint32_t(__pyx_v_count_thres); if (unlikely((__pyx_t_6 == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 130, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_As_uint32_t(__pyx_v_dust_thres); if (unlikely((__pyx_t_7 == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 130, __pyx_L1_error)
 
-  /* "waterz/region_graph.pyx":128
+  /* "waterz/region_graph.pyx":129
  *     count_data = &count[0];
  * 
  *     cpp_merge_id_byCount(id1_data, id2_data, mapping_data, count_data, len(id1), len(mapping), \             # <<<<<<<<<<<<<<
@@ -5143,7 +5157,7 @@ static PyObject *__pyx_pf_6waterz_12region_graph_10__merge_id_byCount(CYTHON_UNU
  */
   cpp_merge_id_byCount(__pyx_v_id1_data, __pyx_v_id2_data, __pyx_v_mapping_data, __pyx_v_count_data, __pyx_t_3, __pyx_t_4, __pyx_t_5, __pyx_t_6, __pyx_t_7);
 
-  /* "waterz/region_graph.pyx":113
+  /* "waterz/region_graph.pyx":114
  * 
  * 
  * def __merge_id_byCount(np.ndarray[np.uint32_t, ndim=1] id1,             # <<<<<<<<<<<<<<
@@ -5178,7 +5192,7 @@ static PyObject *__pyx_pf_6waterz_12region_graph_10__merge_id_byCount(CYTHON_UNU
   return __pyx_r;
 }
 
-/* "waterz/region_graph.pyx":132
+/* "waterz/region_graph.pyx":133
  * 
  * 
  * def __merge_id(np.ndarray[np.uint32_t, ndim=1] id1,             # <<<<<<<<<<<<<<
@@ -5228,23 +5242,23 @@ static PyObject *__pyx_pw_6waterz_12region_graph_13__merge_id(PyObject *__pyx_se
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_id2)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__merge_id", 1, 4, 4, 1); __PYX_ERR(0, 132, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__merge_id", 1, 4, 4, 1); __PYX_ERR(0, 133, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_mapping)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__merge_id", 1, 4, 4, 2); __PYX_ERR(0, 132, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__merge_id", 1, 4, 4, 2); __PYX_ERR(0, 133, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_id_thres)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__merge_id", 1, 4, 4, 3); __PYX_ERR(0, 132, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__merge_id", 1, 4, 4, 3); __PYX_ERR(0, 133, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__merge_id") < 0)) __PYX_ERR(0, 132, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__merge_id") < 0)) __PYX_ERR(0, 133, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 4) {
       goto __pyx_L5_argtuple_error;
@@ -5261,15 +5275,15 @@ static PyObject *__pyx_pw_6waterz_12region_graph_13__merge_id(PyObject *__pyx_se
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__merge_id", 1, 4, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 132, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__merge_id", 1, 4, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 133, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("waterz.region_graph.__merge_id", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_id1), __pyx_ptype_5numpy_ndarray, 1, "id1", 0))) __PYX_ERR(0, 132, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_id2), __pyx_ptype_5numpy_ndarray, 1, "id2", 0))) __PYX_ERR(0, 133, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_mapping), __pyx_ptype_5numpy_ndarray, 1, "mapping", 0))) __PYX_ERR(0, 134, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_id1), __pyx_ptype_5numpy_ndarray, 1, "id1", 0))) __PYX_ERR(0, 133, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_id2), __pyx_ptype_5numpy_ndarray, 1, "id2", 0))) __PYX_ERR(0, 134, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_mapping), __pyx_ptype_5numpy_ndarray, 1, "mapping", 0))) __PYX_ERR(0, 135, __pyx_L1_error)
   __pyx_r = __pyx_pf_6waterz_12region_graph_12__merge_id(__pyx_self, __pyx_v_id1, __pyx_v_id2, __pyx_v_mapping, __pyx_v_id_thres);
 
   /* function exit code */
@@ -5316,21 +5330,21 @@ static PyObject *__pyx_pf_6waterz_12region_graph_12__merge_id(CYTHON_UNUSED PyOb
   __pyx_pybuffernd_mapping.rcbuffer = &__pyx_pybuffer_mapping;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_id1.rcbuffer->pybuffer, (PyObject*)__pyx_v_id1, &__Pyx_TypeInfo_nn___pyx_t_5numpy_uint32_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 132, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_id1.rcbuffer->pybuffer, (PyObject*)__pyx_v_id1, &__Pyx_TypeInfo_nn___pyx_t_5numpy_uint32_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 133, __pyx_L1_error)
   }
   __pyx_pybuffernd_id1.diminfo[0].strides = __pyx_pybuffernd_id1.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_id1.diminfo[0].shape = __pyx_pybuffernd_id1.rcbuffer->pybuffer.shape[0];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_id2.rcbuffer->pybuffer, (PyObject*)__pyx_v_id2, &__Pyx_TypeInfo_nn___pyx_t_5numpy_uint32_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 132, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_id2.rcbuffer->pybuffer, (PyObject*)__pyx_v_id2, &__Pyx_TypeInfo_nn___pyx_t_5numpy_uint32_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 133, __pyx_L1_error)
   }
   __pyx_pybuffernd_id2.diminfo[0].strides = __pyx_pybuffernd_id2.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_id2.diminfo[0].shape = __pyx_pybuffernd_id2.rcbuffer->pybuffer.shape[0];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_mapping.rcbuffer->pybuffer, (PyObject*)__pyx_v_mapping, &__Pyx_TypeInfo_nn___pyx_t_5numpy_uint32_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 132, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_mapping.rcbuffer->pybuffer, (PyObject*)__pyx_v_mapping, &__Pyx_TypeInfo_nn___pyx_t_5numpy_uint32_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 133, __pyx_L1_error)
   }
   __pyx_pybuffernd_mapping.diminfo[0].strides = __pyx_pybuffernd_mapping.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_mapping.diminfo[0].shape = __pyx_pybuffernd_mapping.rcbuffer->pybuffer.shape[0];
 
-  /* "waterz/region_graph.pyx":147
+  /* "waterz/region_graph.pyx":148
  *     cdef uint32_t* id2_data;
  *     cdef uint32_t* mapping_data;
  *     id1_data = &id1[0];             # <<<<<<<<<<<<<<
@@ -5345,11 +5359,11 @@ static PyObject *__pyx_pf_6waterz_12region_graph_12__merge_id(CYTHON_UNUSED PyOb
   } else if (unlikely(__pyx_t_1 >= __pyx_pybuffernd_id1.diminfo[0].shape)) __pyx_t_2 = 0;
   if (unlikely(__pyx_t_2 != -1)) {
     __Pyx_RaiseBufferIndexError(__pyx_t_2);
-    __PYX_ERR(0, 147, __pyx_L1_error)
+    __PYX_ERR(0, 148, __pyx_L1_error)
   }
   __pyx_v_id1_data = (&(*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_uint32_t *, __pyx_pybuffernd_id1.rcbuffer->pybuffer.buf, __pyx_t_1, __pyx_pybuffernd_id1.diminfo[0].strides)));
 
-  /* "waterz/region_graph.pyx":148
+  /* "waterz/region_graph.pyx":149
  *     cdef uint32_t* mapping_data;
  *     id1_data = &id1[0];
  *     id2_data = &id2[0];             # <<<<<<<<<<<<<<
@@ -5364,11 +5378,11 @@ static PyObject *__pyx_pf_6waterz_12region_graph_12__merge_id(CYTHON_UNUSED PyOb
   } else if (unlikely(__pyx_t_1 >= __pyx_pybuffernd_id2.diminfo[0].shape)) __pyx_t_2 = 0;
   if (unlikely(__pyx_t_2 != -1)) {
     __Pyx_RaiseBufferIndexError(__pyx_t_2);
-    __PYX_ERR(0, 148, __pyx_L1_error)
+    __PYX_ERR(0, 149, __pyx_L1_error)
   }
   __pyx_v_id2_data = (&(*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_uint32_t *, __pyx_pybuffernd_id2.rcbuffer->pybuffer.buf, __pyx_t_1, __pyx_pybuffernd_id2.diminfo[0].strides)));
 
-  /* "waterz/region_graph.pyx":149
+  /* "waterz/region_graph.pyx":150
  *     id1_data = &id1[0];
  *     id2_data = &id2[0];
  *     mapping_data = &mapping[0];             # <<<<<<<<<<<<<<
@@ -5383,23 +5397,23 @@ static PyObject *__pyx_pf_6waterz_12region_graph_12__merge_id(CYTHON_UNUSED PyOb
   } else if (unlikely(__pyx_t_1 >= __pyx_pybuffernd_mapping.diminfo[0].shape)) __pyx_t_2 = 0;
   if (unlikely(__pyx_t_2 != -1)) {
     __Pyx_RaiseBufferIndexError(__pyx_t_2);
-    __PYX_ERR(0, 149, __pyx_L1_error)
+    __PYX_ERR(0, 150, __pyx_L1_error)
   }
   __pyx_v_mapping_data = (&(*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_uint32_t *, __pyx_pybuffernd_mapping.rcbuffer->pybuffer.buf, __pyx_t_1, __pyx_pybuffernd_mapping.diminfo[0].strides)));
 
-  /* "waterz/region_graph.pyx":151
+  /* "waterz/region_graph.pyx":152
  *     mapping_data = &mapping[0];
  * 
  *     cpp_merge_id(id1_data, id2_data, mapping_data, len(id1), len(mapping), id_thres);             # <<<<<<<<<<<<<<
  * 
  * cdef extern from "frontend_region_graph.h":
  */
-  __pyx_t_3 = PyObject_Length(((PyObject *)__pyx_v_id1)); if (unlikely(__pyx_t_3 == ((Py_ssize_t)-1))) __PYX_ERR(0, 151, __pyx_L1_error)
-  __pyx_t_4 = PyObject_Length(((PyObject *)__pyx_v_mapping)); if (unlikely(__pyx_t_4 == ((Py_ssize_t)-1))) __PYX_ERR(0, 151, __pyx_L1_error)
-  __pyx_t_5 = __Pyx_PyInt_As_uint32_t(__pyx_v_id_thres); if (unlikely((__pyx_t_5 == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 151, __pyx_L1_error)
+  __pyx_t_3 = PyObject_Length(((PyObject *)__pyx_v_id1)); if (unlikely(__pyx_t_3 == ((Py_ssize_t)-1))) __PYX_ERR(0, 152, __pyx_L1_error)
+  __pyx_t_4 = PyObject_Length(((PyObject *)__pyx_v_mapping)); if (unlikely(__pyx_t_4 == ((Py_ssize_t)-1))) __PYX_ERR(0, 152, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyInt_As_uint32_t(__pyx_v_id_thres); if (unlikely((__pyx_t_5 == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 152, __pyx_L1_error)
   cpp_merge_id(__pyx_v_id1_data, __pyx_v_id2_data, __pyx_v_mapping_data, __pyx_t_3, __pyx_t_4, __pyx_t_5);
 
-  /* "waterz/region_graph.pyx":132
+  /* "waterz/region_graph.pyx":133
  * 
  * 
  * def __merge_id(np.ndarray[np.uint32_t, ndim=1] id1,             # <<<<<<<<<<<<<<
@@ -6556,25 +6570,25 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "waterz/region_graph.pyx":28
+  /* "waterz/region_graph.pyx":29
  *     mapping2_rl[mapping2_uid] = np.arange(1, len(mapping2_uid) + 1).astype(np.uint32)
  * 
  *     mapping[:] = 0             # <<<<<<<<<<<<<<
  *     mapping[uid] = mapping2_rl[mapping2[1:]]
  * 
  */
-  __pyx_slice_ = PySlice_New(Py_None, Py_None, Py_None); if (unlikely(!__pyx_slice_)) __PYX_ERR(0, 28, __pyx_L1_error)
+  __pyx_slice_ = PySlice_New(Py_None, Py_None, Py_None); if (unlikely(!__pyx_slice_)) __PYX_ERR(0, 29, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_slice_);
   __Pyx_GIVEREF(__pyx_slice_);
 
-  /* "waterz/region_graph.pyx":29
+  /* "waterz/region_graph.pyx":30
  * 
  *     mapping[:] = 0
  *     mapping[uid] = mapping2_rl[mapping2[1:]]             # <<<<<<<<<<<<<<
  * 
  *     return mapping
  */
-  __pyx_slice__2 = PySlice_New(__pyx_int_1, Py_None, Py_None); if (unlikely(!__pyx_slice__2)) __PYX_ERR(0, 29, __pyx_L1_error)
+  __pyx_slice__2 = PySlice_New(__pyx_int_1, Py_None, Py_None); if (unlikely(!__pyx_slice__2)) __PYX_ERR(0, 30, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_slice__2);
   __Pyx_GIVEREF(__pyx_slice__2);
 
@@ -6612,77 +6626,77 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GIVEREF(__pyx_tuple__5);
   __pyx_codeobj__6 = (PyObject*)__Pyx_PyCode_New(3, 0, 7, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__5, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_waterz_region_graph_pyx, __pyx_n_s_merge_id_full, 6, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__6)) __PYX_ERR(0, 6, __pyx_L1_error)
 
-  /* "waterz/region_graph.pyx":33
+  /* "waterz/region_graph.pyx":34
  *     return mapping
  * 
  * def merge_id(id1, id2, score=None, count=None, id_thres=0, aff_thres=1, count_thres=50, dust_thres = 50):             # <<<<<<<<<<<<<<
  *     # avoid wrong memory access
  *     if len(id1) != 0:
  */
-  __pyx_tuple__7 = PyTuple_Pack(10, __pyx_n_s_id1, __pyx_n_s_id2, __pyx_n_s_score, __pyx_n_s_count, __pyx_n_s_id_thres, __pyx_n_s_aff_thres, __pyx_n_s_count_thres, __pyx_n_s_dust_thres, __pyx_n_s_mid, __pyx_n_s_mapping); if (unlikely(!__pyx_tuple__7)) __PYX_ERR(0, 33, __pyx_L1_error)
+  __pyx_tuple__7 = PyTuple_Pack(10, __pyx_n_s_id1, __pyx_n_s_id2, __pyx_n_s_score, __pyx_n_s_count, __pyx_n_s_id_thres, __pyx_n_s_aff_thres, __pyx_n_s_count_thres, __pyx_n_s_dust_thres, __pyx_n_s_mid, __pyx_n_s_mapping); if (unlikely(!__pyx_tuple__7)) __PYX_ERR(0, 34, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__7);
   __Pyx_GIVEREF(__pyx_tuple__7);
-  __pyx_codeobj__8 = (PyObject*)__Pyx_PyCode_New(8, 0, 10, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__7, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_waterz_region_graph_pyx, __pyx_n_s_merge_id_2, 33, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__8)) __PYX_ERR(0, 33, __pyx_L1_error)
+  __pyx_codeobj__8 = (PyObject*)__Pyx_PyCode_New(8, 0, 10, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__7, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_waterz_region_graph_pyx, __pyx_n_s_merge_id_2, 34, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__8)) __PYX_ERR(0, 34, __pyx_L1_error)
 
-  /* "waterz/region_graph.pyx":63
+  /* "waterz/region_graph.pyx":64
  *     return mapping
  * 
  * def __remove_small(np.ndarray[np.uint32_t, ndim=1] mapping,             # <<<<<<<<<<<<<<
  *                  np.ndarray[np.uint32_t, ndim=1] count,
  *                  dust_thres):
  */
-  __pyx_tuple__9 = PyTuple_Pack(5, __pyx_n_s_mapping, __pyx_n_s_count, __pyx_n_s_dust_thres, __pyx_n_s_mapping_data, __pyx_n_s_count_data); if (unlikely(!__pyx_tuple__9)) __PYX_ERR(0, 63, __pyx_L1_error)
+  __pyx_tuple__9 = PyTuple_Pack(5, __pyx_n_s_mapping, __pyx_n_s_count, __pyx_n_s_dust_thres, __pyx_n_s_mapping_data, __pyx_n_s_count_data); if (unlikely(!__pyx_tuple__9)) __PYX_ERR(0, 64, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__9);
   __Pyx_GIVEREF(__pyx_tuple__9);
-  __pyx_codeobj__10 = (PyObject*)__Pyx_PyCode_New(3, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__9, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_waterz_region_graph_pyx, __pyx_n_s_remove_small, 63, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__10)) __PYX_ERR(0, 63, __pyx_L1_error)
+  __pyx_codeobj__10 = (PyObject*)__Pyx_PyCode_New(3, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__9, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_waterz_region_graph_pyx, __pyx_n_s_remove_small, 64, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__10)) __PYX_ERR(0, 64, __pyx_L1_error)
 
-  /* "waterz/region_graph.pyx":73
+  /* "waterz/region_graph.pyx":74
  *     cpp_remove_small(mapping_data, count_data, len(mapping), dust_thres)
  * 
  * def __merge_id_byAff(np.ndarray[np.uint32_t, ndim=1] id1,             # <<<<<<<<<<<<<<
  *                  np.ndarray[np.uint32_t, ndim=1] id2,
  *                  np.ndarray[np.uint32_t, ndim=1] mapping,
  */
-  __pyx_tuple__11 = PyTuple_Pack(10, __pyx_n_s_id1, __pyx_n_s_id2, __pyx_n_s_mapping, __pyx_n_s_score, __pyx_n_s_id_thres, __pyx_n_s_aff_thres, __pyx_n_s_id1_data, __pyx_n_s_id2_data, __pyx_n_s_score_data, __pyx_n_s_mapping_data); if (unlikely(!__pyx_tuple__11)) __PYX_ERR(0, 73, __pyx_L1_error)
+  __pyx_tuple__11 = PyTuple_Pack(10, __pyx_n_s_id1, __pyx_n_s_id2, __pyx_n_s_mapping, __pyx_n_s_score, __pyx_n_s_id_thres, __pyx_n_s_aff_thres, __pyx_n_s_id1_data, __pyx_n_s_id2_data, __pyx_n_s_score_data, __pyx_n_s_mapping_data); if (unlikely(!__pyx_tuple__11)) __PYX_ERR(0, 74, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__11);
   __Pyx_GIVEREF(__pyx_tuple__11);
-  __pyx_codeobj__12 = (PyObject*)__Pyx_PyCode_New(6, 0, 10, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__11, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_waterz_region_graph_pyx, __pyx_n_s_merge_id_byAff, 73, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__12)) __PYX_ERR(0, 73, __pyx_L1_error)
+  __pyx_codeobj__12 = (PyObject*)__Pyx_PyCode_New(6, 0, 10, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__11, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_waterz_region_graph_pyx, __pyx_n_s_merge_id_byAff, 74, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__12)) __PYX_ERR(0, 74, __pyx_L1_error)
 
-  /* "waterz/region_graph.pyx":91
+  /* "waterz/region_graph.pyx":92
  *                 id_thres, aff_thres)
  * 
  * def __merge_id_byAffCount(np.ndarray[np.uint32_t, ndim=1] id1,             # <<<<<<<<<<<<<<
  *                  np.ndarray[np.uint32_t, ndim=1] id2,
  *                  np.ndarray[np.uint32_t, ndim=1] mapping,
  */
-  __pyx_tuple__13 = PyTuple_Pack(14, __pyx_n_s_id1, __pyx_n_s_id2, __pyx_n_s_mapping, __pyx_n_s_score, __pyx_n_s_count, __pyx_n_s_id_thres, __pyx_n_s_aff_thres, __pyx_n_s_count_thres, __pyx_n_s_dust_thres, __pyx_n_s_id1_data, __pyx_n_s_id2_data, __pyx_n_s_score_data, __pyx_n_s_mapping_data, __pyx_n_s_count_data); if (unlikely(!__pyx_tuple__13)) __PYX_ERR(0, 91, __pyx_L1_error)
+  __pyx_tuple__13 = PyTuple_Pack(14, __pyx_n_s_id1, __pyx_n_s_id2, __pyx_n_s_mapping, __pyx_n_s_score, __pyx_n_s_count, __pyx_n_s_id_thres, __pyx_n_s_aff_thres, __pyx_n_s_count_thres, __pyx_n_s_dust_thres, __pyx_n_s_id1_data, __pyx_n_s_id2_data, __pyx_n_s_score_data, __pyx_n_s_mapping_data, __pyx_n_s_count_data); if (unlikely(!__pyx_tuple__13)) __PYX_ERR(0, 92, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__13);
   __Pyx_GIVEREF(__pyx_tuple__13);
-  __pyx_codeobj__14 = (PyObject*)__Pyx_PyCode_New(9, 0, 14, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__13, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_waterz_region_graph_pyx, __pyx_n_s_merge_id_byAffCount, 91, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__14)) __PYX_ERR(0, 91, __pyx_L1_error)
+  __pyx_codeobj__14 = (PyObject*)__Pyx_PyCode_New(9, 0, 14, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__13, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_waterz_region_graph_pyx, __pyx_n_s_merge_id_byAffCount, 92, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__14)) __PYX_ERR(0, 92, __pyx_L1_error)
 
-  /* "waterz/region_graph.pyx":113
+  /* "waterz/region_graph.pyx":114
  * 
  * 
  * def __merge_id_byCount(np.ndarray[np.uint32_t, ndim=1] id1,             # <<<<<<<<<<<<<<
  *                  np.ndarray[np.uint32_t, ndim=1] id2,
  *                  np.ndarray[np.uint32_t, ndim=1] mapping,
  */
-  __pyx_tuple__15 = PyTuple_Pack(11, __pyx_n_s_id1, __pyx_n_s_id2, __pyx_n_s_mapping, __pyx_n_s_count, __pyx_n_s_id_thres, __pyx_n_s_count_thres, __pyx_n_s_dust_thres, __pyx_n_s_id1_data, __pyx_n_s_id2_data, __pyx_n_s_mapping_data, __pyx_n_s_count_data); if (unlikely(!__pyx_tuple__15)) __PYX_ERR(0, 113, __pyx_L1_error)
+  __pyx_tuple__15 = PyTuple_Pack(11, __pyx_n_s_id1, __pyx_n_s_id2, __pyx_n_s_mapping, __pyx_n_s_count, __pyx_n_s_id_thres, __pyx_n_s_count_thres, __pyx_n_s_dust_thres, __pyx_n_s_id1_data, __pyx_n_s_id2_data, __pyx_n_s_mapping_data, __pyx_n_s_count_data); if (unlikely(!__pyx_tuple__15)) __PYX_ERR(0, 114, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__15);
   __Pyx_GIVEREF(__pyx_tuple__15);
-  __pyx_codeobj__16 = (PyObject*)__Pyx_PyCode_New(7, 0, 11, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__15, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_waterz_region_graph_pyx, __pyx_n_s_merge_id_byCount, 113, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__16)) __PYX_ERR(0, 113, __pyx_L1_error)
+  __pyx_codeobj__16 = (PyObject*)__Pyx_PyCode_New(7, 0, 11, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__15, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_waterz_region_graph_pyx, __pyx_n_s_merge_id_byCount, 114, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__16)) __PYX_ERR(0, 114, __pyx_L1_error)
 
-  /* "waterz/region_graph.pyx":132
+  /* "waterz/region_graph.pyx":133
  * 
  * 
  * def __merge_id(np.ndarray[np.uint32_t, ndim=1] id1,             # <<<<<<<<<<<<<<
  *                  np.ndarray[np.uint32_t, ndim=1] id2,
  *                  np.ndarray[np.uint32_t, ndim=1] mapping,
  */
-  __pyx_tuple__17 = PyTuple_Pack(7, __pyx_n_s_id1, __pyx_n_s_id2, __pyx_n_s_mapping, __pyx_n_s_id_thres, __pyx_n_s_id1_data, __pyx_n_s_id2_data, __pyx_n_s_mapping_data); if (unlikely(!__pyx_tuple__17)) __PYX_ERR(0, 132, __pyx_L1_error)
+  __pyx_tuple__17 = PyTuple_Pack(7, __pyx_n_s_id1, __pyx_n_s_id2, __pyx_n_s_mapping, __pyx_n_s_id_thres, __pyx_n_s_id1_data, __pyx_n_s_id2_data, __pyx_n_s_mapping_data); if (unlikely(!__pyx_tuple__17)) __PYX_ERR(0, 133, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__17);
   __Pyx_GIVEREF(__pyx_tuple__17);
-  __pyx_codeobj__18 = (PyObject*)__Pyx_PyCode_New(4, 0, 7, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__17, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_waterz_region_graph_pyx, __pyx_n_s_merge_id, 132, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__18)) __PYX_ERR(0, 132, __pyx_L1_error)
+  __pyx_codeobj__18 = (PyObject*)__Pyx_PyCode_New(4, 0, 7, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__17, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_waterz_region_graph_pyx, __pyx_n_s_merge_id, 133, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__18)) __PYX_ERR(0, 133, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -7042,76 +7056,76 @@ if (!__Pyx_RefNanny) {
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_merge_id_full, __pyx_t_1) < 0) __PYX_ERR(0, 6, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "waterz/region_graph.pyx":33
+  /* "waterz/region_graph.pyx":34
  *     return mapping
  * 
  * def merge_id(id1, id2, score=None, count=None, id_thres=0, aff_thres=1, count_thres=50, dust_thres = 50):             # <<<<<<<<<<<<<<
  *     # avoid wrong memory access
  *     if len(id1) != 0:
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6waterz_12region_graph_3merge_id, NULL, __pyx_n_s_waterz_region_graph); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 33, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6waterz_12region_graph_3merge_id, NULL, __pyx_n_s_waterz_region_graph); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 34, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_merge_id_2, __pyx_t_1) < 0) __PYX_ERR(0, 33, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_merge_id_2, __pyx_t_1) < 0) __PYX_ERR(0, 34, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "waterz/region_graph.pyx":63
+  /* "waterz/region_graph.pyx":64
  *     return mapping
  * 
  * def __remove_small(np.ndarray[np.uint32_t, ndim=1] mapping,             # <<<<<<<<<<<<<<
  *                  np.ndarray[np.uint32_t, ndim=1] count,
  *                  dust_thres):
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6waterz_12region_graph_5__remove_small, NULL, __pyx_n_s_waterz_region_graph); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 63, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6waterz_12region_graph_5__remove_small, NULL, __pyx_n_s_waterz_region_graph); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 64, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_remove_small, __pyx_t_1) < 0) __PYX_ERR(0, 63, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_remove_small, __pyx_t_1) < 0) __PYX_ERR(0, 64, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "waterz/region_graph.pyx":73
+  /* "waterz/region_graph.pyx":74
  *     cpp_remove_small(mapping_data, count_data, len(mapping), dust_thres)
  * 
  * def __merge_id_byAff(np.ndarray[np.uint32_t, ndim=1] id1,             # <<<<<<<<<<<<<<
  *                  np.ndarray[np.uint32_t, ndim=1] id2,
  *                  np.ndarray[np.uint32_t, ndim=1] mapping,
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6waterz_12region_graph_7__merge_id_byAff, NULL, __pyx_n_s_waterz_region_graph); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 73, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6waterz_12region_graph_7__merge_id_byAff, NULL, __pyx_n_s_waterz_region_graph); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 74, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_merge_id_byAff, __pyx_t_1) < 0) __PYX_ERR(0, 73, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_merge_id_byAff, __pyx_t_1) < 0) __PYX_ERR(0, 74, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "waterz/region_graph.pyx":91
+  /* "waterz/region_graph.pyx":92
  *                 id_thres, aff_thres)
  * 
  * def __merge_id_byAffCount(np.ndarray[np.uint32_t, ndim=1] id1,             # <<<<<<<<<<<<<<
  *                  np.ndarray[np.uint32_t, ndim=1] id2,
  *                  np.ndarray[np.uint32_t, ndim=1] mapping,
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6waterz_12region_graph_9__merge_id_byAffCount, NULL, __pyx_n_s_waterz_region_graph); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 91, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6waterz_12region_graph_9__merge_id_byAffCount, NULL, __pyx_n_s_waterz_region_graph); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 92, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_merge_id_byAffCount, __pyx_t_1) < 0) __PYX_ERR(0, 91, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_merge_id_byAffCount, __pyx_t_1) < 0) __PYX_ERR(0, 92, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "waterz/region_graph.pyx":113
+  /* "waterz/region_graph.pyx":114
  * 
  * 
  * def __merge_id_byCount(np.ndarray[np.uint32_t, ndim=1] id1,             # <<<<<<<<<<<<<<
  *                  np.ndarray[np.uint32_t, ndim=1] id2,
  *                  np.ndarray[np.uint32_t, ndim=1] mapping,
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6waterz_12region_graph_11__merge_id_byCount, NULL, __pyx_n_s_waterz_region_graph); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 113, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6waterz_12region_graph_11__merge_id_byCount, NULL, __pyx_n_s_waterz_region_graph); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 114, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_merge_id_byCount, __pyx_t_1) < 0) __PYX_ERR(0, 113, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_merge_id_byCount, __pyx_t_1) < 0) __PYX_ERR(0, 114, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "waterz/region_graph.pyx":132
+  /* "waterz/region_graph.pyx":133
  * 
  * 
  * def __merge_id(np.ndarray[np.uint32_t, ndim=1] id1,             # <<<<<<<<<<<<<<
  *                  np.ndarray[np.uint32_t, ndim=1] id2,
  *                  np.ndarray[np.uint32_t, ndim=1] mapping,
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6waterz_12region_graph_13__merge_id, NULL, __pyx_n_s_waterz_region_graph); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 132, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6waterz_12region_graph_13__merge_id, NULL, __pyx_n_s_waterz_region_graph); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 133, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_merge_id, __pyx_t_1) < 0) __PYX_ERR(0, 132, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_merge_id, __pyx_t_1) < 0) __PYX_ERR(0, 133, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
   /* "waterz/region_graph.pyx":1

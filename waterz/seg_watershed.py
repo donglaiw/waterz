@@ -30,17 +30,21 @@ def get_seeds(boundary, method='grid', \
 
     return seeds, num_seeds
 
-def watershed(affs, seed_method='maxima_distance', boundary_thres = 0.5, label_nb = None, seg_bg = True):
+def watershed(affs, seeds=None, seed_method='maxima_distance', boundary_thres = 0.5, label_nb = None, seg_bg = True):
     fragments = np.zeros_like(affs[0]).astype(np.uint32)
     depth  = fragments.shape[0]
     # 3D watershed is too slow -> do 2D watershed
     next_id = np.uint32(0)
     for z in range(depth):
         boundary = 1.0 - 0.5*(affs[1,z].astype(np.float32) + affs[2,z]) / 255.0
-        seeds, num_seeds = get_seeds(boundary, method = seed_method, boundary_thres = boundary_thres, label_nb = label_nb)
-        fragments[z] = mahotas.cwatershed(boundary, seeds)
-        fragments[z][fragments[z] > 0] += next_id
-        next_id += num_seeds
+        if seeds is None:
+            seeds_z, num_seeds = get_seeds(boundary, method = seed_method, boundary_thres = boundary_thres, label_nb = label_nb)
+            fragments[z] = mahotas.cwatershed(boundary, seeds_z)
+            fragments[z][fragments[z] > 0] += next_id
+            next_id += num_seeds
+        else:
+            seeds_z = seeds[z]
+            fragments[z] = mahotas.cwatershed(boundary, seeds_z)
         if seg_bg: # assign bg seg
             fragments[z][(affs[:,z]==0).max(axis=0)] = 0
 

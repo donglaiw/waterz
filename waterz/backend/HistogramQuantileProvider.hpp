@@ -24,17 +24,17 @@ public:
         
         // for uint8 affinity, directly
 		int bin = affinity;
-		// int bin = discretize<int>(affinity, Bins);
-
+		_histograms[e].inc(bin);
+        /*
+		int bin = discretize<int>(affinity, Bins);
 		if (InitWithMax && _histograms[e].lowestBin() != Bins) {
 
 			if (bin > _histograms[e].lowestBin())
 				_histograms[e].clear();
 			else
 				return;
-		}
-
 		_histograms[e].inc(bin);
+		}*/
 	}
 
 	inline bool notifyEdgeMerge(EdgeIdType from, EdgeIdType to) {
@@ -52,10 +52,18 @@ public:
 
 		int sum = 0;
 		int bin = 0;
+        // Q: percentile value 
+        // std::cout<< Q << std::endl;
+        /*
 		for (bin = 0; bin < Bins; bin++) {
+            if(_histograms[e][bin] != 0){
+                std::cout<< bin<<"-"<< _histograms[e][bin]<<",";
+            }
+        }
+        */
 
+		for (bin = 0; bin < Bins; bin++) {
 			sum += _histograms[e][bin];
-
 			if (sum >= pivot)
 				break;
 		}

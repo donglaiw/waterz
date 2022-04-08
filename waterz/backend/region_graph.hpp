@@ -70,8 +70,10 @@ get_region_graph(
 					if (id1 != id2) {
 						auto mm = std::minmax(id1, id2);
 						affinities[mm.first][mm.second].push_back(aff[d][p[0]][p[1]][p[2]]);
-
                         /*
+                        if(mm.first==1 && mm.second==2){
+                            std::cout<<"add: "<<mm.second<<"-"<<(int)aff[d][p[0]][p[1]][p[2]]<<","<<std::endl;
+                        }
                         if (cc<30){
                             std::cout<<mm.first<<","<<mm.second<<","<< +aff[d][p[0]][p[1]][p[2]]<<std::endl;
                             cc+=1;
@@ -86,16 +88,12 @@ get_region_graph(
 			// p.first is ID
 			// p.second is list of affiliated edges
 			EdgeIdType e = rg.addEdge(id1, p.first);
-            /*
-            if(cc<10){
-                std::cout<<e<<","<<id1<<","<<p.first<<std::endl;
-                cc += 1;
-            }
-            */
 			statisticsProvider.notifyNewEdge(e);
 
+            // if (e == 0){std::cout<< (int)p.first<<"p"<<std::endl;}
 			for (F affinity : p.second){
 				statisticsProvider.addAffinity(e, affinity);
+                //if (e == 0){std::cout<< (int)affinity<<",";}
             }
         }
     }

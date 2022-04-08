@@ -276,15 +276,10 @@ private:
 	ScoreType scoreEdge(EdgeIdType e, EdgeScoringFunction& edgeScoringFunction) {
 
 		ScoreType score = edgeScoringFunction(e);
+        //std::cout<<"se:"<<e<<":"<<+score<<std::endl;
 
 		_edgeScores[e] = score;
 		_edgeQueue.push(e, score);
-        /*
-        if(e < 10){
-            std::cout<<"se:"<<e<<":"<<+score<<std::endl;
-        }
-        */
-
 		return score;
 	}
 
