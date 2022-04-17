@@ -40,7 +40,7 @@ def agglomerate(
         print("Creating memory-contiguous fragments arrray (avoid this by passing C_CONTIGUOUS arrays)")
         fragments = np.ascontiguousarray(fragments)
 
-    print("Preparing segmentation volume...")
+    # print("Preparing segmentation volume...")
 
     if fragments is None:
         volume_shape = (affs.shape[1], affs.shape[2], affs.shape[3])

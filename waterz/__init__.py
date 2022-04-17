@@ -61,12 +61,10 @@ def __compile(scoring_function='OneMinus<MeanAffinity<RegionGraphType, ScoreValu
             if force_rebuild:
                 raise ImportError
             else:
-                print("Re-using already compiled waterz version")
+                #print("Re-using already compiled waterz version")
                 return module_name
         except ImportError:
-
             print("Compiling waterz in " + str(lib_dir))
-
             cython_include_dirs = ['.']
             ctx = Context(cython_include_dirs, default_options)
 

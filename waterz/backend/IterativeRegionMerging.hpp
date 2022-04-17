@@ -57,6 +57,7 @@ public:
 
 			std::cout << "computing initial scores" << std::endl;
             int cc = 0; 
+            ScoreType score;
 			for (EdgeIdType e = 0; e < _regionGraph.edges().size(); e++){
 				scoreEdge(e, edgeScoringFunction);
             }
@@ -276,7 +277,10 @@ private:
 	ScoreType scoreEdge(EdgeIdType e, EdgeScoringFunction& edgeScoringFunction) {
 
 		ScoreType score = edgeScoringFunction(e);
-        //std::cout<<"se:"<<e<<":"<<+score<<std::endl;
+        /*
+        if (e==31144){
+            std::cout<<"se:"<<e<<":"<<(int)score<<std::endl;
+        }*/
 
 		_edgeScores[e] = score;
 		_edgeQueue.push(e, score);

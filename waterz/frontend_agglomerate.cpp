@@ -45,13 +45,13 @@ initialize(
 
 	if (findFragments) {
 
-		std::cout << "performing initial watershed segmentation..." << std::endl;
+		//std::cout << "performing initial watershed segmentation..." << std::endl;
 
 		watershed(affinities, affThresholdLow, affThresholdHigh, *segmentation, sizes);
 
 	} else {
 
-		std::cout << "counting regions and sizes..." << std::endl;
+		// std::cout << "counting regions and sizes..." << std::endl;
 
 		std::size_t maxId = *std::max_element(segmentation_data, segmentation_data + num_voxels);
 		sizes.resize(maxId + 1);
@@ -66,7 +66,7 @@ initialize(
 			new RegionGraphType(numNodes)
 	);
 
-	std::cout << "creating statistics provider" << std::endl;
+	//std::cout << "creating statistics provider" << std::endl;
 	std::shared_ptr<StatisticsProviderType> statisticsProvider(
 			new StatisticsProviderType(*regionGraph)
 	);
@@ -76,8 +76,8 @@ initialize(
 	get_region_graph(
 			affinities,
 			*segmentation,
-            0,
 			numNodes - 1,
+            0,
 			*statisticsProvider,
 			*regionGraph);
 
@@ -246,7 +246,7 @@ vector<ScoredEdge> rgFromSeg(
 	);
 
 	counts_t<std::size_t> sizes;
-    std::cout << "counting regions and sizes..." << std::endl;
+    //std::cout << "counting regions and sizes..." << std::endl;
     std::size_t maxId = *std::max_element(segmentation_data, segmentation_data + num_voxels);
     sizes.resize(maxId + 1);
     for (std::size_t i = 0; i < num_voxels; i++)
@@ -259,12 +259,12 @@ vector<ScoredEdge> rgFromSeg(
 			new RegionGraphType(numNodes)
 	);
 
-	std::cout << "creating statistics provider" << std::endl;
+	//std::cout << "creating statistics provider" << std::endl;
 	std::shared_ptr<StatisticsProviderType> statisticsProvider(
 			new StatisticsProviderType(*regionGraph)
 	);
 
-	std::cout << "extracting region graph..." << std::endl;
+	//std::cout << "extracting region graph..." << std::endl;
     if (rg_opt == 1){
         // all slices, all three directions
     	get_region_graph(

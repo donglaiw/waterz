@@ -93,7 +93,8 @@ get_region_graph(
             // if (e == 0){std::cout<< (int)p.first<<"p"<<std::endl;}
 			for (F affinity : p.second){
 				statisticsProvider.addAffinity(e, affinity);
-                //if (e == 0){std::cout<< (int)affinity<<",";}
+                // if ((int)id1 == 25356 && (int)p.first == 25604){std::cout<< e<<" "<<(int)affinity<<std::endl;}
+                // if (e == 0){std::cout<< (int)affinity<<",";}
             }
         }
     }
