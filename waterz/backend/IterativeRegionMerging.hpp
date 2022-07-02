@@ -56,10 +56,10 @@ public:
 		if (_mergedUntil == std::numeric_limits<ScoreType>::lowest()) {
 
 			std::cout << "computing initial scores" << std::endl;
-            int cc = 0; 
-            ScoreType score;
+            //ScoreType score;
 			for (EdgeIdType e = 0; e < _regionGraph.edges().size(); e++){
 				scoreEdge(e, edgeScoringFunction);
+                //if(e<10){std::cout<<(int)e<<":"<<(int)score<<std::endl;}
             }
 		}
 

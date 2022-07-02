@@ -14,9 +14,9 @@ def findConnectEdge(ii, i0, i1):
         sc = np.in1d(g0,g1).sum()==0
     return ii[sc==0]
         
-def somaBFS(ii, m0=400000000, check_num=10):
+def somaBFS(ii, soma_ids, check_num=10):
     # ii: Nx2
-    # m0: soma ids (bigger than others)
+    # soma ids
 
     # remove redundant 
     ii = ii[ii[:,0] != ii[:,1]]
@@ -26,12 +26,14 @@ def somaBFS(ii, m0=400000000, check_num=10):
 
     rll = np.arange(ii2.max()+1).astype(ii.dtype)
     check_id = 0
-    while ii2.max() > m0:
+
+    remains = np.in1d(ii2, soma_ids)
+    while remains.any():
         if check_id == 0:
             # check if exist false merge in the end
             ii_g = ii3[gid]
             out = merge_id(ii_g[:,0], ii_g[:,1])
-            ui, uc = np.unique(out[m0+1:], return_counts=True)
+            ui, uc = np.unique(out[soma_ids], return_counts=True)
             # only keep the fm-affected ones
             rl = np.zeros(ii_g.max()+1, np.uint8)
             rl[ui[uc>1]] = 1
@@ -49,16 +51,14 @@ def somaBFS(ii, m0=400000000, check_num=10):
                 return ii[gid]
         check_id = (check_id + 1) % check_num
 
-        print((ii2>m0).sum())
-
         # can't have two soma ids in one row 
-        bid = ii2.min(axis=1) > m0
+        bid = np.isin(ii2, soma_ids).sum() > 1
         gid[bid] = 0
         ii2[bid] = 0
 
         # only use seg that connects to one soma
         # can't have two soma ids merge to the same id
-        jj = ii2.max(axis=1) > m0
+        jj = np.isin(ii2, soma_ids).sum() > 0
         ii_j = ii2[jj]
         gid_j = gid[jj]
         ii_j_min = ii_j.min(axis=1)
@@ -77,6 +77,8 @@ def somaBFS(ii, m0=400000000, check_num=10):
         # merge a step
         ii2 = rll[ii2]
         ii2[ii2[:,0]==ii2[:,1]] = 0
+        remains = np.in1d(ii2, soma_ids)
+        print('# ids for soma',remains.sum())
 
     return ii[gid]
 

@@ -84,7 +84,7 @@ def waterz(
                     seg = out
         if return_seg:
             if seg is not None:
-                outs.append(seg)
+                outs.append(seg.copy())
             if rg is not None:
                 outs_rg.append([rg[0].copy(), rg[1].copy()])
         else:

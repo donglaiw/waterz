@@ -91,11 +91,13 @@ get_region_graph(
 			statisticsProvider.notifyNewEdge(e);
 
             // if (e == 0){std::cout<< (int)p.first<<"p"<<std::endl;}
+            //F score;
 			for (F affinity : p.second){
 				statisticsProvider.addAffinity(e, affinity);
                 // if ((int)id1 == 25356 && (int)p.first == 25604){std::cout<< e<<" "<<(int)affinity<<std::endl;}
-                // if (e == 0){std::cout<< (int)affinity<<",";}
+                //score = affinity;
             }
+            //if (e < 10){std::cout<< e<<":"<<id1<<"_"<<p.first<<"_"<< (int)score<<std::endl;}
         }
     }
 
