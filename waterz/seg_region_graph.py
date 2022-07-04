@@ -52,13 +52,13 @@ def somaBFS(ii, soma_ids, check_num=10):
         check_id = (check_id + 1) % check_num
 
         # can't have two soma ids in one row 
-        bid = np.isin(ii2, soma_ids).sum() > 1
+        bid = np.isin(ii2, soma_ids).sum(axis=1) > 1
         gid[bid] = 0
         ii2[bid] = 0
 
         # only use seg that connects to one soma
         # can't have two soma ids merge to the same id
-        jj = np.isin(ii2, soma_ids).sum() > 0
+        jj = np.isin(ii2, soma_ids).sum(axis=1) > 0
         ii_j = ii2[jj]
         gid_j = gid[jj]
         ii_j_min = ii_j.min(axis=1)
