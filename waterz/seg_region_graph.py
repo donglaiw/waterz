@@ -33,7 +33,8 @@ def somaBFS(ii, soma_ids, check_num=10):
             # check if exist false merge in the end
             ii_g = ii3[gid]
             out = merge_id(ii_g[:,0], ii_g[:,1])
-            ui, uc = np.unique(out[soma_ids], return_counts=True)
+            # some rows with large soma ids are removed from the to-merge list
+            ui, uc = np.unique(out[soma_ids[soma_ids<len(out)]], return_counts=True)
             # only keep the fm-affected ones
             rl = np.zeros(ii_g.max()+1, np.uint8)
             rl[ui[uc>1]] = 1
