@@ -56,7 +56,7 @@ def watershed(affs, seeds=None, seed_method='maxima_distance', seg_thres=1, seed
         
         if bg_thres < 1: # assign bg seg
             #fragments[z][(affs[:,z]==0).max(axis=0)] = 0
-            fragments[z][boundary > bg_thres] = 0
+            fragments[z][boundary >= bg_thres] = 0
 
         # print('\tinit:', z, next_id)
     return fragments

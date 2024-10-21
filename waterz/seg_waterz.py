@@ -34,6 +34,7 @@ def waterz(
         fragments_mask = None,
         aff_threshold  = [1, 254],
         return_seg = True,
+        bg_thres = 1,
         return_rg = False,
         rebuild = True):
 
@@ -44,7 +45,7 @@ def waterz(
     if fragments is None:
         print('initial watershed')
         if fragments_opt != 0: # mahotas
-            fragments = watershed(affs, 'maxima_distance', label_nb = np.ones([fragments_seed_nb,fragments_seed_nb]))
+            fragments = watershed(affs, seed_method='maxima_distance', label_nb = np.ones([fragments_seed_nb,fragments_seed_nb]), bg_thres = bg_thres)
             if fragments_mask is not None:
                 fragments[fragments_mask==False] = 0
 
